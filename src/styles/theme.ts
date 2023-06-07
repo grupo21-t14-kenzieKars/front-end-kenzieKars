@@ -297,14 +297,9 @@ const customTheme = extendTheme({
     xs: "10px",
   },
   components: {
-<<<<<<< HEAD
     Input: inputTheme,
-    Button: buttonTheme,
-=======
-    Inpunt: imputTheme,
     Button: customButtonTheme,
     Textarea: customTextAreaTheme,
->>>>>>> ef6ad0a90d27519b29646b9ea4460142285df2f4
   },
 });
 
