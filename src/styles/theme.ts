@@ -16,7 +16,54 @@ const imputTheme: ComponentStyleConfig = {
   },
 };
 
-const buttonTheme: ComponentStyleConfig = {
+const customTextAreaTheme: ComponentStyleConfig = {
+  defaultProps: {
+    size: "md",
+    variant: "custom",
+  },
+  variants: {
+    custom: {
+      border: "2px solid",
+      borderColor: "grey.8",
+      rounded: "4px",
+      color: "grey.2",  
+      resize: "none",
+      maxHeight: "80px",
+      overflowY: "scroll",
+      _placeholder: {
+        color: "grey.3",
+      },
+      _hover: {
+        bg: "grey.8",
+        borderColor: "transparent",
+      },
+      _focus: {
+        bg: "grey.9",
+        border: "2px solid",
+        borderColor: "brand.2",
+        _placeholder: {
+          color: "transparent",
+        },
+      },
+      _invalid: {
+        border: "2px solid",
+        borderColor: "red",
+      },
+      "::-webkit-scrollbar": {
+        width: "6px",
+      },
+      "::-webkit-scrollbar-track": {
+        width: "2px",
+      },
+      "::-webkit-scrollbar-thumb": {
+        background: "brand.3",
+        borderRadius: "24px",
+      },
+    },
+  },
+};
+
+const customButtonTheme: ComponentStyleConfig = {
   defaultProps: {
     variant: "brand1",
     size: "md",
@@ -229,7 +276,8 @@ const customTheme = extendTheme({
   },
   components: {
     Inpunt: imputTheme,
-    Button: buttonTheme,
+    Button: customButtonTheme,
+    Textarea: customTextAreaTheme,
   },
 });
 
