@@ -1,9 +1,10 @@
-import { Button } from "@chakra-ui/react"
+import { CardPoster } from "./components/cardPoster"
 
 function App() {
 
   return (
     <main>
+      <CardPoster />
     </main>
   )
 }
