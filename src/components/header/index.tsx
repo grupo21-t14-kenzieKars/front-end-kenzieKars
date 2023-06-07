@@ -13,14 +13,13 @@ import {
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import logo from '../../assets/Motors shop.svg'
+import { mockedUser,mockedUser2 } from './../../mocks/index';
 
 const Header = () => {
     const { isOpen, onToggle } = useDisclosure();
-    let user = {
-        name: "Lucas Rodrigues da Silva",
-        seller: false
-    }
-    user = false
+    const user = mockedUser2
+    
+
     return (
         <Flex
             as="header"
@@ -58,7 +57,7 @@ const Header = () => {
                     <Box p={2} display={{ base: 'block', md: 'none' }}>
                         <a href="/">Editar Endereço</a>
                     </Box>
-                    {user.seller && <Box p={2}>
+                    {user.is_seller && <Box p={2}>
                         <a href="/">Meus anuncios</a>
                     </Box>}
                     <Box p={2}>
@@ -167,7 +166,7 @@ const Header = () => {
                 <MenuList color={'black'}>
                     <MenuItem>Editar perfil</MenuItem>
                     <MenuItem >Editar endereço</MenuItem>
-                    {user.seller && <MenuItem>Meus anúncios</MenuItem>}
+                    {user.is_seller && <MenuItem>Meus anúncios</MenuItem>}
                     <MenuItem>Sair</MenuItem>
                 </MenuList>
             </Menu>
