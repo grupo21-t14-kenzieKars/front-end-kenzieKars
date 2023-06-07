@@ -1,18 +1,40 @@
 import { extendTheme } from "@chakra-ui/react";
 import { ComponentStyleConfig } from "@chakra-ui/react";
 
-const imputTheme: ComponentStyleConfig = {
-  // style object for base or default style
-  baseStyle: {},
-  // styles for different sizes ("sm", "md", "lg")
-  sizes: {},
-  // styles for different visual variants ("outline", "solid")
-  variants: {},
-  // default values for 'size', 'variant' and 'colorScheme'
+const inputTheme: ComponentStyleConfig = {
   defaultProps: {
-    size: "",
-    variant: "",
-    colorScheme: "",
+    variant: "default",
+  },
+  baseStyle: {
+    field:{
+      width: "100%",
+      height: "48px",
+      maxWidth: "315px",
+    }
+  },
+  variants: {
+    default: {
+      field:{
+        height:"48px",
+        bg:"transparent",
+        border:"1px solid",
+        borderColor:"grey.8",
+        borderRadius:"4px",
+        fontSize:"input.md",
+        color:"grey.1",
+      },
+      _hover:{
+        bg: "grey.8",
+        borderColor:"transparent",
+      },
+      _focus: {
+        bg: "grey.9",
+        borderColor:"brand.2",
+        _placeholder:{
+          color:"transparent",
+        },
+      }
+    }
   },
 };
 
@@ -259,7 +281,7 @@ const customTheme = extendTheme({
       7: "36px",
       8: "44px",
     },
-    ipunt: {
+    input: {
       md: "16px",
       label: "14px",
     },
@@ -275,7 +297,7 @@ const customTheme = extendTheme({
     xs: "10px",
   },
   components: {
-    Inpunt: imputTheme,
+    Input: inputTheme,
     Button: customButtonTheme,
     Textarea: customTextAreaTheme,
   },
