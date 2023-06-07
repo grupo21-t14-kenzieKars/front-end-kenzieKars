@@ -38,7 +38,54 @@ const inputTheme: ComponentStyleConfig = {
   },
 };
 
-const buttonTheme: ComponentStyleConfig = {
+const customTextAreaTheme: ComponentStyleConfig = {
+  defaultProps: {
+    size: "md",
+    variant: "custom",
+  },
+  variants: {
+    custom: {
+      border: "2px solid",
+      borderColor: "grey.8",
+      rounded: "4px",
+      color: "grey.2",  
+      resize: "none",
+      maxHeight: "80px",
+      overflowY: "scroll",
+      _placeholder: {
+        color: "grey.3",
+      },
+      _hover: {
+        bg: "grey.8",
+        borderColor: "transparent",
+      },
+      _focus: {
+        bg: "grey.9",
+        border: "2px solid",
+        borderColor: "brand.2",
+        _placeholder: {
+          color: "transparent",
+        },
+      },
+      _invalid: {
+        border: "2px solid",
+        borderColor: "red",
+      },
+      "::-webkit-scrollbar": {
+        width: "6px",
+      },
+      "::-webkit-scrollbar-track": {
+        width: "2px",
+      },
+      "::-webkit-scrollbar-thumb": {
+        background: "brand.3",
+        borderRadius: "24px",
+      },
+    },
+  },
+};
+
+const customButtonTheme: ComponentStyleConfig = {
   defaultProps: {
     variant: "brand1",
     size: "md",
@@ -250,8 +297,14 @@ const customTheme = extendTheme({
     xs: "10px",
   },
   components: {
+<<<<<<< HEAD
     Input: inputTheme,
     Button: buttonTheme,
+=======
+    Inpunt: imputTheme,
+    Button: customButtonTheme,
+    Textarea: customTextAreaTheme,
+>>>>>>> ef6ad0a90d27519b29646b9ea4460142285df2f4
   },
 });
 
