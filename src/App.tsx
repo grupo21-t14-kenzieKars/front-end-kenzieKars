@@ -1,10 +1,7 @@
-import { CardPoster } from "./components/cardPoster"
-
 function App() {
 
   return (
     <main>
-      <CardPoster />
     </main>
   )
 }
