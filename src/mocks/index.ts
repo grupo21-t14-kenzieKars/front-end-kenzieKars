@@ -36,13 +36,13 @@ export const mockedCarPost: IMockedCar = {
   createdAt: new Date().toISOString(),
   images: [
     {
-      url: "https://example.com/car1.png",
+      url: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiWU9OU5KBtP-eM544C3QMceBUtv4fvasBzgzrCZhELB0xlg8hf5UsJiyKinxjf2weEQeHRDbHSt2nmJkdagkJGakMvVKoSpjRirK0RIKgU2jG7XmrD0udQBMam7jMX0MjIr000l820penHpgbfClRHI6m8YQKS7W9lypdojeoeRkeMQif553-spgsz/s600/pace-car-1.jpg",
     },
     {
-      url: "https://example.com/car2.png",
+      url: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiWU9OU5KBtP-eM544C3QMceBUtv4fvasBzgzrCZhELB0xlg8hf5UsJiyKinxjf2weEQeHRDbHSt2nmJkdagkJGakMvVKoSpjRirK0RIKgU2jG7XmrD0udQBMam7jMX0MjIr000l820penHpgbfClRHI6m8YQKS7W9lypdojeoeRkeMQif553-spgsz/s600/pace-car-1.jpg",
     },
     {
-      url: "https://example.com/car3.png",
+      url: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiWU9OU5KBtP-eM544C3QMceBUtv4fvasBzgzrCZhELB0xlg8hf5UsJiyKinxjf2weEQeHRDbHSt2nmJkdagkJGakMvVKoSpjRirK0RIKgU2jG7XmrD0udQBMam7jMX0MjIr000l820penHpgbfClRHI6m8YQKS7W9lypdojeoeRkeMQif553-spgsz/s600/pace-car-1.jpg",
     },
   ],
   comments: [
@@ -78,13 +78,13 @@ export const mockedCarPost2: IMockedCar = {
   createdAt: new Date().toISOString(),
   images: [
     {
-      url: "https://example.com/car4.png",
+      url: "https://revistacarro.com.br/wp-content/uploads/2022/05/Camry-hibrido_2.jpg",
     },
     {
-      url: "https://example.com/car5.png",
+      url: "https://revistacarro.com.br/wp-content/uploads/2022/05/Camry-hibrido_2.jpg",
     },
     {
-      url: "https://example.com/car6.png",
+      url: "https://revistacarro.com.br/wp-content/uploads/2022/05/Camry-hibrido_2.jpg",
     },
   ],
   comments: [
