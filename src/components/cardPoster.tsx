@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { mockedCarPost } from "../mocks";
 
-export const CardPoster = () => {
+const CardPoster = () => {
   const cardStatus = true;
 
   return (
@@ -159,3 +159,5 @@ export const CardPoster = () => {
     </Card>
   );
 };
+
+export default CardPoster

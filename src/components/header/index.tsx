@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import logo from '../../assets/Motors shop.svg'
-import { mockedUser,mockedUser2 } from './../../mocks/index';
+import { mockedUser2 } from './../../mocks/index';
 
 const Header = () => {
     const { isOpen, onToggle } = useDisclosure();
