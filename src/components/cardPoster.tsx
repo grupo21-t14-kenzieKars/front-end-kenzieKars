@@ -10,16 +10,14 @@ import {
   Tag,
   Text,
 } from "@chakra-ui/react";
-import { mockedCarPost } from "../mocks";
 
-const CardPoster = () => {
+const CardPoster = ({carPost}) => {
   const cardStatus = true;
 
   return (
     <Card
       w={"100%"}
       maxWidth={"312px"}
-      h={"152px"}
       bgColor={"transparent"}
       boxShadow={"none"}
       gap={"18px"}
@@ -28,8 +26,8 @@ const CardPoster = () => {
       data-group
     >
       <CardHeader p={0}>
-              <Flex
-        overflow={"hidden"}
+        <Flex
+          overflow={"hidden"}
           position={"relative"}
           justifyContent={"center"}
           border={"2px solid transparent"}
@@ -42,7 +40,7 @@ const CardPoster = () => {
           }}
         >
             <Image
-              src={mockedCarPost.images[0].url}
+              src={carPost.images[0].url}
               w="100%"
               maxW="100%"
               h="100%"
@@ -54,8 +52,8 @@ const CardPoster = () => {
               transition="0.3s"
             />
 
-          {mockedCarPost.price <=
-            mockedCarPost.fipePrice - mockedCarPost.fipePrice * 0.05 &&
+          {carPost.price <=
+            carPost.fipePrice - carPost.fipePrice * 0.05 &&
             cardStatus && (
               <Flex
                 w={"15px"}
@@ -79,13 +77,13 @@ const CardPoster = () => {
               h={"24px"}
               w={"51px"}
               color={"white"}
-              bg={mockedCarPost.isPublished ? "brand.1" : "grey.4"}
+              bg={carPost.isPublished ? "brand.1" : "grey.4"}
               fontSize={"heading.1"}
               position={"absolute"}
               top={"10px"}
               left={"15px"}
             >
-              {mockedCarPost.isPublished ? (
+              {carPost.isPublished ? (
                 <Text px="8px">Ativo</Text>
               ) : (
                 <Text px={"5px"}>Inativo</Text>
@@ -104,7 +102,7 @@ const CardPoster = () => {
             fontWeight={"semibold"}
             noOfLines={1}
           >
-            {mockedCarPost.model}
+            {carPost.model}
           </Heading>
           <Text
             color={"grey.2"}
@@ -112,20 +110,20 @@ const CardPoster = () => {
             textAlign={"left"}
             noOfLines={2}
           >
-            {mockedCarPost.description}
+            {carPost.description}
           </Text>
         </Flex>
 
         <Flex alignItems={"center"}>
           <Avatar
-            name={mockedCarPost.user.name}
+            name={carPost.user.name}
             w={"32px"}
             h={"32px"}
             size={"sm"}
             margin={"10px 10px 10px 0px"}
           />
           <Text color={"grey.2"} fontSize={"heading.1"} fontWeight={"medium"}>
-            {mockedCarPost.user.name}
+            {carPost.user.name}
           </Text>
         </Flex>
       </CardBody>
@@ -140,7 +138,7 @@ const CardPoster = () => {
               fontWeight={"medium"}
               p={"8px 5px"}
             >
-              {mockedCarPost.kilometers}km
+              {carPost.kilometers}km
             </Tag>
             <Tag
               color={"brand.1"}
@@ -148,11 +146,11 @@ const CardPoster = () => {
               fontSize={"heading.1"}
               fontWeight={"medium"}
             >
-              {mockedCarPost.year}
+              {carPost.year}
             </Tag>
           </Flex>
           <Text fontSize={"heading.2"} fontWeight={"medium"}>
-            R${mockedCarPost.price.toFixed(2)}
+            R${carPost.price.toFixed(2)}
           </Text>
         </Flex>
       </CardFooter>
