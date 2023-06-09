@@ -1,42 +1,23 @@
 import { Button, Flex, Heading } from "@chakra-ui/react"
 import InputSide from "./inputSide"
-import { MockedCarPostList } from "../../mocks"
+import FilterCategory from "./filterCategory"
 
 const SideBar = () => {
-    MockedCarPostList
+    const filters = {
+        brands: ['Ford', 'Fiat'],
+        models: ['Ka', 'Focus', 'Uno'],
+        colors: ['Branco', 'Azul', 'Preto', 'Verde'],
+        years: ['1999', '2000'],
+        fuels: ['gasolina', 'flex']
+    }
     return (
-        <Flex direction={"column"} width={250} alignItems={"center"} gap={5} fontFamily="heading">
+        <Flex direction={"column"} width={{ base: '100%', md: '350px' }} alignItems={"center"} gap={5} fontFamily="heading">
             <Flex align={"start"} direction={"column"} width={"full"} gap={5}>
-                <Heading color="grey.0" fontSize="heading.5" fontWeight="semibold">
-                    Marca
-                </Heading>
-                <Heading color="grey.3" fontSize="heading.3" fontWeight="semibold">
-                    -
-                </Heading>
-                <Heading color="grey.0" fontSize="heading.5" fontWeight="semibold">
-                    Modelo
-                </Heading>
-                <Heading color="grey.3" fontSize="heading.3" fontWeight="semibold">
-                    -
-                </Heading>
-                <Heading color="grey.0" fontSize="heading.5" fontWeight="semibold">
-                    Cor
-                </Heading>
-                <Heading color="grey.3" fontSize="heading.3" fontWeight="semibold">
-                    -
-                </Heading>
-                <Heading color="grey.0" fontSize="heading.5" fontWeight="semibold">
-                    Ano
-                </Heading>
-                <Heading color="grey.3" fontSize="heading.3" fontWeight="semibold">
-                    -
-                </Heading>
-                <Heading color="grey.0" fontSize="heading.5" fontWeight="semibold">
-                    Combustivel
-                </Heading>
-                <Heading color="grey.3" fontSize="heading.3" fontWeight="semibold">
-                    -
-                </Heading>
+                <FilterCategory filters={filters.brands}>Marca</FilterCategory>
+                <FilterCategory filters={filters.models}>Modelo</FilterCategory>
+                <FilterCategory filters={filters.colors}>Cor</FilterCategory>
+                <FilterCategory filters={filters.years}>Ano</FilterCategory>
+                <FilterCategory filters={filters.fuels}>Combustivel</FilterCategory>
                 <Heading color="grey.0" fontSize="heading.5" fontWeight="semibold">
                     KM
                 </Heading>

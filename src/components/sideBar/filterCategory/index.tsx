@@ -1,5 +1,4 @@
 import { Box, Heading } from "@chakra-ui/layout"
-import { Button } from "@chakra-ui/button";
 
 type filterCategoryProps = {
     filters: string[]
@@ -20,6 +19,7 @@ const FilterCategory = ({ filters, children }: filterCategoryProps) => {
                             filters.map((filter, i) =>
                                 <Heading
                                     onClick={() => console.log(`${children}=${filter}`)}
+                                    cursor={"pointer"}
                                     key={i}
                                     color="grey.3"
                                     fontSize="heading.3"
