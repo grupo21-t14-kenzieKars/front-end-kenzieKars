@@ -41,10 +41,10 @@ const inputTheme: ComponentStyleConfig = {
 const customTextAreaTheme: ComponentStyleConfig = {
   defaultProps: {
     size: "md",
-    variant: "custom",
+    variant: "default",
   },
   variants: {
-    custom: {
+    default: {
       border: "2px solid",
       borderColor: "grey.8",
       rounded: "4px",
@@ -269,7 +269,10 @@ const customTheme = extendTheme({
     medium: 500,
     normal: 400,
   },
-
+  fonts:{
+    heading: "Lexend, sans-serif",
+    body: "Inter, sans-serif"
+  },
   fontSizes: {
     heading: {
       1: "14px",
@@ -286,8 +289,9 @@ const customTheme = extendTheme({
       label: "14px",
     },
     body: {
-      1: "24px",
-      2: "28px",
+      1: "12px",
+      2: "14px",
+      3:"16px"
     },
   },
   button: {
