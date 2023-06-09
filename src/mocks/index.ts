@@ -86,6 +86,15 @@ export const mockedCarPost2: IMockedCar = {
     {
       url: "https://revistacarro.com.br/wp-content/uploads/2022/05/Camry-hibrido_2.jpg",
     },
+    {
+      url: "https://revistacarro.com.br/wp-content/uploads/2022/05/Camry-hibrido_2.jpg",
+    },
+    {
+      url: "https://revistacarro.com.br/wp-content/uploads/2022/05/Camry-hibrido_2.jpg",
+    },
+    {
+      url: "https://revistacarro.com.br/wp-content/uploads/2022/05/Camry-hibrido_2.jpg",
+    },
   ],
   comments: [
     {
