@@ -8,7 +8,7 @@ const PosterList = () =>{
     return(
         <>
             {carList.length > 0 ? (
-                <Flex gap={"20px"} maxW={"100%"}>
+                <Flex gap={"48px"} maxW={"100%"}>
                     {carList.map((carPost, index) => (
                             <CardPoster key={index} carPost={carPost}/>
                     ))}

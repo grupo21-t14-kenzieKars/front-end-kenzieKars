@@ -18,6 +18,8 @@ const CardPoster = ({carPost}) => {
     <Card
       w={"100%"}
       maxWidth={"312px"}
+      h={"100%"}
+      maxH={"391px"}
       bgColor={"transparent"}
       boxShadow={"none"}
       gap={"18px"}
@@ -129,7 +131,7 @@ const CardPoster = ({carPost}) => {
       </CardBody>
 
       <CardFooter p={0}>
-        <Flex w={"100%"} justifyContent={"space-between"}>
+        <Flex w={"100%"} h={"fit-content"}justifyContent={"space-between"}>
           <Flex gap={"13px"}>
             <Tag
               color={"brand.1"}
