@@ -31,8 +31,9 @@ const PosterImageBox = () => {
                     {mockedCarPost2.images.map((img, index) =>(
                         <GridItem
                             key={index}
-                            w={"108px"}
-                            h={"108px"}
+                            w={"100%"}
+                            h={"100%"}
+                            maxH={"108px"}
                             p={"10px"}
                             bgColor={"grey.7"}
                             cursor={"pointer"}
@@ -41,8 +42,8 @@ const PosterImageBox = () => {
                                 onOpen()
                             }}>
                                 <Image 
-                                src={"img.url"} 
-                                maxW={"100%"} 
+                                src={img.url}
+                                w={"100%"} 
                                 h={"100%"} 
                                 objectFit={"fill"}/>
                         </GridItem>
