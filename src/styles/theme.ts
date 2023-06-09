@@ -269,7 +269,10 @@ const customTheme = extendTheme({
     medium: 500,
     normal: 400,
   },
-
+  fonts:{
+    heading: "Lexend, sans-serif",
+    body: "Inter, sans-serif"
+  },
   fontSizes: {
     heading: {
       1: "14px",
