@@ -79,6 +79,7 @@ function CommentForm() {
           borderRadius={"10px"}
           width={"max-content"}
           padding={"0 5px"}
+          display={{ base: "none", md: "flex" }}
         >
           Recomendarei para meus amigos!
         </Text>

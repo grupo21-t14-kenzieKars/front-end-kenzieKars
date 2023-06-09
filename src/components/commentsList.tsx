@@ -14,7 +14,7 @@ interface commentListProps {
 function CommentList({ comments }: commentListProps) {
   return (
     <Box
-      bg={"white"}
+      bg="white"
       width={"100%"}
       display={"flex"}
       gap={"30px"}
@@ -41,29 +41,29 @@ function CommentList({ comments }: commentListProps) {
                   borderRadius={"50%"}
                   alignItems={"center"}
                   justifyContent={"center"}
-                  color={"white"}
+                  color="white"
                   bg={"blue"}
                 >
                   JL
                 </Flex>
                 <Text
-                  color="black"
+                  color="grey.1"
                   fontWeight={"medium"}
                   fontSize={"heading.1"}
                 >
                   {elem.user.name}
                 </Text>
                 <Box
-                  bg={"gray.500"}
+                  bg="grey.3"
                   width={"4px"}
                   height={"4px"}
                   borderRadius={"50%"}
                 ></Box>
-                <Text color="gray.500" fontSize={"heading.1"}>
+                <Text color="grey.3" fontSize={"heading.1"}>
                   3 dias atrás
                 </Text>
               </Flex>
-              <Text color={"gray.600"} fontSize={"heading.1"}>
+              <Text color="grey.2" fontSize={"heading.1"}>
                 {elem.comment}
               </Text>
             </ListItem>
