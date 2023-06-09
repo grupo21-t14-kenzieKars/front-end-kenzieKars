@@ -9,33 +9,47 @@ const PosterImageBox = () => {
 
     return(
         <>
-        <Flex w={"100%"} bgColor={"grey.10"} gap={"25px"} p={"30px"}>
-            <Heading fontSize={"heading.3"}>
-                Fotos
-            </Heading>
-            <Grid
-                templateColumns={"repeat(3, 1fr)"}
-                templateRows={"repeat(2, 1fr)"}
-            >
-                {mockedCarPost2.images.map((img, index) =>(
-                    <GridItem
-                        key={index}
-                        w={"108px"}
-                        h={"108px"}
-                        p={1}
-                        cursor={"pointer"}
-                        onClick={() => {
-                            setPosterImg(img.url)
-                            onOpen()
-                        }}>
-                            <Image src={"img.url"} maxW={"100%"} objectFit={"fill"}/>
-                        </GridItem>
-                ))
-                }
-            </Grid>
+            <Flex w={"100%"} 
+            maxW={"440px"} 
+            direction={"column"} 
+            bgColor={"grey.10"} 
+            gap={"25px"} 
+            p={"30px"} 
+            borderRadius={"6px"}>
 
-        </Flex>
-        <PosterImageModal isOpen={isOpen} onClose={onClose} posterImg={posterImg}/>
+                <Heading fontSize={"heading.3"}>
+                    Fotos
+                </Heading>
+
+                <Grid
+                    templateColumns={"repeat(3, 1fr)"}
+                    templateRows={"repeat(2, 1fr)"}
+                    display={"flex"}
+                    justifyContent={"center"}
+                    gap={"14px"}
+                >
+                    {mockedCarPost2.images.map((img, index) =>(
+                        <GridItem
+                            key={index}
+                            w={"108px"}
+                            h={"108px"}
+                            p={"10px"}
+                            bgColor={"grey.7"}
+                            cursor={"pointer"}
+                            onClick={() => {
+                                setPosterImg(img.url)
+                                onOpen()
+                            }}>
+                                <Image 
+                                src={"img.url"} 
+                                maxW={"100%"} 
+                                h={"100%"} 
+                                objectFit={"fill"}/>
+                        </GridItem>
+                    ))}
+                </Grid>
+            </Flex>
+            <PosterImageModal isOpen={isOpen} onClose={onClose} posterImg={posterImg}/>
         </>
     )
 }
