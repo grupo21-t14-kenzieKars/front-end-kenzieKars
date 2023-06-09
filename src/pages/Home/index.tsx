@@ -18,7 +18,7 @@ const Home = () => {
         <Container as={"section"} p={0} maxWidth={"1600px"}>
             <Flex gap={"25px"} p={"40px 10px"} flexWrap={"wrap"} justifyContent={"space-evenly"} >
              <Box as="aside" w={"400px"}>
-                <Flex flexDirection={"column"}>
+                <Flex flexDirection={"column"} fontFamily={"heading"}>
                     <Heading fontSize={"heading.3"} p={"15px"}>Marca</Heading>
                     <List color={"grey.3"} fontSize={"heading.1"} paddingLeft={"25px"}>
                         <ListItem>General Motors</ListItem>
