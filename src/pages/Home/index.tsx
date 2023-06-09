@@ -21,46 +21,22 @@ const Home = () => {
                 <Flex flexDirection={"column"}>
                     <Heading fontSize={"heading.3"} p={"15px"}>Marca</Heading>
                     <List color={"grey.3"} fontSize={"heading.1"} paddingLeft={"25px"}>
-                        <ListItem>
-                            General Motors
-                        </ListItem>
-                        <ListItem>
-                            Fiat
-                        </ListItem>
-                        <ListItem>
-                            Ford
-                        </ListItem>
-                        <ListItem>
-                            Honda
-                        </ListItem>
-                        <ListItem>
-                            Porsche
-                        </ListItem>
-                        <ListItem>
-                            Volkswagen
-                        </ListItem>
+                        <ListItem>General Motors</ListItem>
+                        <ListItem>Fiat</ListItem>
+                        <ListItem>Ford</ListItem>
+                        <ListItem>Honda</ListItem>
+                        <ListItem>Porsche</ListItem>
+                        <ListItem>Volkswagen</ListItem>
                     </List>                    
                 
                 <Heading fontSize={"heading.3"} p={"15px"}>Modelo</Heading>
                     <List color={"grey.3"} fontSize={"heading.1"} paddingLeft={"25px"}>
-                        <ListItem>
-                            Civic
-                        </ListItem>
-                        <ListItem>
-                            Corolla
-                        </ListItem>
-                        <ListItem>
-                            Cruze
-                        </ListItem>
-                        <ListItem>
-                            Fit
-                        </ListItem>
-                        <ListItem>
-                            Gol
-                        </ListItem>
-                        <ListItem>
-                            Ka
-                        </ListItem>
+                        <ListItem>Civic</ListItem>
+                        <ListItem>Corolla</ListItem>
+                        <ListItem>Cruze</ListItem>
+                        <ListItem>Fit</ListItem>
+                        <ListItem>Gol</ListItem>
+                        <ListItem>Ka</ListItem>
                     </List>                    
                 </Flex>
                 <Heading fontSize={"heading.3"} p={"15px"}>Cor</Heading>
@@ -81,34 +57,34 @@ const Home = () => {
                     <Button w={"279px"} h={"45px"} variant={"brand1"} fontWeight={"normal"}>Limpar filtros</Button>
                 </Box>
              </Box>
+             <Box display={"flex"} flexDirection={"column"} 
+             justifyContent={"space-between"} alignItems={"center"}
+             >
              <PosterList />
-
+             <Flex 
+                gap={"30px"}
+                fontSize={"heading.3"}
+                fontFamily={"heading"}
+                alignContent={"center"}
+                p={"70px"}
+                >
+                    <Text 
+                    bgGradient="linear(to-l, gray.400, gray.800)" 
+                    backgroundClip={"text"} 
+                    fontWeight={"medium"}>
+                        1 de 2
+                    </Text>
+                    <Text 
+                    as={"a"} 
+                    href="" 
+                    color={"brand.2"} 
+                    fontWeight={"medium"}>
+                        Seguinte {">"} 
+                    </Text>
+                </Flex>
+             </Box>
             </Flex>
-            <Flex 
-            gap={"30px"}
-            justifyContent={"center"}
-            fontSize={"heading.3"} 
-            fontFamily={"heading"}
-            p={"70px"}
-            >
-                <Text 
-                bgGradient="linear(to-l, gray.300, gray.800)" 
-                backgroundClip={"text"} 
-                fontWeight={"medium"}>
-                    1 de 2
-                </Text>
-                <Text 
-                as={"a"} 
-                href="" 
-                color={"brand.2"} 
-                fontWeight={"medium"}>
-                    Seguinte {">"} 
-                </Text>
-            </Flex>
-           
         </Container>
-       
-      
         <Footer />
         </>
     )
