@@ -6,8 +6,6 @@ const RoutesMain = () =>{
     return(
         <Routes>
             <Route path='/' element={<Home />}/>
-            <Route path='/teste' element={<PosterImageBox />}/>
-
         </Routes>
     )
 }
