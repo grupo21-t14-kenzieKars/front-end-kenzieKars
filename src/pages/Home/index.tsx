@@ -16,8 +16,15 @@ const Home = () => {
         objectFit={"cover"}
         />
         <Container as={"section"} p={0} maxWidth={"1600px"}>
-            <Flex gap={"25px"} p={"40px 10px"} flexWrap={"wrap"} justifyContent={"space-evenly"} >
-             <Box as="aside" w={"400px"}>
+            <Flex 
+                gap={"25px"} 
+                p={"40px 10px"} 
+                justifyContent={"space-between"}
+                flexDirection={{base: "column", md: "row"}}
+            >
+
+            {/* Filtro */}
+             <Box as="aside" w={"400px"} maxW={"100%"}>
                 <Flex flexDirection={"column"}>
                     <Heading fontSize={"heading.3"} p={"15px"}>Marca</Heading>
                     <List color={"grey.3"} fontSize={"heading.1"} paddingLeft={"25px"}>
@@ -28,7 +35,7 @@ const Home = () => {
                         <ListItem>Porsche</ListItem>
                         <ListItem>Volkswagen</ListItem>
                     </List>                    
-                
+              
                 <Heading fontSize={"heading.3"} p={"15px"}>Modelo</Heading>
                     <List color={"grey.3"} fontSize={"heading.1"} paddingLeft={"25px"}>
                         <ListItem>Civic</ListItem>
@@ -57,32 +64,33 @@ const Home = () => {
                     <Button w={"279px"} h={"45px"} variant={"brand1"} fontWeight={"normal"}>Limpar filtros</Button>
                 </Box>
              </Box>
-             <Box display={"flex"} flexDirection={"column"} 
-             justifyContent={"space-between"} alignItems={"center"}
-             >
-             <PosterList />
-             <Flex 
-                gap={"30px"}
-                fontSize={"heading.3"}
-                fontFamily={"heading"}
-                alignContent={"center"}
-                p={"70px"}
-                >
-                    <Text 
-                    bgGradient="linear(to-l, gray.400, gray.800)" 
-                    backgroundClip={"text"} 
-                    fontWeight={"medium"}>
-                        1 de 2
-                    </Text>
-                    <Text 
-                    as={"a"} 
-                    href="" 
-                    color={"brand.2"} 
-                    fontWeight={"medium"}>
-                        Seguinte {">"} 
-                    </Text>
+
+             {/* Seção de Posters e paginação */}
+            <Flex direction={"column"} justifyContent={"space-between"}>
+                <PosterList />
+
+                <Flex 
+                    gap={{base:"50px", lg:"30px"}}
+                    fontSize={"heading.3"}
+                    fontFamily={"heading"}
+                    alignSelf={"center"}
+                    p={"80px"}
+                    >
+                        <Text 
+                        bgGradient="linear(to-l, gray.400, gray.800)" 
+                        backgroundClip={"text"} 
+                        fontWeight={"medium"}>
+                            1 de 2
+                        </Text>
+                        <Text 
+                        as={"a"} 
+                        href="" 
+                        color={"brand.2"} 
+                        fontWeight={"medium"}>
+                            Seguinte {">"} 
+                        </Text>
+                    </Flex>
                 </Flex>
-             </Box>
             </Flex>
         </Container>
         <Footer />
