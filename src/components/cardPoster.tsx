@@ -11,6 +11,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 
+
 const CardPoster = ({carPost}) => {
   const cardStatus = true;
 
