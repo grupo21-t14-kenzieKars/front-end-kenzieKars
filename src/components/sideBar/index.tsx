@@ -1,23 +1,28 @@
 import { Button, Flex, Heading } from "@chakra-ui/react"
 import InputSide from "./inputSide"
 import FilterCategory from "./filterCategory"
+import { useContext } from "react"
+import { CarContext } from "../../contexts/CarsContext"
 
 const SideBar = () => {
+    const { carList } = useContext(CarContext)
+
     const filters = {
-        brands: ['Ford', 'Fiat'],
-        models: ['Ka', 'Focus', 'Uno'],
-        colors: ['Branco', 'Azul', 'Preto', 'Verde'],
-        years: ['1999', '2000'],
-        fuels: ['gasolina', 'flex']
+        brands: [...new Set(carList.map(ele => ele.brand))],
+        models: [...new Set(carList.map(ele => ele.model))],
+        colors: [...new Set(carList.map(ele => ele.color))],
+        years: [...new Set(carList.map(ele => ele.year))],
+        fuels: [...new Set(carList.map(ele => ele.fuelType))]
     }
+
     return (
         <Flex direction={"column"} width={{ base: '100%', md: '350px' }} alignItems={"center"} gap={5} fontFamily="heading">
             <Flex align={"start"} direction={"column"} width={"full"} gap={5}>
-                <FilterCategory filters={filters.brands}>Marca</FilterCategory>
-                <FilterCategory filters={filters.models}>Modelo</FilterCategory>
-                <FilterCategory filters={filters.colors}>Cor</FilterCategory>
-                <FilterCategory filters={filters.years}>Ano</FilterCategory>
-                <FilterCategory filters={filters.fuels}>Combustivel</FilterCategory>
+                <FilterCategory filters={filters.brands} category={'brand'}>Marca</FilterCategory>
+                <FilterCategory filters={filters.models} category={'model'}>Modelo</FilterCategory>
+                <FilterCategory filters={filters.colors} category={'color'}>Cor</FilterCategory>
+                <FilterCategory filters={filters.years} category={'year'}>Ano</FilterCategory>
+                <FilterCategory filters={filters.fuels} category={'fuelType'}>Combustivel</FilterCategory>
                 <Heading color="grey.0" fontSize="heading.5" fontWeight="semibold">
                     KM
                 </Heading>
