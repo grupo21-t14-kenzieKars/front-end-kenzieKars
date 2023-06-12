@@ -5,13 +5,16 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { ChakraProvider } from '@chakra-ui/react'
 import customTheme from './styles/theme';
+import CarProvider from './contexts/CarsContext';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <BrowserRouter>
-    <ChakraProvider theme={customTheme}>
-      <App />
-    </ChakraProvider>
+      <ChakraProvider theme={customTheme}>
+        <CarProvider>
+          <App />
+        </CarProvider>
+      </ChakraProvider>
     </BrowserRouter>
   </React.StrictMode>,
 )

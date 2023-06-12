@@ -113,9 +113,59 @@ export const mockedCarPost2: IMockedCar = {
     },
   ],
 };
+export const mockedCarPost3: IMockedCar = {
+  user: mockedUser2,
+  brand: "Toyota",
+  model: "Corola",
+  year: "2021",
+  fuelType: "Hybrid",
+  kilometers: 5000,
+  color: "silver",
+  fipePrice: 80000.0,
+  price: 75000.0,
+  description: `Sleek and reliable sedan with excellent fuel efficiency. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam non tortor maximus, accumsan lectus at, tincidunt elit.`,
+  isPublished: true,
+  createdAt: new Date().toISOString(),
+  images: [
+    {
+      url: "https://revistacarro.com.br/wp-content/uploads/2022/05/Camry-hibrido_2.jpg",
+    },
+    {
+      url: "https://revistacarro.com.br/wp-content/uploads/2022/05/Camry-hibrido_2.jpg",
+    },
+    {
+      url: "https://revistacarro.com.br/wp-content/uploads/2022/05/Camry-hibrido_2.jpg",
+    },
+    {
+      url: "https://revistacarro.com.br/wp-content/uploads/2022/05/Camry-hibrido_2.jpg",
+    },
+    {
+      url: "https://revistacarro.com.br/wp-content/uploads/2022/05/Camry-hibrido_2.jpg",
+    },
+    {
+      url: "https://revistacarro.com.br/wp-content/uploads/2022/05/Camry-hibrido_2.jpg",
+    },
+  ],
+  comments: [
+    {
+      content: "Great car for daily commuting!",
+      createdAt: new Date().toISOString().split("T")[0],
+      user: {
+        name: "Sarah Thompson",
+      },
+    },
+    {
+      content: "I highly recommend this car!",
+      createdAt: new Date().toISOString().split("T")[0],
+      user: {
+        name: "Michael Davis",
+      },
+    },
+  ],
+};
 export const MockedCarPostList = [
   mockedCarPost,
   mockedCarPost2,
   mockedCarPost,
-  mockedCarPost2,
+  mockedCarPost3,
 ];

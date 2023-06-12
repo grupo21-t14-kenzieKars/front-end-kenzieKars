@@ -1,10 +1,13 @@
 import { Input } from "@chakra-ui/react"
+import { FieldValues, UseFormRegister } from "react-hook-form"
 
 type InputSideProps = {
     placetext: string
+    id: string
+    register: any
 }
 
-const InputSide = ({ placetext }: InputSideProps) => {
+const InputSide = ({ placetext, id, register }: InputSideProps) => {
     return (
         <Input
             type="number"
@@ -13,6 +16,8 @@ const InputSide = ({ placetext }: InputSideProps) => {
             backgroundColor='grey.5'
             _placeholder={{ color: 'grey.3', fontWeight: "semibold", fontSize: "heading.2", textAlign: "center" }}
             placeholder={placetext}
+            id={id}
+            {...register}
         >
         </Input>
     )
