@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { ChakraProvider } from '@chakra-ui/react'
 import customTheme from './styles/theme';
-import CarProvider from './contexts/CarsContext';
+import CarProvider from './contexts/carsContext';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

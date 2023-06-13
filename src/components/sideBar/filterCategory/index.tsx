@@ -1,6 +1,6 @@
 import { Box, Heading } from "@chakra-ui/layout"
 import { useContext } from "react"
-import { CarContext } from "../../../contexts/CarsContext"
+import { CarContext } from "../../../contexts/carsContext"
 
 
 type filterCategoryProps = {

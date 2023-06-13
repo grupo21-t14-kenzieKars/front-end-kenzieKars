@@ -1,4 +1,4 @@
-import { IMockedCar, IMockedUser } from "../interfaces/moks.interfaces";
+import { IMockedCar, IMockedUser } from "../interfaces/mocksInterfaces";
 
 export const mockedUser: IMockedUser = {
   name: "Maria Souza",
