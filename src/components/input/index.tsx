@@ -1,4 +1,5 @@
 import { Flex, FormLabel, Input } from "@chakra-ui/react"
+import { UseFormRegisterReturn } from "react-hook-form"
 
 interface InputWithLabelProps {
     placeHolder: string
@@ -6,9 +7,10 @@ interface InputWithLabelProps {
     label: string
     value?: string
     type: string
+    register?: UseFormRegisterReturn
 }
 
-const InputWithLabel = ({ placeHolder, id, label, value, type }: InputWithLabelProps) => {
+const InputWithLabel = ({ placeHolder, id, label, value, type, register }: InputWithLabelProps) => {
     return (
         <Flex
             direction={"column"}
@@ -32,7 +34,8 @@ const InputWithLabel = ({ placeHolder, id, label, value, type }: InputWithLabelP
                 w={"full"}
                 value={value}
                 _placeholder={{ color: 'grey.3', fontWeight: 'normal' }}
-                _focus={{ borderColor: 'brand.2' }}>
+                _focus={{ borderColor: 'brand.2' }}
+                {...register}>
             </Input>
         </Flex>
     )

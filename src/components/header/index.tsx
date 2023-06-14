@@ -17,7 +17,7 @@ import { mockedUser2 } from './../../mocks/index';
 
 const Header = () => {
     const { isOpen, onToggle } = useDisclosure();
-    const user = mockedUser2
+    const user = false
 
 
     return (
