@@ -6,35 +6,35 @@ const inputTheme: ComponentStyleConfig = {
     variant: "default",
   },
   baseStyle: {
-    field:{
+    field: {
       width: "100%",
       height: "48px",
       maxWidth: "315px",
-    }
+    },
   },
   variants: {
     default: {
-      field:{
-        height:"48px",
-        bg:"transparent",
-        border:"1px solid",
-        borderColor:"grey.8",
-        borderRadius:"4px",
-        fontSize:"input.md",
-        color:"grey.1",
+      field: {
+        height: "48px",
+        bg: "transparent",
+        border: "1px solid",
+        borderColor: "grey.8",
+        borderRadius: "4px",
+        fontSize: "input.md",
+        color: "grey.1",
       },
-      _hover:{
+      _hover: {
         bg: "grey.8",
-        borderColor:"transparent",
+        borderColor: "transparent",
       },
       _focus: {
         bg: "grey.9",
-        borderColor:"brand.2",
-        _placeholder:{
-          color:"transparent",
+        borderColor: "brand.2",
+        _placeholder: {
+          color: "transparent",
         },
-      }
-    }
+      },
+    },
   },
 };
 
@@ -48,7 +48,7 @@ const customTextAreaTheme: ComponentStyleConfig = {
       border: "2px solid",
       borderColor: "grey.8",
       rounded: "4px",
-      color: "grey.2",  
+      color: "grey.2",
       resize: "none",
       maxHeight: "80px",
       overflowY: "scroll",
@@ -269,9 +269,9 @@ const customTheme = extendTheme({
     medium: 500,
     normal: 400,
   },
-  fonts:{
+  fonts: {
     heading: "Lexend, sans-serif",
-    body: "Inter, sans-serif"
+    body: "Inter, sans-serif",
   },
   fontSizes: {
     heading: {
@@ -291,7 +291,7 @@ const customTheme = extendTheme({
     body: {
       1: "12px",
       2: "14px",
-      3:"16px"
+      3: "16px",
     },
   },
   button: {
