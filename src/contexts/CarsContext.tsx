@@ -13,6 +13,9 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   const [fipeCars, setFipeCars] = useState([] as Array<object>)
   const [fipeCarsByBrand, setFipeCarsByBrand] = useState([] as Array<object>)
 
+
+  // Request's da API KenzieKars
+
   useEffect(() => {
     const getFipeCars = async () => {
       try {
@@ -37,6 +40,8 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
       console.error(error)
     }
   }
+
+  //Request's da API do nosso back
 
   useEffect(() => {
     setCarList(MockedCarPostList)

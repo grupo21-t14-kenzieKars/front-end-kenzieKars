@@ -1,4 +1,4 @@
-import { Button, Flex, FormControl, FormErrorMessage, Link, Text } from "@chakra-ui/react"
+import { Button, FormControl, FormErrorMessage, Link, Text } from "@chakra-ui/react"
 import { useForm } from "react-hook-form";
 import InputWithLabel from "../../input";
 import loginSchema, { LoginData } from "./loginSchema";

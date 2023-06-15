@@ -5,6 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import InputWithLabel from '../../input'
 import { useContext, useState } from 'react'
 import { UserContext } from '../../../contexts/userContext'
+import StateSelect from '../../input/stateSelect'
 
 const RegisterForm = () => {
     const [seller, setSeller] = useState(false)
@@ -17,6 +18,8 @@ const RegisterForm = () => {
 
     const onSubmit = (data: RegisterData) => {
         data.is_seller = seller
+        console.log(data);
+
         createUser(data)
     }
     return (
@@ -71,6 +74,16 @@ const RegisterForm = () => {
                 type="text"
                 label={"CPF"}
                 error={errors.cpf}
+                onKeyUp={(event: any) => {
+                    const value = event.target.value.replace(/\D/g, '');
+                    const match = value.match(/^(\d{3})(\d{3})(\d{3})(\d{2})$/);
+
+                    if (match) {
+                        event.target.value = `${match[1]}.${match[2]}.${match[3]}-${match[4]}`;
+                    } else {
+                        event.target.value = value;
+                    }
+                }}
                 register={register('cpf')} />
             <InputWithLabel
                 placeHolder={"Digitar numero"}
@@ -78,6 +91,16 @@ const RegisterForm = () => {
                 type="text"
                 label={"Celular"}
                 error={errors.phone}
+                onKeyUp={(event: any) => {
+                    const value = event.target.value.replace(/\D/g, '');
+                    const match = value.match(/^(\d{2})(\d{5})(\d{4})$/);
+
+                    if (match) {
+                        event.target.value = `(${match[1]}) ${match[2]}-${match[3]}`;
+                    } else {
+                        event.target.value = value;
+                    }
+                }}
                 register={register('phone')} />
             <InputWithLabel
                 placeHolder={"Digitar data de nascimento"}
@@ -118,14 +141,21 @@ const RegisterForm = () => {
                 type="text"
                 label={"CEP"}
                 error={errors.zip_code}
+                onKeyUp={(event: any) => {
+                    const value = event.target.value.replace(/\D/g, '');
+                    const match = value.match(/^(\d{5})(\d{3})$/);
+
+                    if (match) {
+                        event.target.value = `${match[1]}-${match[2]}`;
+                    } else {
+                        event.target.value = value;
+                    }
+                }}
                 register={register('zip_code')} />
-            <Flex>
-                <InputWithLabel
-                    placeHolder={"Digitar Estado"}
-                    id={"state"}
-                    type="text"
-                    label={"Estado"}
-                    error={errors.state}
+            <Flex gap={5}>
+                <StateSelect
+                    id={'state'}
+                    label={'Estado'}
                     register={register('state')} />
                 <InputWithLabel
                     placeHolder={"Digitar cidade"}
