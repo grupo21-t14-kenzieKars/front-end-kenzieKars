@@ -1,8 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-import Home from "../pages/home";
-import CarDetailPage from "../pages/carDetailPage";
 import Login from "../pages/loginPage";
 import Register from "../pages/registerPage";
+import PosterCreateModal from "../components/posterCreateModal";
+import Home from "../pages/Home";
+import CarDetailPage from "../pages/CarDetailPage";
 
 const RoutesMain = () => {
   return (
@@ -11,6 +12,7 @@ const RoutesMain = () => {
       <Route path="/car" element={<CarDetailPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/teste" element={<PosterCreateModal />} />
     </Routes>
   );
 };
