@@ -9,8 +9,7 @@ const inputTheme: ComponentStyleConfig = {
     field: {
       width: "100%",
       height: "48px",
-      maxWidth: "315px",
-    },
+    }
   },
   variants: {
     default: {

@@ -2,9 +2,9 @@ import { Button, Flex, Heading } from "@chakra-ui/react"
 import InputSide from "./inputSide"
 import FilterCategory from "./filterCategory"
 import { useContext } from "react"
-import { CarContext } from "../../contexts/CarsContext"
+import { CarContext } from "../../contexts/carsContext"
 import { useForm } from "react-hook-form"
-import { IMockedCar } from "../../interfaces/moks.interfaces"
+import { IMockedCar } from "../../interfaces/mocksInterfaces"
 
 const SideBar = () => {
     const { carList, filteredCarList, setFilteredCarList } = useContext(CarContext)

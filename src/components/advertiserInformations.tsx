@@ -1,5 +1,5 @@
 import { Flex, Text, Button } from "@chakra-ui/react";
-import { IMockedUser } from "../interfaces/moks.interfaces";
+import { IMockedUser } from "../interfaces/mocksInterfaces";
 
 interface IAdvertiserInformationsProps {
   user: IMockedUser;
