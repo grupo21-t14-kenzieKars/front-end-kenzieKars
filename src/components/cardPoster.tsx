@@ -11,7 +11,7 @@ import {
   Tag,
   Text,
 } from "@chakra-ui/react";
-import { IMockedCar } from "../interfaces/moks.interfaces";
+import { IMockedCar } from "../interfaces/mocksInterfaces";
 
 interface ICardPosterProps {
   carPost: IMockedCar;
@@ -33,6 +33,7 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
       as={"a"}
       href={""}
       data-group
+      minW={{ base: "85%", md:"312px" }}
     >
       <CardHeader p={0}>
         <Flex

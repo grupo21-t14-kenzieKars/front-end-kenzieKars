@@ -13,11 +13,11 @@ import {
 } from '@chakra-ui/react'
 import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
 import logo from '../../assets/Motors shop.svg'
-import { mockedUser2 } from './../../mocks/index';
+import { mockedUser } from './../../mocks/index';
 
 const Header = () => {
     const { isOpen, onToggle } = useDisclosure();
-    const user = false
+    const user  = mockedUser
 
 
     return (
@@ -128,7 +128,7 @@ const Header = () => {
                             rounded={'full'}
                             backgroundColor='brand.2'
                             minW={0}>
-                            {user.name.split(" ").filter((palavra, indice) => indice < 2).map(palavra => palavra.charAt(0)).join("")}
+                            {user.name.split(" ").filter((_palavra, indice) => indice < 2).map(palavra => palavra.charAt(0)).join("")}
                         </Box>
                         <Box color='grey.2'>{user.name}</Box>
                     </Flex>

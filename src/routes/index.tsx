@@ -1,11 +1,9 @@
 import { Routes, Route } from "react-router-dom";
-
 import Home from "../pages/Home";
 import CarDetailPage from "../pages/CarDetailPage";
 import AdvertiserPage from "../pages/AdvertiserPage";
 import Login from "../pages/loginPage";
 import Register from "../pages/registerPage";
-
 
 const RoutesMain = () => {
   return (
