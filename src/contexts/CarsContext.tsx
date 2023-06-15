@@ -1,8 +1,8 @@
 import { createContext, useEffect, useState } from "react"
 import { MockedCarPostList } from "../mocks"
-import ICarProviderData from "./Interfaces"
 import { IMockedCar } from "../interfaces/mocksInterfaces"
 import { apiKenzieKars } from '../services/api'
+import { ICarProviderData } from "./Interfaces"
 
 export const CarContext = createContext<ICarProviderData>({} as ICarProviderData)
 

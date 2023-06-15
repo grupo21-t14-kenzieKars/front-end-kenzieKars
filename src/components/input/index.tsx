@@ -1,4 +1,4 @@
-import { Flex, FormLabel, Input } from "@chakra-ui/react"
+import { Flex, FormErrorMessage, FormLabel, Input } from "@chakra-ui/react"
 import { UseFormRegisterReturn } from "react-hook-form"
 
 interface InputWithLabelProps {
@@ -8,9 +8,11 @@ interface InputWithLabelProps {
     value?: string
     type: string
     register?: UseFormRegisterReturn
+    error?: any
+    onKeyUp?: any
 }
 
-const InputWithLabel = ({ placeHolder, id, label, value, type, register }: InputWithLabelProps) => {
+const InputWithLabel = ({ placeHolder, id, label, value, type, register, error, onKeyUp }: InputWithLabelProps) => {
     return (
         <Flex
             direction={"column"}
@@ -35,8 +37,12 @@ const InputWithLabel = ({ placeHolder, id, label, value, type, register }: Input
                 value={value}
                 _placeholder={{ color: 'grey.3', fontWeight: 'normal' }}
                 _focus={{ borderColor: 'brand.2' }}
+                onKeyUp={onKeyUp}
                 {...register}>
             </Input>
+            <FormErrorMessage>
+                {error && error.message}
+            </FormErrorMessage>
         </Flex>
     )
 }

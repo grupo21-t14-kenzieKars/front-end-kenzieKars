@@ -1,6 +1,8 @@
+import { LoginData } from "../components/forms/loginForm/loginSchema"
+import { RegisterData } from "../components/forms/registerForm/registerSchema"
 import { IMockedCar } from "../interfaces/mocksInterfaces"
 
-interface ICarProviderData {
+export interface ICarProviderData {
     carList: Array<IMockedCar>
     filteredCarList: Array<IMockedCar>
     setFilteredCarList: React.Dispatch<React.SetStateAction<IMockedCar[]>>
@@ -9,5 +11,7 @@ interface ICarProviderData {
     getFipeCarsByBrand: (brand: string) => void
 }
 
-export default
-    ICarProviderData
+export interface IUserProviderData {
+    loginUser: (data: LoginData) => Promise<void>
+    createUser: (data: RegisterData) => Promise<void>
+}
