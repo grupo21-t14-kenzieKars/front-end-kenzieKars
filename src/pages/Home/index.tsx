@@ -16,8 +16,9 @@ import {
 import Footer from "../../components/footer";
 import Header from "../../components/header";
 import HomeBg from "../../assets/HomeBg.png";
-import PosterList from "../../components/posterList";
 import SideBar from "../../components/sideBar";
+import CarPostList from "./../../components/carPosterListComponet";
+import { MockedCarPostList } from "../../mocks";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -46,20 +47,19 @@ const Home = () => {
         <Flex
           gap={"25px"}
           p={"40px 10px"}
-          flexWrap={"wrap"}
+          flexWrap={{ base: "wrap", md: "nowrap" }}
           justifyContent={"space-evenly"}
         >
-          <Flex display={{ base: "none", md: "flex" }}>
+          <Box display={{ base: "none", md: "flex" }} flex={{ md: 1 }}>
             <SideBar />
-          </Flex>
+          </Box>
           <Box
             display={"flex"}
-            flexDirection="column"
-            justifyContent={"space-between"}
+            flexDirection={"column"}
             alignItems={"center"}
-            // overflowX="scroll"
+            width={{ base: "100%", md: "auto" }}
           >
-            <PosterList />
+            <CarPostList carsList={MockedCarPostList} isOwner={false} />
             <Button
               marginTop={5}
               display={{ base: "block", md: "none" }}
@@ -73,7 +73,7 @@ const Home = () => {
               fontSize={"heading.3"}
               fontFamily={"heading"}
               alignContent={"center"}
-              p={"70px"}
+              p={{ base: "10px", md: "70px" }}
             >
               <Text
                 bgGradient="linear(to-l, gray.400, gray.800)"

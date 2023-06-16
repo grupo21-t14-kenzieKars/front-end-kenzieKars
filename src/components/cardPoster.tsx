@@ -24,7 +24,7 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
   return (
     <Card
       w={"100%"}
-      maxWidth={"312px"}
+      maxWidth={"300px"}
       h={"100%"}
       maxH={"391px"}
       bgColor={"transparent"}
@@ -33,7 +33,6 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
       as={"a"}
       href={""}
       data-group
-      minW={{ base: "85%", md:"312px" }}
     >
       <CardHeader p={0}>
         <Flex
