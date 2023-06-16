@@ -9,15 +9,17 @@ export const CarContext = createContext<ICarProviderData>({} as ICarProviderData
 
 const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
+  //Lista de todos os carros da API Kenzie
   const [carList, setCarList] = useState([] as Array<IMockedCar>)
 
+  //Lista com as marcas dos carros da API Kenzie
+  const [carsByBrand, setCarsByBrand] = useState([] as Array<object>)
+  //Lista de todos os modelos dos carros da API Kenzie
   const [carModels, setCarModels] = useState([])
+  //Modelo do carro selecionado
   const [selectedCarModel, setSelectedCarModel] = useState(null)
 
   const [filteredCarList, setFilteredCarList] = useState<IMockedCar[]>([])
-
-  const [carsBrand, setCarsBrand] = useState([])
-  const [carsByBrand, setCarsByBrand] = useState([] as Array<object>)
 
   const token = localStorage.getItem("@kenzie-cars:token")
   const userId = localStorage.getItem("@kenzie-cars:userID")

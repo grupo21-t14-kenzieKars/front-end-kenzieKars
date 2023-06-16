@@ -118,7 +118,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
             <Select placeholder="Escolha a marca" {...register("brand")} onChange={handleBrandSelect} >
                 {carOptionsSelect}
             </Select>
-            <FormErrorMessage>{errors.brand?.message}</FormErrorMessage>
+            <FormErrorMessage>{errors.brand?.message?.toString()}</FormErrorMessage>
           </FormControl>
 
           <FormControl id="model" isInvalid={!!errors}>
@@ -128,7 +128,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
             <Select placeholder="Selecione o modelo" {...register("model")} onChange={handleModelSelect}>
                 {carModelOptionsSelect}
             </Select>
-            <FormErrorMessage>{errors.model?.message}</FormErrorMessage>
+            <FormErrorMessage>{errors.model?.message?.toString()}</FormErrorMessage>
           </FormControl>
 
           <Flex width="100%" wrap={"wrap"} justifyContent={"space-between"}>
@@ -143,7 +143,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                 value={selectedCarModel?.year}
                 {...register("year")}
               />
-              <FormErrorMessage>{errors.year?.message}</FormErrorMessage>
+              <FormErrorMessage>{errors.year?.message?.toString()}</FormErrorMessage>
             </FormControl>
 
             <FormControl id="fuel_type" width="48%" isInvalid={!!errors}>
@@ -161,7 +161,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                     ""}
                 {...register("fuel_type")}
               />
-              <FormErrorMessage>{errors.fuel_type?.message}</FormErrorMessage>
+              <FormErrorMessage>{errors.fuel_type?.message?.toString()}</FormErrorMessage>
             </FormControl>
 
             <FormControl id="kilometers" width="48%" isInvalid={!!errors}>
@@ -174,7 +174,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                 placeholder="30.000"
                 {...register("kilometers")}
               />
-              <FormErrorMessage>{errors.kilometers?.message}</FormErrorMessage>
+              <FormErrorMessage>{errors.kilometers?.message?.toString()}</FormErrorMessage>
             </FormControl>
 
             <FormControl id="color" width="48%" isInvalid={!!errors}>
@@ -182,7 +182,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                 Cor
               </FormLabel>
               <Input type="text" placeholder="Branco" {...register("color")} />
-              <FormErrorMessage>{errors.color?.message}</FormErrorMessage>
+              <FormErrorMessage>{errors.color?.message?.toString()}</FormErrorMessage>
             </FormControl>
 
             <FormControl id="fipe_price" width="48%" isInvalid={!!errors}>
@@ -196,7 +196,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                 value={selectedCarModel? `R$ ${selectedCarModel?.value},00` : "R$0,00"}
                 {...register("fipe_price")}
               />
-              <FormErrorMessage>{errors.fipe_price?.message}</FormErrorMessage>
+              <FormErrorMessage>{errors.fipe_price?.message?.toString()}</FormErrorMessage>
             </FormControl>
 
             <FormControl id="price" width="48%" isInvalid={!!errors}>
@@ -208,7 +208,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                 placeholder="R$50.000,00"
                 {...register("price")}
               />
-              <FormErrorMessage>{errors.price?.message}</FormErrorMessage>
+              <FormErrorMessage>{errors.price?.message?.toString()}</FormErrorMessage>
             </FormControl>
           </Flex>
 
@@ -222,7 +222,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
               maxLength={600}
               {...register("description")}
             />
-            <FormErrorMessage>{errors.description?.message}</FormErrorMessage>
+            <FormErrorMessage>{errors.description?.message?.toString()}</FormErrorMessage>
           </FormControl>
 
           <FormControl id="img">

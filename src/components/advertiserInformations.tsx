@@ -1,4 +1,4 @@
-import { Flex, Text, Button } from "@chakra-ui/react";
+import { Flex, Text, Button, Avatar } from "@chakra-ui/react";
 import { IMockedUser } from "../interfaces/mocksInterfaces";
 
 interface IAdvertiserInformationsProps {
@@ -26,18 +26,7 @@ function AdvertiserInformations({ user }: IAdvertiserInformationsProps) {
       width={"100%"}
       alignItems={"center"}
     >
-      <Flex
-        fontSize={"heading.7"}
-        width={"80px"}
-        height={"80px"}
-        borderRadius={"50%"}
-        alignItems={"center"}
-        justifyContent={"center"}
-        color="white"
-        bg={"blue"}
-      >
-        {getInitials(user.name)}
-      </Flex>
+      <Avatar name={user.name} color="white" size="xl" />
       <Text color="grey.1" fontWeight={"semibold"} fontSize={"heading.3"}>
         {user.name}
       </Text>

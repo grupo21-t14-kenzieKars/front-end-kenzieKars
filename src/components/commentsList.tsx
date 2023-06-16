@@ -1,4 +1,4 @@
-import { Box, List, ListItem, Text, Flex } from "@chakra-ui/react";
+import { Box, List, ListItem, Text, Flex, Avatar } from "@chakra-ui/react";
 
 interface comments {
   comment: string;
@@ -35,17 +35,7 @@ function CommentList({ comments }: commentListProps) {
                 alignItems={"center"}
                 marginBottom={"5px"}
               >
-                <Flex
-                  width={"32px"}
-                  height={"32px"}
-                  borderRadius={"50%"}
-                  alignItems={"center"}
-                  justifyContent={"center"}
-                  color="white"
-                  bg={"blue"}
-                >
-                  JL
-                </Flex>
+                <Avatar name={elem.user.name} color="white" size="sm" />
                 <Text
                   color="grey.1"
                   fontWeight={"medium"}
