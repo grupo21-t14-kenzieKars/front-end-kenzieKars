@@ -1,15 +1,29 @@
-import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Modal, ModalCloseButton, ModalContent, ModalOverlay, Text, useDisclosure } from "@chakra-ui/react"
+import { Button, Flex, FormControl, FormErrorMessage, FormLabel, Heading, Input, Modal, ModalCloseButton, ModalContent, ModalOverlay, Text, useDisclosure } from "@chakra-ui/react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import createPosterSchema from "../schemas/createPosterSchema"
+import { useContext, useState } from "react"
+import { createPosterSchema } from "../schemas/createPosterSchema"
+import { INewPoster } from "../interfaces/posterInterfaces"
+import { CarContext } from "../contexts/CarsContext"
 
 const PosterCreateModal = () => {
-    
+    const [loading, setLoading] = useState(false)
+    const [findBrand, setFindBrand] = useState("")
+    const [findModel, setFindModel] = useState("")
+
     const { isOpen, onOpen, onClose } = useDisclosure()
     
-    const { register, handleSubmit, formState:{errors}, reset} = useForm({
+    const { createPoster, carList, carModels, getCarModels, getSelectedCarModel, selectedCarModel } = useContext(CarContext)
+
+    const { register, handleSubmit, formState: { errors } , reset} = useForm({
+        mode: 'onBlur',
         resolver: zodResolver(createPosterSchema)
     })
+
+    const onSubmit = (data: any) => {
+        createPoster(data)
+        reset()
+    }
 
     //Pegar carros na API e colocar em um State
     //Pegar marca de carros + ano + combustível + $$fipe e colocar em outro state
@@ -29,7 +43,7 @@ const PosterCreateModal = () => {
                 <ModalContent 
                 color={"grey.1"}
                 as="form"
-                // onSubmit={handleSubmit{}}
+                onSubmit={handleSubmit(onSubmit)}
                 width="100%"
                 maxW={"520px"}
                 backgroundColor={"white"}
@@ -49,52 +63,60 @@ const PosterCreateModal = () => {
                         Informações do veículo
                     </Text>
 
-                    <FormControl id="brand">
+                    <FormControl id="brand" isInvalid={!!errors} >
                         <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>Marca</FormLabel>
-                        <Input type="text" placeholder="Mercedes Benz" />
+                        <Input type="text" placeholder="Mercedes Benz" {...register('brand')}/>
+                        <FormErrorMessage>{errors.brand?.message}</FormErrorMessage>
                     </FormControl>
 
-                    <FormControl id="model">
+                    <FormControl id="model" isInvalid={!!errors}>
                         <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>Modelo</FormLabel>
-                        <Input type="text" placeholder="A 200CGI Advance Sedan" />
+                        <Input type="text" placeholder="A 200CGI Advance Sedan" {...register('model')} />
+                        <FormErrorMessage>{errors.model?.message}</FormErrorMessage>
                     </FormControl>
 
                     <Flex width="100%" wrap={"wrap"} justifyContent={"space-between"}>
-                        <FormControl id="year" width="48%">
+                        <FormControl id="year" width="48%" isInvalid={!!errors}>
                             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>Ano</FormLabel>
-                            <Input readOnly type="text" placeholder="Ano" />
+                            <Input readOnly type="text" placeholder="Ano" {...register('year')} />
+                            <FormErrorMessage>{errors.year?.message}</FormErrorMessage>
                         </FormControl>
 
-                        <FormControl id="fuel" width="48%">
+                        <FormControl id="fuel_type" width="48%" isInvalid={!!errors}>
                             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>Combustível</FormLabel>
-                            <Input readOnly type="text" placeholder="Gasolina/Etanol" />
+                            <Input readOnly type="text" placeholder="Gasolina/Etanol" {...register('fuel_type')} />
+                            <FormErrorMessage>{errors.fuel_type?.message}</FormErrorMessage>
                         </FormControl>
 
-                        <FormControl id="Quilometragem" width="48%">
+                        <FormControl id="kilometers" width="48%" isInvalid={!!errors}>
                             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>Quilometragem</FormLabel>
-                            <Input type="number" min={0} placeholder="30.000" />
+                            <Input type="number" min={0} placeholder="30.000" {...register ('kilometers')}/>
+                            <FormErrorMessage>{errors.kilometers?.message}</FormErrorMessage>
                         </FormControl>
 
-                        <FormControl id="color" width="48%">
+                        <FormControl id="color" width="48%" isInvalid={!!errors}>
                             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>Cor</FormLabel>
-                            <Input type="text" placeholder="Branco" />
+                            <Input type="text" placeholder="Branco" {...register('color')} />
+                            <FormErrorMessage>{errors.color?.message}</FormErrorMessage>
                         </FormControl>
 
-                        <FormControl id="fipe_price" width="48%">
+                        <FormControl id="fipe_price" width="48%" isInvalid={!!errors}>
                             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>Preço tabela FIPE</FormLabel>
-                            <Input readOnly type="text" placeholder="R$30.000,00" />
+                            <Input readOnly type="number" placeholder="R$30.000,00" {...register('fipe_price')}/>
+                            <FormErrorMessage>{errors.fipe_price?.message}</FormErrorMessage>
                         </FormControl>
 
-                        <FormControl id="price" width="48%">
+                        <FormControl id="price" width="48%" isInvalid={!!errors}>
                             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>Preço</FormLabel>
-                            <Input type="text" placeholder="R$50.000,00" />
+                            <Input type="number" placeholder="R$50.000,00" {...register('price')}/>
+                            <FormErrorMessage>{errors.price?.message}</FormErrorMessage>
                         </FormControl>
                     </Flex>
-                    
 
-                    <FormControl id="description">
+                    <FormControl id="description" isInvalid={!!errors}>
                         <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>Descrição</FormLabel>
-                        <Input type="text" placeholder="Descreva seu anúncio aqui" maxLength={600} />
+                        <Input type="text" placeholder="Descreva seu anúncio aqui" maxLength={600} {...register('description')} />
+                        <FormErrorMessage>{errors.description?.message}</FormErrorMessage>
                     </FormControl>
 
                     <FormControl id="img">
