@@ -3,9 +3,9 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { MockedCarPostList, mockedUser2 } from "../../mocks";
 import CardPoster from "../../components/cardPoster";
+import CarPostList from './../../components/carPosterListComponet';
 
 const AdvertiserPage = () => {
-  const cars = MockedCarPostList;
   const user = mockedUser2;
 
   return (
@@ -50,23 +50,7 @@ const AdvertiserPage = () => {
             Criar anuncio
           </Button>
         </Flex>
-        <List
-          display={"flex"}
-          gap={"30px"}
-          flexWrap={{ base: "nowrap", md: "wrap" }}
-          justifyContent={{ base: "left", md: "center" }}
-          padding={"40px 0"}
-          overflowX={"auto"}
-          w={"100%"}
-        >
-          {cars.map((elem) => {
-            return (
-              <ListItem>
-                <CardPoster carPost={elem} isOwner={true} />
-              </ListItem>
-            );
-          })}
-        </List>
+        <CarPostList carsList={MockedCarPostList} isOwner={true}/>
       </Flex>
       <Footer />
     </Flex>
