@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Button,
   Card,
   CardBody,
   CardFooter,
@@ -10,15 +11,20 @@ import {
   Tag,
   Text,
 } from "@chakra-ui/react";
+import { IMockedCar } from "../interfaces/mocksInterfaces";
 
+interface ICardPosterProps {
+  carPost: IMockedCar;
+  isOwner: boolean;
+}
 
-const CardPoster = ({carPost}) => {
+const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
   const cardStatus = true;
 
   return (
     <Card
       w={"100%"}
-      maxWidth={"312px"}
+      maxWidth={"300px"}
       h={"100%"}
       maxH={"391px"}
       bgColor={"transparent"}
@@ -36,27 +42,26 @@ const CardPoster = ({carPost}) => {
           border={"2px solid transparent"}
           _groupHover={{
             border: "2px solid blue",
-              transition: "1s",
-              img: {
-                transform:"scale(1.1)"
-            }
+            transition: "1s",
+            img: {
+              transform: "scale(1.1)",
+            },
           }}
         >
-            <Image
-              src={carPost.images[0].url}
-              w="100%"
-              maxW="100%"
-              h="100%"
-              maxH="150px"
-              bg={"grey.7"}
-              objectFit={"contain"}
-              alt="car image"
-              transformOrigin="center"
-              transition="0.3s"
-            />
+          <Image
+            src={carPost.images[0].url}
+            w="100%"
+            maxW="100%"
+            h="100%"
+            maxH="150px"
+            bg={"grey.7"}
+            objectFit={"contain"}
+            alt="car image"
+            transformOrigin="center"
+            transition="0.3s"
+          />
 
-          {carPost.price <=
-            carPost.fipePrice - carPost.fipePrice * 0.05 &&
+          {carPost.price <= carPost.fipePrice - carPost.fipePrice * 0.05 &&
             cardStatus && (
               <Flex
                 w={"15px"}
@@ -117,22 +122,24 @@ const CardPoster = ({carPost}) => {
           </Text>
         </Flex>
 
-        <Flex alignItems={"center"}>
-          <Avatar
-            name={carPost.user.name}
-            w={"32px"}
-            h={"32px"}
-            size={"sm"}
-            margin={"10px 10px 10px 0px"}
-          />
-          <Text color={"grey.2"} fontSize={"heading.1"} fontWeight={"medium"}>
-            {carPost.user.name}
-          </Text>
-        </Flex>
+        {!isOwner && (
+          <Flex alignItems={"center"}>
+            <Avatar
+              name={carPost.user.name}
+              w={"32px"}
+              h={"32px"}
+              size={"sm"}
+              margin={"10px 10px 10px 0px"}
+            />
+            <Text color={"grey.2"} fontSize={"heading.1"} fontWeight={"medium"}>
+              {carPost.user.name}
+            </Text>
+          </Flex>
+        )}
       </CardBody>
 
-      <CardFooter p={0}>
-        <Flex w={"100%"} h={"fit-content"}justifyContent={"space-between"}>
+      <CardFooter p={0} flexDirection={"column"} gap={"15px"}>
+        <Flex w={"100%"} h={"fit-content"} justifyContent={"space-between"}>
           <Flex gap={"13px"}>
             <Tag
               color={"brand.1"}
@@ -156,9 +163,29 @@ const CardPoster = ({carPost}) => {
             R${carPost.price.toFixed(2)}
           </Text>
         </Flex>
+        {isOwner && (
+          <Flex gap={"15px"}>
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+              variant={"outline1"}
+            >
+              Editar
+            </Button>
+            <Button
+              onClick={(e) => {
+                e.preventDefault();
+              }}
+              variant={"outline1"}
+            >
+              Ver detalhes
+            </Button>
+          </Flex>
+        )}
       </CardFooter>
     </Card>
   );
 };
 
-export default CardPoster
+export default CardPoster;
