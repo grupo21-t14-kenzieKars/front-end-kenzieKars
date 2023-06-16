@@ -62,6 +62,11 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
     getSelectedCarModel(model, carBrand);
   };
 
+  const closeAndReset = () =>{
+    onClose()
+    reset()
+  }
+
   const carOptionsSelect =
     carList &&
     Object.keys(carList).map((brand) => (
@@ -82,7 +87,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={closeAndReset}>
       <ModalOverlay width="100%" height="100%" />
       <ModalContent
         color={"grey.1"}
@@ -149,6 +154,11 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                 readOnly
                 type="text"
                 placeholder="Gasolina/Etanol"
+                value={
+                    (selectedCarModel && selectedCarModel.fuel === 1) ? "Flex" :
+                    (selectedCarModel && selectedCarModel.fuel === 2) ? "Híbrido" :
+                    (selectedCarModel && selectedCarModel.fuel === 3) ? "Elétrico" :
+                    ""}
                 {...register("fuel_type")}
               />
               <FormErrorMessage>{errors.fuel_type?.message}</FormErrorMessage>
@@ -181,7 +191,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
               </FormLabel>
               <Input
                 readOnly
-                type="number"
+                type="text"
                 placeholder="R$30.000,00"
                 value={selectedCarModel? `R$ ${selectedCarModel?.value},00` : "R$0,00"}
                 {...register("fipe_price")}
