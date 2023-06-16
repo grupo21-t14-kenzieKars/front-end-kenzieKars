@@ -21,24 +21,24 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   const userId = localStorage.getItem("@kenzie-cars:userID")
 
   //Pega todos os carros da API
-  useEffect(() => {
-    const getCars = async () => {
-      try {
-        const { data } = await apiKenzieKars.get('/cars')
-        setCarList(data)
-      } catch (error) {
-        console.error(error)
-      }
-    }
-    getCars()
-  }, [])
+  // useEffect(() => {
+  //   const getCars = async () => {
+  //     try {
+  //       const { data } = await apiKenzieKars.get('/cars')
+  //       setCarList(data)
+  //     } catch (error) {
+  //       console.error(error)
+  //     }
+  //   }
+  //   getCars()
+  // }, [])
 
   const createPoster = async (data: INewPoster) =>{
     if(userId){
       try{
         apiG21.defaults.headers.authorization = `Bearer ${token}`
         await apiG21.post("/posters", data);
-        //função de carregar carros do usuário logado
+        //Colocar função de carregar carros do usuário logado
       } catch {
         console.error(Error)
       }
@@ -88,6 +88,8 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         setFilteredCarList,
         carsByBrand,
         getCarsByBrand,
+        getCarModels,
+        getSelectedCarModel,
         carModels,
         selectedCarModel,
       }}>

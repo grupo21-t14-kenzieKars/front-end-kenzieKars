@@ -3,16 +3,18 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { useContext, useState } from "react"
 import { createPosterSchema } from "../schemas/createPosterSchema"
-import { INewPoster } from "../interfaces/posterInterfaces"
-import { CarContext } from "../contexts/CarsContext"
+import { CarContext } from "../contexts/carsContext"
 
-const PosterCreateModal = () => {
+interface IPosterCreateModalProps{
+    isOpen: boolean;
+    onClose: () => void;
+}
+
+const PosterCreateModal = ({isOpen, onClose}: IPosterCreateModalProps) => {
     const [loading, setLoading] = useState(false)
     const [findBrand, setFindBrand] = useState("")
     const [findModel, setFindModel] = useState("")
 
-    const { isOpen, onOpen, onClose } = useDisclosure()
-    
     const { createPoster, carList, carModels, getCarModels, getSelectedCarModel, selectedCarModel } = useContext(CarContext)
 
     const { register, handleSubmit, formState: { errors } , reset} = useForm({
@@ -32,9 +34,6 @@ const PosterCreateModal = () => {
     //submit de criação de modal + loading (?)
 
     return(
-        <>
-
-        <Button onClick={onOpen}>Open</Button>
             <Modal
                 isOpen={isOpen}
                 onClose={onClose}
@@ -147,7 +146,6 @@ const PosterCreateModal = () => {
                 </ModalContent>
 
             </Modal>
-        </>
     )
 }
 

@@ -8,7 +8,7 @@ export interface IMockedUser {
 }
 
 export interface IMockedCar {
-  id: string
+  id: string;
   user: IMockedUser;
   brand: string;
   model: string;

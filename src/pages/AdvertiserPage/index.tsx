@@ -1,11 +1,12 @@
-import { Avatar, Button, Flex, List, ListItem, Text } from "@chakra-ui/react";
+import { Avatar, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { MockedCarPostList, mockedUser2 } from "../../mocks";
-import CardPoster from "../../components/cardPoster";
 import CarPostList from './../../components/carPosterListComponet';
+import PosterCreateModal from "../../components/posterCreateModal";
 
 const AdvertiserPage = () => {
+  const { isOpen, onOpen, onClose} = useDisclosure()
   const user = mockedUser2;
 
   return (
@@ -46,9 +47,10 @@ const AdvertiserPage = () => {
           <Text fontSize={"body.3"} color={"grey.2"}>
             {user.description}
           </Text>
-          <Button w={"max-content"} variant={"outlineBrand1"}>
+          <Button w={"max-content"} variant={"outlineBrand1"} onClick={() => { onOpen() }}>
             Criar anuncio
           </Button>
+          <PosterCreateModal isOpen={isOpen} onClose={onClose}/>
         </Flex>
         <CarPostList carsList={MockedCarPostList} isOwner={true}/>
       </Flex>
