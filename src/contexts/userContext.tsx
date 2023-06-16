@@ -4,8 +4,6 @@ import { LoginData } from "../components/forms/loginForm/loginSchema"
 import { RegisterData } from "../components/forms/registerForm/registerSchema"
 import { apiG21 } from "../services/api"
 
-
-
 export const UserContext = createContext<IUserProviderData>({} as IUserProviderData)
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
