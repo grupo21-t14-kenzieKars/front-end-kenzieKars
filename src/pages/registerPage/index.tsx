@@ -7,7 +7,12 @@ const Register = () => {
   return (
     <>
       <Header />
-      <Flex w={"full"} justifyContent={"center"} marginBottom="140px">
+      <Flex
+        w={"full"}
+        justifyContent={"center"}
+        paddingBottom={{ base: "50px", md: "140px" }}
+        bg="grey.8"
+      >
         <RegisterForm />
       </Flex>
       <Footer />

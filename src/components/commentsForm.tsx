@@ -5,9 +5,14 @@ import {
   FormLabel,
   Textarea,
   Button,
+  Avatar,
 } from "@chakra-ui/react";
 
-function CommentForm() {
+interface ICommentProps {
+  name: string;
+}
+
+function CommentForm({ name }: ICommentProps) {
   return (
     <FormControl
       bg="white"
@@ -24,19 +29,9 @@ function CommentForm() {
         gap={"5px"}
         alignItems={"center"}
       >
-        <Flex
-          width={"32px"}
-          height={"32px"}
-          borderRadius={"50%"}
-          alignItems={"center"}
-          justifyContent={"center"}
-          color="white"
-          bg="brand.1"
-        >
-          JL
-        </Flex>
+        <Avatar name={name} color="white" size="sm" />
         <Text color="grey.1" fontWeight={"medium"} fontSize={"heading.1"}>
-          Samuel Leão
+          {name}
         </Text>
       </FormLabel>
       <Flex flexDirection={"column"} gap={"20px"} position={"relative"}>

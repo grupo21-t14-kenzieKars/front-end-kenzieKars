@@ -190,7 +190,7 @@ const PosterContainer = () => {
             w={{ base: "100%", md: "62%" }}
           >
             <CommentList comments={commetArr} />
-            <CommentForm />
+            <CommentForm name={mockedUser2.name} />
           </Flex>
         </Flex>
       </Box>

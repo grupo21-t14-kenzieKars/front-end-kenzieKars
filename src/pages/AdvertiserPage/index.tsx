@@ -3,7 +3,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { MockedCarPostList, mockedUser2 } from "../../mocks";
 import CardPoster from "../../components/cardPoster";
-import CarPostList from './../../components/carPosterListComponet';
+import CarPostList from "./../../components/carPosterListComponet";
 
 const AdvertiserPage = () => {
   const user = mockedUser2;
@@ -28,7 +28,7 @@ const AdvertiserPage = () => {
           gap={"20px"}
           w={{ base: "100%", md: "80%" }}
         >
-          <Avatar name={user.name} w={"80px"} h={"80px"} color="white" />
+          <Avatar name={user.name} size={"xl"} color="white" />
           <Flex alignItems={"center"} gap={"15px"}>
             <Text color="grey.1" fontWeight={"semibold"} fontSize={"heading.3"}>
               {user.name}
@@ -50,7 +50,7 @@ const AdvertiserPage = () => {
             Criar anuncio
           </Button>
         </Flex>
-        <CarPostList carsList={MockedCarPostList} isOwner={true}/>
+        <CarPostList carsList={MockedCarPostList} isOwner={true} />
       </Flex>
       <Footer />
     </Flex>
