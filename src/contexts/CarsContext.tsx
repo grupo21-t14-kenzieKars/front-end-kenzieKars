@@ -15,26 +15,28 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedCarModel, setSelectedCarModel] = useState(null)
 
   const [filteredCarList, setFilteredCarList] = useState<IMockedCar[]>([])
+
+  const [carsBrand, setCarsBrand] = useState([])
   const [carsByBrand, setCarsByBrand] = useState([] as Array<object>)
 
   const token = localStorage.getItem("@kenzie-cars:token")
   const userId = localStorage.getItem("@kenzie-cars:userID")
 
-  //Pega todos os carros da API
-  // useEffect(() => {
-  //   const getCars = async () => {
-  //     try {
-  //       const { data } = await apiKenzieKars.get('/cars')
-  //       setCarList(data)
-  //     } catch (error) {
-  //       console.error(error)
-  //     }
-  //   }
-  //   getCars()
-  // }, [])
+  // Pega todos os carros da API
+  useEffect(() =>{
+    getCars()
+  }, [])
+  
+  const getCars = async () => {
+    try {
+      const { data } = await apiKenzieKars.get('/cars/')
+      setCarList(data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const createPoster = async (data: INewPoster) =>{
-    if(userId){
       try{
         apiG21.defaults.headers.authorization = `Bearer ${token}`
         await apiG21.post("/posters", data);
@@ -43,7 +45,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         console.error(Error)
       }
     }
-  }
 
   //Pega os carros pela marca
   const getCarsByBrand = async (brand: string) => {
@@ -65,6 +66,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     setCarModels(data);
   }
 
+  //Pega a marca selecionada
   const getSelectedCarModel = async (name: string, brand: string) => {
     const { data } = await apiKenzieKars.get(`/cars?brand=${brand}`);
     data.map((value: any) =>{
@@ -91,6 +93,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         getCarModels,
         getSelectedCarModel,
         carModels,
+        setSelectedCarModel,
         selectedCarModel,
       }}>
         {children}

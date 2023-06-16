@@ -1,3 +1,4 @@
+import React from "react"
 import { LoginData } from "../components/forms/loginForm/loginSchema"
 import { RegisterData } from "../components/forms/registerForm/registerSchema"
 import { IMockedCar } from "../interfaces/mocksInterfaces"
@@ -14,6 +15,7 @@ export interface ICarProviderData {
     getSelectedCarModel: (name: string, brand: string) => Promise<void>
     carModels: Array<IMockedCar>
     selectedCarModel: IModelCar | null
+    setSelectedCarModel: React.Dispatch<React.SetStateAction<any | null>>
 }
 
 export interface IUserProviderData {
