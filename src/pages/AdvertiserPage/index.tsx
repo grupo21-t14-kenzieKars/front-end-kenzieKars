@@ -2,13 +2,8 @@ import { Avatar, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import { MockedCarPostList, mockedUser2 } from "../../mocks";
-<<<<<<< HEAD
-import CarPostList from './../../components/carPosterListComponet';
-import PosterCreateModal from "../../components/posterCreateModal";
-=======
-import CardPoster from "../../components/cardPoster";
 import CarPostList from "./../../components/carPosterListComponet";
->>>>>>> b3ed87a9aa910e6beb49be49f256a51551428f02
+import PosterCreateModal from "../../components/posterCreateModal";
 
 const AdvertiserPage = () => {
   const { isOpen, onOpen, onClose} = useDisclosure()

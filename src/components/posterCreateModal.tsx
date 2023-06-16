@@ -27,11 +27,17 @@ interface IPosterCreateModalProps {
 const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
   const [loading, setLoading] = useState(false);
   const [carBrand, setCarBrand] = useState("");
-  const [findModel, setFindModel] = useState("");
+  const [imagesCount, setImagesCount] = useState(1);
+
+  const handleAddImageButton = () => {
+    if(imagesCount != 6){
+        setImagesCount(imagesCount + 1)
+    }
+  }
 
   const {
     createPoster,
-    carList,
+    allCarsList,
     carModels,
     getCarModels,
     getSelectedCarModel,
@@ -63,13 +69,15 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
   };
 
   const closeAndReset = () =>{
-    onClose()
+    setImagesCount(1)
+    setSelectedCarModel(null)
     reset()
+    onClose()
   }
 
   const carOptionsSelect =
-    carList &&
-    Object.keys(carList).map((brand) => (
+    allCarsList &&
+    Object.keys(allCarsList).map((brand) => (
       <option key={brand} value={brand}>
         {brand}
       </option>
@@ -115,7 +123,8 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
               Marca
             </FormLabel>
-            <Select placeholder="Escolha a marca" {...register("brand")} onChange={handleBrandSelect} >
+            <Select {...register("brand")} onChange={handleBrandSelect} >
+              <option value="">Escolha a marca</option>
                 {carOptionsSelect}
             </Select>
             <FormErrorMessage>{errors.brand?.message?.toString()}</FormErrorMessage>
@@ -229,37 +238,29 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
               Imagem da capa
             </FormLabel>
-            <Input type="text" placeholder="https://image.com" />
+            <Input type="text" placeholder="https://image.com" {...register('main_image')}/>
           </FormControl>
-
-          <FormControl id="img1">
-            <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
-              1ª imagem da galeria
-            </FormLabel>
-            <Input type="text" placeholder="https://image.com" />
-          </FormControl>
-
-          <FormControl id="img2">
-            <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
-              2ª imagem da galeria
-            </FormLabel>
-            <Input type="text" placeholder="https://image.com" />
-          </FormControl>
+                
+            {Array.from({length: imagesCount}, (value, index) =>(
+                <>
+                    <FormLabel id="image_url">{index+1}ª Imagem da galeria</FormLabel>
+                    <Input key={index} type="text" placeholder="https://image.com" {...register(`images[${index}].image_url`)}/>
+                    <FormErrorMessage>{errors.images?.message?.toString()}</FormErrorMessage>
+                </>
+            ))}
 
           <Flex width="100%" justifyContent={"flex-start"} paddingTop={"15px"}>
-            <Button width="75%" variant={"brandOpacity"}>
+            <Button width="75%" variant={"brandOpacity"} onClick={handleAddImageButton}>
               Adicionar campo para imagem da galeria
             </Button>
           </Flex>
 
           <Flex justifyContent={"flex-end"} p={"30px 10px 5px 0"} gap={"10px"}>
             <Button onClick={onClose} variant={"negative"}>
-              {" "}
-              Cancelar{" "}
+              Cancelar
             </Button>
             <Button type="submit" variant={"brandDisable"}>
-              {" "}
-              Criar anúncio{" "}
+              Criar anúncio
             </Button>
           </Flex>
         </Flex>

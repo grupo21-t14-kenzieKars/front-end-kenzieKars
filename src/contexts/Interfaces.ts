@@ -6,6 +6,7 @@ import { IModelCar, INewPoster } from "../interfaces/posterInterfaces"
 
 export interface ICarProviderData {
     createPoster: (data: INewPoster) => void
+    allCarsList: Array<IMockedCar>
     carList: Array<IMockedCar>
     filteredCarList: Array<IMockedCar>
     setFilteredCarList: React.Dispatch<React.SetStateAction<IMockedCar[]>>

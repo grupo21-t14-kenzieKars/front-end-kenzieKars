@@ -10,6 +10,7 @@ export const CarContext = createContext<ICarProviderData>({} as ICarProviderData
 const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   //Lista de todos os carros da API Kenzie
+  const [allCarsList, setAllCarsList] = useState([] as Array<IMockedCar>)
   const [carList, setCarList] = useState([] as Array<IMockedCar>)
 
   //Lista com as marcas dos carros da API Kenzie
@@ -32,7 +33,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   const getCars = async () => {
     try {
       const { data } = await apiKenzieKars.get('/cars/')
-      setCarList(data)
+      setAllCarsList(data)
     } catch (error) {
       console.error(error)
     }
@@ -87,6 +88,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     <>
       <CarContext.Provider value={{
         createPoster,
+        allCarsList,
         carList,
         filteredCarList,
         setFilteredCarList,
