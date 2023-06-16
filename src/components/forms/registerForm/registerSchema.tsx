@@ -21,7 +21,7 @@ const registerScehma = z.object({
     password: z.string().min(6, 'A senha deve conter no minimo 6 caracteres'),
     repeat_password: z.string().min(1, 'Este campo é obrigatório'),
     is_seller: z.boolean().optional().default(false),
-    zip_code: z.string().refine((value) => /^[0-9]{5}-[0-9]{3}$/.test(value), {
+    zip_code: z.string().refine((value: string) => /^[0-9]{5}-[0-9]{3}$/.test(value), {
         message: 'CEP inválido. Insira um CEP válido no formato 12345-678.',
     }),
     city: z.string().max(50, 'maximo de 50 caracteres').min(3, 'Minimo de 3 caracteres'),

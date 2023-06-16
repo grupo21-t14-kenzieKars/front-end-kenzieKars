@@ -32,8 +32,8 @@ const inputTheme: ComponentStyleConfig = {
         _placeholder: {
           color: "transparent",
         },
-      }
-    }
+      },
+    },
   },
 };
 
@@ -270,7 +270,7 @@ const customTheme = extendTheme({
   },
   fonts: {
     heading: "Lexend, sans-serif",
-    body: "Inter, sans-serif"
+    body: "Inter, sans-serif",
   },
   fontSizes: {
     heading: {
@@ -290,7 +290,7 @@ const customTheme = extendTheme({
     body: {
       1: "12px",
       2: "14px",
-      3: "16px"
+      3: "16px",
     },
   },
   button: {
