@@ -139,7 +139,12 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
       </CardBody>
 
       <CardFooter p={0} flexDirection={"column"} gap={"15px"}>
-        <Flex w={"100%"} h={"fit-content"} justifyContent={"space-between"}>
+        <Flex
+          w={"100%"}
+          h={"fit-content"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
+        >
           <Flex gap={"13px"}>
             <Tag
               color={"brand.1"}
