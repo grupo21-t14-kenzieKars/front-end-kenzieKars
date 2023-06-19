@@ -14,7 +14,6 @@ const RegisterForm = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<RegisterData>({
     mode: "onBlur",
@@ -22,10 +21,21 @@ const RegisterForm = () => {
   });
 
   const onSubmit = (data: RegisterData) => {
-    data.is_seller = seller;
     console.log(data);
 
-    createUser(data);
+    const address = {
+      zip_code: data.zip_code.replace(/[-]/g, ""),
+      city: data.city,
+      state: data.state,
+      street: data.street,
+      number: data.number,
+      complement: data.complement
+    }
+    const formatData = { ...data, address: address }
+    formatData.phone = `55${formatData.phone.replace(/[\s()-]/g, "")}`
+    formatData.birth_date = formatData.birth_date.replace(/[/]/g, "-")
+    console.log(formatData);
+    createUser(formatData);
   };
   return (
     <FormControl
