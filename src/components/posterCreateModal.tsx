@@ -124,7 +124,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
               Marca
             </FormLabel>
-            <Select {...register("brand")} onChange={handleBrandSelect} >
+            <Select {...register("brand")} onChange={handleBrandSelect}>
               <option value="">Escolha a marca</option>
                 {carOptionsSelect}
             </Select>
@@ -251,7 +251,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
             ))}
 
           <Flex width="100%" justifyContent={"flex-start"} paddingTop={"15px"}>
-            <Button width="75%" variant={"brandOpacity"} onClick={handleAddImageButton}>
+            <Button variant={"brandOpacity"} onClick={handleAddImageButton} fontSize={{base:"heading.1", md:"heading.2"}}>
               Adicionar campo para imagem da galeria
             </Button>
           </Flex>
