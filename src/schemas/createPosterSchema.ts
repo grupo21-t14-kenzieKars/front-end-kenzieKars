@@ -14,6 +14,6 @@ export const createPosterSchema = z.object({
     fipe_price: z.string().optional(),
     price: z.string().nonempty("Preço é obrigatório"),
     description: z.string().nonempty("Coloque uma descrição"),
-    images: z.array(imageSchema),
+    images: z.array(imageSchema).optional(),
 })
 

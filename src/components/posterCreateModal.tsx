@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { useContext, useState } from "react";
 import { createPosterSchema } from "../schemas/createPosterSchema";
 import { CarContext } from "../contexts/carsContext";
+import { INewPoster } from "../interfaces/posterInterfaces";
 
 interface IPosterCreateModalProps {
   isOpen: boolean;
@@ -50,19 +51,19 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({
+  } = useForm<INewPoster>({
     mode: "onBlur",
     resolver: zodResolver(createPosterSchema),
   });
 
-  const handleBrandSelect = (e: any) => {
+  const handleBrandSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCarModel(null);
     const brand = e.target.value;
     setCarBrand(brand);
     getCarModels(brand);
   };
 
-  const handleModelSelect = (e: any) => {
+  const handleModelSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCarModel(null);
     const model = e.target.value;
     getSelectedCarModel(model, carBrand);
@@ -89,8 +90,8 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
     </option>
   ));
 
-  const onSubmit = (data: any) => {
-    createPoster(data);
+  const onSubmit = (newData: INewPoster) => {
+    createPoster(newData);
     reset();
   };
 
@@ -238,13 +239,13 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
               Imagem da capa
             </FormLabel>
-            <Input type="text" placeholder="https://image.com" {...register('main_image')}/>
+            <Input type="text" placeholder="https://image.com" {...register('images.0.image_url')}/>
           </FormControl>
                 
-            {Array.from({length: imagesCount}, (value, index) =>(
+            {Array.from({length: imagesCount}, (_, index) =>(
                 <>
                     <FormLabel id="image_url">{index+1}ª Imagem da galeria</FormLabel>
-                    <Input key={index} type="text" placeholder="https://image.com" {...register(`images[${index}].image_url`)}/>
+                    <Input type="text" placeholder="https://image.com" {...register(`images.${index}.image_url` )}/>
                     <FormErrorMessage>{errors.images?.message?.toString()}</FormErrorMessage>
                 </>
             ))}
