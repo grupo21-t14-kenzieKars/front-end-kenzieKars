@@ -14,7 +14,6 @@ const RegisterForm = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm<RegisterData>({
     mode: "onBlur",
