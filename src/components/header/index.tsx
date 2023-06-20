@@ -14,9 +14,13 @@ import {
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import logo from "../../assets/Motors shop.svg";
 import { mockedUser } from "./../../mocks/index";
+import UserEditModal from "../userEditModal";
 
 const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
+  const { isOpen: isOpenEditModal, onOpen: onOpenEditModal, onClose: onCloseEditModal} = useDisclosure()
+  const { isOpen: isOpenAddressModal, onOpen: onOpenAddressModal, onClose: onCloseAddressModal} = useDisclosure()
+
   const user = mockedUser;
 
   return (
@@ -50,10 +54,10 @@ const Header = () => {
               width={"full"}
             >
               <Box p={2} display={{ base: "block", md: "none" }}>
-                <a href="/">Editar Perfil</a>
+                <a onClick={onOpenEditModal}>Editar Perfil</a>
               </Box>
               <Box p={2} display={{ base: "block", md: "none" }}>
-                <a href="/">Editar Endereço</a>
+                <a onClick={onOpenAddressModal}>Editar Endereço</a>
               </Box>
               {user.is_seller && (
                 <Box p={2}>
@@ -195,6 +199,9 @@ const Header = () => {
           <MenuItem>Sair</MenuItem>
         </MenuList>
       </Menu>
+
+      <UserEditModal isOpen={isOpenEditModal} onClose={onCloseEditModal}/>
+      {/* <AddressEditModal isOpen={isOpenAddressModal} onclose={onCloseAddressModal} /> */}
     </Flex>
   );
 };
