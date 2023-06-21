@@ -13,11 +13,16 @@ import {
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import logo from "../../assets/Motors shop.svg";
-import { mockedUser } from "./../../mocks/index";
+import { useContext } from "react";
+import { UserContext } from "../../contexts/userContext";
+import { useLocation } from "react-router-dom";
+
 
 const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
-  const user = mockedUser;
+  const { user, isSeller, logout } = useContext(UserContext)
+  const location = useLocation()
+  const isLoginOrRegister = location.pathname == '/login' || location.pathname == '/regiter' ? true : false
 
   return (
     <Flex
@@ -55,13 +60,13 @@ const Header = () => {
               <Box p={2} display={{ base: "block", md: "none" }}>
                 <a href="/">Editar Endereço</a>
               </Box>
-              {user.is_seller && (
+              {isSeller && (
                 <Box p={2}>
                   <a href="/">Meus anuncios</a>
                 </Box>
               )}
               <Box p={2}>
-                <a href="/">Sair</a>
+                <button onClick={() => logout()}>Sair</button>
               </Box>
             </Box>
           ) : (
@@ -142,7 +147,11 @@ const Header = () => {
                 color="white.1"
                 rounded={"full"}
                 backgroundColor="brand.2"
-                minW={0}
+                w='40px'
+                h='40px'
+                display={"flex"}
+                alignItems={"center"}
+                justifyContent={"center"}
               >
                 {user.name
                   .split(" ")
@@ -163,14 +172,21 @@ const Header = () => {
             display={{ base: "none", md: "flex" }}
           >
             <Box display="flex" alignItems={"center"} textAlign={"center"}>
-              <Link
+              {isLoginOrRegister ? <Link
+                _hover={{}}
+                color={"brand.1"}
+                href="/login"
+                fontWeight={"semibold"}
+              >
+                Fazer Login
+              </Link> : <Link
                 _hover={{}}
                 color={"grey.2"}
                 href="/login"
                 fontWeight={"semibold"}
               >
                 Fazer Login
-              </Link>
+              </Link>}
             </Box>
             <Box>
               <Button
@@ -191,8 +207,8 @@ const Header = () => {
         <MenuList color={"black"}>
           <MenuItem>Editar perfil</MenuItem>
           <MenuItem>Editar endereço</MenuItem>
-          {user.is_seller && <MenuItem>Meus anúncios</MenuItem>}
-          <MenuItem>Sair</MenuItem>
+          {isSeller && <MenuItem>Meus anúncios</MenuItem>}
+          <MenuItem onClick={() => logout()}>Sair</MenuItem>
         </MenuList>
       </Menu>
     </Flex>
