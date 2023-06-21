@@ -41,7 +41,7 @@ const RegisterForm = () => {
     <FormControl
       isInvalid={!!errors}
       w="90%"
-      maxWidth="315px"
+      maxWidth="412px"
       display={"flex"}
       flexDirection={"column"}
       alignItems={"center"}
