@@ -17,10 +17,30 @@ import { useContext } from "react";
 import { UserContext } from "../../contexts/userContext";
 import { useLocation } from "react-router-dom";
 import UserEditModal from "../userEditModal";
+import AddressEditModal from "../addressEditModal";
+
+const user = {
+  id: "9d931a02-a54d-487e-b6e4-70323edecd6e",
+  email: "maria.souza@email.com",
+  name: "Maria Souza",
+  cpf: "12345678900",
+  phone:"1234567890007",
+  birth_date:"2000-02-13",
+  description: `Uma pessoa incrível com interesses diversos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio autem soluta
+  molestias voluptates veniam consequatur sint officia aperiam dolorum nobis.`,
+  password: "1234",
+  is_seller: false,
+  address: {
+      zip_code:"12345671",
+      city:"Santos",
+      state:"BA",
+      street:"Avenida Elementar",
+  }
+}
 
 const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
-  const { user, isSeller, logout } = useContext(UserContext)
+  const { isSeller, logout } = useContext(UserContext)
 
   const { isOpen: isOpenEditModal, onOpen: onOpenEditModal, onClose: onCloseEditModal} = useDisclosure()
   const { isOpen: isOpenAddressModal, onOpen: onOpenAddressModal, onClose: onCloseAddressModal} = useDisclosure()
@@ -209,15 +229,15 @@ const Header = () => {
           </Stack>
         )}
         <MenuList color={"black"}>
-          <MenuItem>Editar perfil</MenuItem>
-          <MenuItem>Editar endereço</MenuItem>
+          <MenuItem onClick={onOpenEditModal}>Editar perfil</MenuItem>
+          <MenuItem onClick={onOpenAddressModal}>Editar endereço</MenuItem>
           {isSeller && <MenuItem>Meus anúncios</MenuItem>}
           <MenuItem onClick={() => logout()}>Sair</MenuItem>
         </MenuList>
       </Menu>
 
       <UserEditModal isOpen={isOpenEditModal} onClose={onCloseEditModal}/>
-      {/* <AddressEditModal isOpen={isOpenAddressModal} onclose={onCloseAddressModal} /> */}
+      <AddressEditModal isOpen={isOpenAddressModal} onClose={onCloseAddressModal} />
     </Flex>
   );
 };

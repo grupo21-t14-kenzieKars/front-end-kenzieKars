@@ -22,6 +22,25 @@ interface IAddressEditModalProps {
   onClose: () => void;
 }
 
+const user = {
+    id: "9d931a02-a54d-487e-b6e4-70323edecd6e",
+    email: "maria.souza@email.com",
+    name: "Maria Souza",
+    cpf: "12345678900",
+    phone:"1234567890007",
+    birth_date:"2000-02-13",
+    description: `Uma pessoa incrível com interesses diversos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio autem soluta
+    molestias voluptates veniam consequatur sint officia aperiam dolorum nobis.`,
+    password: "1234",
+    is_seller: false,
+    address: {
+        zip_code:"12345671",
+        city:"Santos",
+        state:"BA",
+        street:"Avenida Elementar",
+    }
+  }
+
 const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
   const [loading, setLoading] = useState(false);
 
@@ -39,6 +58,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
 
   const onSubmit = async (data: IAddressEdit) => {
     setLoading(true);
+    console.log(data)
     await editUser(data);
     reset();
     setLoading(false);
@@ -49,7 +69,10 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
     <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent
-        maxWidth="100%"
+        maxWidth="520px"
+        width="85%"
+        backgroundColor={"white"}
+        gap={"15px"}
         p={"15px"}
         borderRadius={"6px"}
         fontWeight={"semibold"}
@@ -116,7 +139,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
             register={register("address.street")}
             />
         
-        <Flex>
+        <Flex gap={"15px"}>
             <InputWithLabel
               placeHolder={"Digitar número"}
               id={"number"}
@@ -136,9 +159,9 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
             />
         </Flex>
 
-        <Flex>
-            <Button type="submit" variant={"brand.1"} size={"lg"}>Salvar alterações</Button>
-            <Button variant={"negative"} size={"lg"} onClick={onClose}>Cancelar</Button>
+        <Flex flexDirection={"row-reverse"} gap={"10px"} p={"25px"}>
+            <Button type="submit" variant={"brand1"} size={"lg"} width={{ base: "100%", sm:"40%"}}>Salvar alterações</Button>
+            <Button variant={"negative"} size={"lg"} width={{base: "50%", sm:"auto"}} onClick={onClose}>Cancelar</Button>
         </Flex>
 
         </ModalContent>

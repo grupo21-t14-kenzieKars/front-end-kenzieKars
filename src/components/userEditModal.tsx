@@ -37,14 +37,17 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
         <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick>
             <ModalOverlay />
             <ModalContent 
-            maxWidth="100%" 
+            as="form"
+            width="100%"
+            maxWidth="520px" 
+            color={"grey.1"}
+            backgroundColor={"white"}
+            gap={"15px"}
             p={"15px"} 
+            fontFamily={"heading"}
             borderRadius={"6px"} 
             fontWeight={"semibold"} 
-            color={"grey.1"}
-            as="form"
             onSubmit={handleSubmit(onSubmit)}
-            fontFamily={"heading"}
             >
 
             <Flex width="100%" height="100%" p={"15px"}>
@@ -144,10 +147,10 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             register={register("description")}
             />
 
-            <Flex>
-                <Button type="submit" variant={"brand.1"} size={"lg"}>Salvar alterações</Button>
-                <Button variant={"alert"} size={"lg"} onClick={onOpenDeleteModal}>Excluir perfil</Button>
-                <Button variant={"negative"} size={"lg"} onClick={onClose}>Cancelar</Button>
+            <Flex width="100%" flexDirection={"row-reverse"} justifyContent={"space-evenly"} wrap={{base: "wrap-reverse", sm: "nowrap"}} p={"15px"} gap={"10px"}>
+                <Button type="submit" variant={"brand1"} size={"lg"} width={{base:"80%", sm: "50%"}}>Salvar alterações</Button>
+                <Button variant={"alert"} size={"lg"} width={{base: "40%"}} onClick={onOpenDeleteModal}>Excluir perfil</Button>
+                <Button variant={"negative"} size={"lg"} width={{base:"40%"}} onClick={onClose}>Cancelar</Button>
             </Flex>
 
             </ModalContent>
