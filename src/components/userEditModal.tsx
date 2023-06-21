@@ -5,17 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { IEditUser } from "../interfaces/userInterfaces"
 import InputWithLabel from "./input"
-import editUserSchema from "../schemas/editUserSchema"
-
-const user = {
-    id: "9d931a02-a54d-487e-b6e4-70323edecd6e",
-    name: "Maria Souza",
-    email: "maria.souza@email.com",
-    phone: "1234567890123",
-    cpf: "12345678900",
-    birth_date:"15/02/2000",
-    description: "Sou uma pessoa"
-  }
+import { editUserSchema } from "../schemas/editUserSchema"
 
 interface IEditUserModalProps {
   isOpen: boolean;
@@ -27,7 +17,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
 
     const { isOpen: isOpenDeleteModal, onOpen: onOpenDeleteModal, onClose: onCloseDeleteModal} = useDisclosure()
 
-    const {editUser, deleteUser} = useContext(UserContext)
+    const { user, editUser, deleteUser} = useContext(UserContext)
 
     const { register, handleSubmit, reset, formState: {errors}}=useForm<IEditUser>({
         mode: "onBlur",
@@ -37,7 +27,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
     const onSubmit = async(data: IEditUser) => {
         setLoading(true)
         data.birth_date = data.birth_date?.replace(/[/]/g, "-")
-        editUser(data)
+        await editUser(data)
         reset()
         setLoading(false)
     }
@@ -69,9 +59,9 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
                     Informações pessoais
                 </Text>
             </Flex>
-
+            
             <InputWithLabel
-            placeHolder={`${user.name}`}
+            placeHolder={`${user?.name}`}
             id={"name"}
             type="text"
             label={"Nome"}
@@ -80,7 +70,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             />
 
             <InputWithLabel
-            placeHolder={`${user.email}`}
+            placeHolder={`${user?.email}`}
             id={"email"}
             type="email"
             label={"Email"}
@@ -89,7 +79,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             /> 
 
             <InputWithLabel
-            placeHolder={`${user.cpf}`}
+            placeHolder={`${user?.cpf}`}
             id={"cpf"}
             type="text"
             label={"CPF"}
@@ -108,7 +98,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             />
       
             <InputWithLabel
-            placeHolder={`${user.phone}`}
+            placeHolder={`${user?.phone}`}
             id={"phone"}
             type="text"
             label={"Celular"}
@@ -127,7 +117,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             />
 
             <InputWithLabel
-            placeHolder={`${user.birth_date}`}
+            placeHolder={`${user?.birth_date}`}
             id={"birth_date"}
             type="text"
             label={"Data de nascimento"}
@@ -146,7 +136,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             />
             
             <InputWithLabel
-            placeHolder={`${user.description}`}
+            placeHolder={`${user?.description}`}
             id={"description"}
             type="text"
             label={"Descrição"}

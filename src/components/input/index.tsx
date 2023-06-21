@@ -9,7 +9,7 @@ interface InputWithLabelProps {
     type: string
     register?: UseFormRegisterReturn
     error?: any
-    onKeyUp?: any
+    onKeyUp?: React.KeyboardEventHandler<HTMLInputElement> | undefined
 }
 
 const InputWithLabel = ({ placeHolder, id, label, value, type, register, error, onKeyUp }: InputWithLabelProps) => {

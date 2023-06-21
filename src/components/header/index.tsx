@@ -16,14 +16,17 @@ import logo from "../../assets/Motors shop.svg";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/userContext";
 import { useLocation } from "react-router-dom";
-
+import UserEditModal from "../userEditModal";
 
 const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
+  const { user, isSeller, logout } = useContext(UserContext)
+
   const { isOpen: isOpenEditModal, onOpen: onOpenEditModal, onClose: onCloseEditModal} = useDisclosure()
   const { isOpen: isOpenAddressModal, onOpen: onOpenAddressModal, onClose: onCloseAddressModal} = useDisclosure()
 
-  const user = mockedUser;
+  const location = useLocation()
+  const isLoginOrRegister = location.pathname == '/login' || location.pathname == '/regiter' ? true : false
 
   return (
     <Flex

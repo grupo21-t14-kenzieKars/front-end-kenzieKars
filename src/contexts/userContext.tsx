@@ -1,21 +1,19 @@
 import { createContext, useEffect, useState } from "react"
-import { IUserProviderData } from "./Interfaces"
+import { IUserData, IUserProviderData } from "./Interfaces"
 import { LoginData } from "../components/forms/loginForm/loginSchema"
 import { apiG21 } from "../services/api"
 import { useNavigate } from "react-router-dom"
 import { IEditUser } from "../interfaces/userInterfaces"
-import { IMockedUser } from "../interfaces/mocksInterfaces"
+import { RegisterData } from "../components/forms/registerForm/registerSchema"
 
 export const UserContext = createContext<IUserProviderData>({} as IUserProviderData)
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
     const [loading, setLoading] = useState(false)
-    const [user, setUser] = useState<IMockedUser | null>(null)
+    const [user, setUser] = useState<IUserData | null>(null)
     const [isSeller, setIsSeller] = useState<boolean>(false)
-    const [user, setUser] = useState(null)
 
     const navigate = useNavigate()
-
 
     useEffect(() => {
         const auth = async () => {
@@ -48,8 +46,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
             console.log(data);
             window.localStorage.setItem("@kenzie-cars:token", data.token);
 
-            window.localStorage.setItem("TOKEN", data.token);
-            /* navigate('/') */
         } catch (error) {
             console.error(error)
             window.localStorage.clear()
@@ -58,10 +54,10 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
         }
     }
 
-    const createUser = async (createUserData: any): Promise<void> => {
+    const createUser = async (data: RegisterData): Promise<void> => {
         try {
             setLoading(true)
-            await apiG21.post('/user', createUserData)
+            await apiG21.post('/user', data)
 
             navigate('/login')
         } catch (error) {
@@ -77,21 +73,25 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     const editUser = async (data: IEditUser) =>{
-        try{
-            const response = await apiG21.patch(`/user${user!.id}`, data);
-            setUser(response.data)
-        }catch(error){
-            console.error(error)
+        if(user){
+            try{
+                const response = await apiG21.patch(`/user${user.id}`, data);
+                setUser(response.data)
+            }catch(error){
+                console.error(error)
+            }
         }
     }
 
     const deleteUser = async () => {
-        try{
-            await apiG21.delete(`/user/${user!.id}`);
-            setUser(null)
-            navigate("/")
-        } catch (error){
-            console.error(error)
+        if(user){
+            try{
+                await apiG21.delete(`/user/${user.id}`);
+                setUser(null)
+                navigate("/")
+            } catch (error){
+                console.error(error)
+            }
         }
     }
 
@@ -99,7 +99,14 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
         <>
             <UserContext.Provider value={{
                 loginUser,
-                createUser
+                createUser,
+                user,
+                loading,
+                isSeller,
+                setLoading,
+                logout,
+                editUser,
+                deleteUser
             }}>
                 {children}
             </UserContext.Provider>
