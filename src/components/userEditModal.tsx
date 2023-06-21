@@ -1,11 +1,11 @@
 import { Flex, Heading, Modal, ModalCloseButton, ModalContent, useDisclosure, Text, Button, ModalOverlay } from "@chakra-ui/react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import InputWithLabel from "./input"
-import editUserSchema from "../schemas/editUserSchema"
-import { IEditUser } from "../interfaces/userInterfaces"
 import { useContext, useState } from "react"
 import { UserContext } from "../contexts/userContext"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { IEditUser } from "../interfaces/userInterfaces"
+import InputWithLabel from "./input"
+import editUserSchema from "../schemas/editUserSchema"
 
 const user = {
     id: "9d931a02-a54d-487e-b6e4-70323edecd6e",
@@ -21,7 +21,6 @@ interface IEditUserModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
 
 const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
     const [loading, setLoading] = useState(false)
