@@ -1,5 +1,4 @@
 import { createContext, useEffect, useState } from "react"
-import { MockedCarPostList } from "../mocks"
 import { IMockedCar } from "../interfaces/mocksInterfaces"
 import { apiG21, apiKenzieKars } from '../services/api'
 import { ICarProviderData } from "./Interfaces"
@@ -11,6 +10,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   //Lista de todos os carros da API Kenzie
   const [allCarsList, setAllCarsList] = useState([] as Array<IMockedCar>)
+
   const [carList, setCarList] = useState([] as Array<IMockedCar>)
 
   //Lista com as marcas dos carros da API Kenzie
@@ -23,7 +23,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   const [filteredCarList, setFilteredCarList] = useState<IMockedCar[]>([])
 
   const token = localStorage.getItem("@kenzie-cars:token")
-  const userId = localStorage.getItem("@kenzie-cars:userID")
 
   // Pega todos os carros da API
   useEffect(() =>{
@@ -79,10 +78,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     })
   }
 
-  useEffect(() => {
-    setCarList(MockedCarPostList)
-    setFilteredCarList(MockedCarPostList)
-  }, [])
 
   return (
     <>

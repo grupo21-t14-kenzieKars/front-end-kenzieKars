@@ -1,7 +1,7 @@
 import React from "react"
 import { LoginData } from "../components/forms/loginForm/loginSchema"
 import { RegisterData } from "../components/forms/registerForm/registerSchema"
-import { IMockedCar } from "../interfaces/mocksInterfaces"
+import { IMockedCar, IMockedUser } from "../interfaces/mocksInterfaces"
 import { IModelCar, INewPoster } from "../interfaces/posterInterfaces"
 
 export interface ICarProviderData {
@@ -22,4 +22,9 @@ export interface ICarProviderData {
 export interface IUserProviderData {
     loginUser: (data: LoginData) => Promise<void>
     createUser: (data: RegisterData) => Promise<void>
+    user: IMockedUser | null
+    loading: boolean
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+    isSeller: boolean
+    logout: () => void
 }
