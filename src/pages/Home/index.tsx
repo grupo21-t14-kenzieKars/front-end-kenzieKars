@@ -20,11 +20,11 @@ import SideBar from "../../components/sideBar";
 import CarPostList from "./../../components/carPosterListComponet";
 import { MockedCarPostList } from "../../mocks";
 import { useContext } from "react";
-import { CarContext } from "../../contexts/carsContext";
+import { CarContext } from "../../contexts/CarsContext";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { carList } = useContext(CarContext)
+  const { filteredCarList } = useContext(CarContext)
 
   return (
     <>
@@ -62,7 +62,7 @@ const Home = () => {
             alignItems={"center"}
             width={{ base: "100%", md: "auto" }}
           >
-            <CarPostList carsList={carList} isOwner={false} />
+            <CarPostList carsList={filteredCarList} isOwner={false} />
             <Button
               marginTop={5}
               display={{ base: "block", md: "none" }}

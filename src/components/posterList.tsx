@@ -1,7 +1,7 @@
 import { Flex, Text } from "@chakra-ui/react";
 import CardPoster from "./cardPoster";
 import { useContext } from "react";
-import { CarContext } from "../contexts/carsContext";
+import { CarContext } from "../contexts/CarsContext";
 
 const PosterList = () => {
   const { carList } = useContext(CarContext)

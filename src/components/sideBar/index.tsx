@@ -9,12 +9,13 @@ import { IMockedCar } from "../../interfaces/mocksInterfaces"
 const SideBar = () => {
     const { carList, filteredCarList, setFilteredCarList } = useContext(CarContext)
 
+
     const filters = {
-        brands: [...new Set(carList.map(ele => ele.brand))],
-        models: [...new Set(carList.map(ele => ele.model))],
-        colors: [...new Set(carList.map(ele => ele.color))],
-        years: [...new Set(carList.map(ele => ele.year))],
-        fuels: [...new Set(carList.map(ele => ele.fuelType))]
+        brands: [...new Set(filteredCarList.map(ele => ele.brand))],
+        models: [...new Set(filteredCarList.map(ele => ele.model))],
+        colors: [...new Set(filteredCarList.map(ele => ele.color))],
+        years: [...new Set(filteredCarList.map(ele => ele.year))],
+        fuels: [...new Set(filteredCarList.map(ele => ele.fuelType))]
     }
 
     const { register, handleSubmit, reset } = useForm({
