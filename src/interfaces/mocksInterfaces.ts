@@ -21,10 +21,19 @@ export interface IMockedCar {
   description: string;
   isPublished: boolean;
   createdAt: string;
-  images: Array<{ url: string }>;
+  images: iImages;
   comments: Array<{
     content: string;
     createdAt: string;
     user: { name: string };
   }>;
+}
+
+interface iImages {
+  one: string
+  two: string | null
+  three: string | null
+  four: string | null
+  five: string | null
+  six: string | null
 }

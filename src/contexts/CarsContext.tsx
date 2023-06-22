@@ -24,29 +24,43 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   const token = localStorage.getItem("@kenzie-cars:token")
 
-  // Pega todos os carros da API
-  useEffect(() =>{
-    getCars()
-  }, [])
-  
-  const getCars = async () => {
-    try {
-      const { data } = await apiKenzieKars.get('/cars/')
-      setAllCarsList(data)
-    } catch (error) {
-      console.error(error)
-    }
-  }
+  useEffect(() => {
+    const getCars = async () => {
+      try {
+        const { data } = await apiG21.get('/car')
+        console.log(data);
 
-  const createPoster = async (data: INewPoster) =>{
-      try{
-        apiG21.defaults.headers.authorization = `Bearer ${token}`
-        await apiG21.post("/posters", data);
-        //Colocar função de carregar carros do usuário logado
-      } catch {
-        console.error(Error)
+        setCarList(data)
+      } catch (error) {
+        console.error(error)
       }
     }
+    getCars()
+  }, [])
+  // Pega todos os carros da API
+  useEffect(() => {
+    const getCars = async () => {
+      try {
+        const { data } = await apiKenzieKars.get('/cars')
+        setAllCarsList(data)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+    getCars()
+  }, [])
+
+
+
+  const createPoster = async (data: INewPoster) => {
+    try {
+      apiG21.defaults.headers.authorization = `Bearer ${token}`
+      await apiG21.post("/posters", data);
+      //Colocar função de carregar carros do usuário logado
+    } catch {
+      console.error(Error)
+    }
+  }
 
   //Pega os carros pela marca
   const getCarsByBrand = async (brand: string) => {
@@ -71,8 +85,8 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   //Pega a marca selecionada
   const getSelectedCarModel = async (name: string, brand: string) => {
     const { data } = await apiKenzieKars.get(`/cars?brand=${brand}`);
-    data.map((value: any) =>{
-      if(value.name === name){
+    data.map((value: any) => {
+      if (value.name === name) {
         setSelectedCarModel(value)
       }
     })

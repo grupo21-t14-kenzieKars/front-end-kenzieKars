@@ -14,8 +14,8 @@ const CarPostList = ({ carsList, isOwner }: any) => {
       w={"100%"}
       maxW="100%"
     >
-      {carsList.map((elem: any) => (
-        <ListItem key={elem.id}>
+      {carsList.map((elem: any, i: any) => (
+        <ListItem key={i}>
           <CardPoster carPost={elem} isOwner={isOwner} />
         </ListItem>
       ))}

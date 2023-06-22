@@ -49,7 +49,7 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
           }}
         >
           <Image
-            src={carPost.images[0].url}
+            src={carPost.images.one}
             w="100%"
             maxW="100%"
             h="100%"
