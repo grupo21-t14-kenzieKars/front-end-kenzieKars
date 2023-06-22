@@ -1,6 +1,7 @@
 import { Box, Heading } from "@chakra-ui/layout"
 import { useContext } from "react"
-import { CarContext } from "../../../contexts/carsContext"
+import { CarContext } from "../../../contexts/CarsContext"
+
 
 
 type filterCategoryProps = {
@@ -16,6 +17,8 @@ const FilterCategory = ({ filters, children, category }: filterCategoryProps) =>
     const handleFilter = (filter: any) => {
         const newList: any = filteredCarList.filter((el: any) => el[category] == filter)
         setFilteredCarList(newList)
+        console.log(newList);
+
     }
 
     return (
@@ -29,6 +32,7 @@ const FilterCategory = ({ filters, children, category }: filterCategoryProps) =>
                         (
                             filters.map((filter, i) =>
                                 <Heading
+                                    cursor={"pointer"}
                                     onClick={() => handleFilter(filter)}
                                     key={i}
                                     color="grey.3"

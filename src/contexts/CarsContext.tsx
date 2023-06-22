@@ -31,6 +31,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         console.log(data);
 
         setCarList(data)
+        setFilteredCarList(data)
       } catch (error) {
         console.error(error)
       }

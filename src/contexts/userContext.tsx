@@ -73,9 +73,15 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     const editUser = async (data: IEditUser) => {
+        const token = localStorage.getItem("@kenzie-cars:token")
+
         if (user) {
             try {
-                const response = await apiG21.patch(`/user${user.id}`, data);
+                const response = await apiG21.patch(`/user/${user.id}`, data, {
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
+                })
                 setUser(response.data)
             } catch (error) {
                 console.error(error)
