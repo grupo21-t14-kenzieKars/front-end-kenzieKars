@@ -19,31 +19,13 @@ import { useLocation } from "react-router-dom";
 import UserEditModal from "../userEditModal";
 import AddressEditModal from "../addressEditModal";
 
-const user = {
-  id: "9d931a02-a54d-487e-b6e4-70323edecd6e",
-  email: "maria.souza@email.com",
-  name: "Maria Souza",
-  cpf: "12345678900",
-  phone:"1234567890007",
-  birth_date:"2000-02-13",
-  description: `Uma pessoa incrível com interesses diversos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio autem soluta
-  molestias voluptates veniam consequatur sint officia aperiam dolorum nobis.`,
-  password: "1234",
-  is_seller: false,
-  address: {
-      zip_code:"12345671",
-      city:"Santos",
-      state:"BA",
-      street:"Avenida Elementar",
-  }
-}
 
 const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
-  const { isSeller, logout } = useContext(UserContext)
+  const { user, isSeller, logout } = useContext(UserContext)
 
-  const { isOpen: isOpenEditModal, onOpen: onOpenEditModal, onClose: onCloseEditModal} = useDisclosure()
-  const { isOpen: isOpenAddressModal, onOpen: onOpenAddressModal, onClose: onCloseAddressModal} = useDisclosure()
+  const { isOpen: isOpenEditModal, onOpen: onOpenEditModal, onClose: onCloseEditModal } = useDisclosure()
+  const { isOpen: isOpenAddressModal, onOpen: onOpenAddressModal, onClose: onCloseAddressModal } = useDisclosure()
 
   const location = useLocation()
   const isLoginOrRegister = location.pathname == '/login' || location.pathname == '/regiter' ? true : false
@@ -236,7 +218,7 @@ const Header = () => {
         </MenuList>
       </Menu>
 
-      <UserEditModal isOpen={isOpenEditModal} onClose={onCloseEditModal}/>
+      <UserEditModal isOpen={isOpenEditModal} onClose={onCloseEditModal} />
       <AddressEditModal isOpen={isOpenAddressModal} onClose={onCloseAddressModal} />
     </Flex>
   );

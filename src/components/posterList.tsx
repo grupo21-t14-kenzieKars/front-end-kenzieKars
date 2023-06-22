@@ -1,9 +1,10 @@
-import {  Flex, Text } from "@chakra-ui/react";
-import { mockedCarPost, mockedCarPost2 } from "../mocks";
+import { Flex, Text } from "@chakra-ui/react";
 import CardPoster from "./cardPoster";
+import { useContext } from "react";
+import { CarContext } from "../contexts/CarsContext";
 
 const PosterList = () => {
-  const carList = [mockedCarPost, mockedCarPost2];
+  const { carList } = useContext(CarContext)
 
   return (
     <Flex
@@ -14,11 +15,11 @@ const PosterList = () => {
       padding={"40px 0"}
       overflowX={"auto"}
       w={"100%"}
-      
+
     >
       {carList.length > 0 ? (
-        carList.map((carPost, index) => (
-            <CardPoster key={index} carPost={carPost} isOwner={false} />
+        carList.map((carPost, i) => (
+          <CardPoster key={i} carPost={carPost} isOwner={false} />
 
         ))
       ) : (

@@ -19,9 +19,12 @@ import HomeBg from "../../assets/HomeBg.png";
 import SideBar from "../../components/sideBar";
 import CarPostList from "./../../components/carPosterListComponet";
 import { MockedCarPostList } from "../../mocks";
+import { useContext } from "react";
+import { CarContext } from "../../contexts/CarsContext";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { filteredCarList } = useContext(CarContext)
 
   return (
     <>
@@ -59,7 +62,7 @@ const Home = () => {
             alignItems={"center"}
             width={{ base: "100%", md: "auto" }}
           >
-            <CarPostList carsList={MockedCarPostList} isOwner={false} />
+            <CarPostList carsList={filteredCarList} isOwner={false} />
             <Button
               marginTop={5}
               display={{ base: "block", md: "none" }}

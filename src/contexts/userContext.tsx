@@ -45,7 +45,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
             const { data } = await apiG21.post('/login', loginData)
             console.log(data);
             window.localStorage.setItem("@kenzie-cars:token", data.token);
-
+            navigate('/')
         } catch (error) {
             console.error(error)
             window.localStorage.clear()
@@ -72,24 +72,30 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
         window.location.reload()
     }
 
-    const editUser = async (data: IEditUser) =>{
-        if(user){
-            try{
-                const response = await apiG21.patch(`/user${user.id}`, data);
+    const editUser = async (data: IEditUser) => {
+        const token = localStorage.getItem("@kenzie-cars:token")
+
+        if (user) {
+            try {
+                const response = await apiG21.patch(`/user/${user.id}`, data, {
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
+                })
                 setUser(response.data)
-            }catch(error){
+            } catch (error) {
                 console.error(error)
             }
         }
     }
 
     const deleteUser = async () => {
-        if(user){
-            try{
+        if (user) {
+            try {
                 await apiG21.delete(`/user/${user.id}`);
                 setUser(null)
                 navigate("/")
-            } catch (error){
+            } catch (error) {
                 console.error(error)
             }
         }
