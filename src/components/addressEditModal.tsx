@@ -58,7 +58,6 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
 
   const onSubmit = async (data: IAddressEdit) => {
     setLoading(true);
-    console.log(data)
     await editUser(data);
     reset();
     setLoading(false);
