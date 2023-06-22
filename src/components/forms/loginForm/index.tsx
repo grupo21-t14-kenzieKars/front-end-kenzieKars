@@ -45,6 +45,7 @@ const LoginForm = () => {
       padding={"40px"}
       borderRadius={"4px"}
       bg="white"
+      isInvalid={!!errors}
     >
       <Text
         w={"full"}
@@ -62,16 +63,15 @@ const LoginForm = () => {
         type="email"
         label={"Email"}
         register={register("email")}
+        error={errors.email}
       />
-      <FormErrorMessage>
-        {errors.email && errors.email.message}
-      </FormErrorMessage>
       <InputWithLabel
         placeHolder={"Digitar senha"}
         id={"password"}
         type="password"
         label={"Senha"}
         register={register("password")}
+        error={errors.password}
       />
       <Link
         fontSize={"heading.1"}
