@@ -21,6 +21,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const toast = useToast();
 
   const navigate = useNavigate();
+  console.log(user);
 
   useEffect(() => {
     const auth = async () => {
@@ -117,43 +118,43 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const resetPassword = async (data: IResetPassword,token:string) => {
-  try {
-    setLoading(true);
-    console.log(token);
+  const resetPassword = async (data: IResetPassword, token: string) => {
+    try {
+      setLoading(true);
+      console.log(token);
 
-    if (!token) {
-      throw new Error("Token não encontrado na URL.");
+      if (!token) {
+        throw new Error("Token não encontrado na URL.");
+      }
+
+      await apiG21.post(`/user/recovery/${token}`, {
+        password: data.password,
+      });
+
+      toast({
+        status: "success",
+        description: "Senha alterada com sucesso, faça o login novamente",
+        duration: 4000,
+        position: "bottom-right",
+        variant: "subtle",
+      });
+
+      navigate("/login");
+    } catch (error: any) {
+      console.error(error);
+      toast({
+        status: "error",
+        description:
+          error.response?.data.message ||
+          "Ops... ocorreu um erro! Tente novamente mais tarde.",
+        duration: 3000,
+        position: "bottom-right",
+        variant: "subtle",
+      });
+    } finally {
+      setLoading(false);
     }
-
-    await apiG21.post(`/user/recovery/${token}`, {
-      password: data.password,
-    });
-
-    toast({
-      status: "success",
-      description: "Senha alterada com sucesso, faça o login novamente",
-      duration: 4000,
-      position: "bottom-right",
-      variant: "subtle",
-    });
-
-    navigate("/login");
-  } catch (error: any) {
-    console.error(error);
-    toast({
-      status: "error",
-      description:
-        error.response?.data.message ||
-        "Ops... ocorreu um erro! Tente novamente mais tarde.",
-      duration: 3000,
-      position: "bottom-right",
-      variant: "subtle",
-    });
-  } finally {
-    setLoading(false);
-  }
-};
+  };
   return (
     <>
       <UserContext.Provider

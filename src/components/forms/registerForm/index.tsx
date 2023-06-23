@@ -21,7 +21,6 @@ const RegisterForm = () => {
   });
 
   const onSubmit = (data: RegisterData) => {
-    console.log(data);
 
     const address = {
       zip_code: data.zip_code.replace(/[-]/g, ""),
@@ -31,10 +30,11 @@ const RegisterForm = () => {
       number: data.number,
       complement: data.complement
     }
+
     const formatData = { ...data, address: address }
     formatData.phone = `55${formatData.phone.replace(/[\s()-]/g, "")}`
     formatData.birth_date = formatData.birth_date.replace(/[/]/g, "-")
-    console.log(formatData);
+    formatData.is_seller = seller
     createUser(formatData);
   };
   return (
