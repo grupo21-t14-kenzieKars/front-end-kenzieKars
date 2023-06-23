@@ -51,7 +51,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
         },
       });
     }
-  }, [ user, isOpen]);
+  }, [user, isOpen]);
 
   const onCloseAndReset = () =>{
     onClose()

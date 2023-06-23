@@ -18,7 +18,7 @@ export const editUserSchema = z.object({
         .string()
         .length(14, "Deve conter 11 dígitos")
         .transform((cpf) => cpf.replace(/\D/g, "")),
-        phone: z.string()
+    phone: z.string()
         .refine((value) => /^\([1-9]{2}\)\s9?[6-9]{1}[0-9]{3}-[0-9]{4}$/.test(value),
             { message: 'Número de telefone inválido. Insira um número de telefone válido no formato DDD 9xxxx-xxxx.' }),
     birth_date: z.string().refine((value) => {
@@ -29,7 +29,7 @@ export const editUserSchema = z.object({
     }),
     description: z.string(),
     address: addressSchema.partial()
-});
+}).partial();
 
 export const addressEditSchema = z.object({
     address: addressSchema.partial()

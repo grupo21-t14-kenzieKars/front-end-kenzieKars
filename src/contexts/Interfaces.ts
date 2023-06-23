@@ -27,13 +27,16 @@ export interface ICarProviderData {
 export interface IUserProviderData {
   loginUser: (data: LoginData) => Promise<void>;
   createUser: (data: RegisterData) => Promise<void>;
-  user: IMockedUser | null;
+  user: IUserData | null;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   isSeller: boolean;
   logout: () => void;
   sendResetPassworEmail: (data: IForgotPassword) => Promise<void>;
-  resetPassword: (data: IResetPassword, token:string) => Promise<void>
+  resetPassword: (data: IResetPassword, token:string) => Promise<void>;
+  editUser:(data: IEditUser) => Promise<void>
+  deleteUser: () => Promise<void>;
+
 }
 
 export interface IUserAddressData{

@@ -1,4 +1,4 @@
-import { Flex, Heading, Modal, ModalCloseButton, ModalContent, useDisclosure, Text, Button, ModalOverlay } from "@chakra-ui/react"
+import { Flex, Heading, Modal, ModalCloseButton, ModalContent, useDisclosure, Text, Button, ModalOverlay, FormControl } from "@chakra-ui/react"
 import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../contexts/userContext"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -28,7 +28,6 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
         if (user) {
           reset({
             name: user.name,
-            email: user.email,
             cpf: user.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"),
             phone: user.phone.replace(/^(\d{2})(\d{5})(\d{4})/, "($1) $2-$3"),
             birth_date: user.birth_date.split("-").reverse().join("/"),
@@ -39,8 +38,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
 
     const onSubmit = async (data: IEditUser) => {
         setLoading(true);
-        console.log(data)
-        data.phone = `${data.phone?.replace(/[\s()-]/g, "")}`;
+        data.phone = `55${data.phone?.replace(/[\s()-]/g, "")}`;
         data.birth_date = data.birth_date?.replace(/[/]/g, "/");
         await editUser(data);
         onClose();
@@ -64,7 +62,6 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
         <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick>
             <ModalOverlay />
             <ModalContent 
-            as={"form"}
             width="100%"
             maxWidth="520px" 
             color={"grey.1"}
@@ -74,7 +71,11 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             fontFamily={"heading"}
             borderRadius={"6px"} 
             fontWeight={"semibold"} 
+            >
+            <FormControl
+            as={"form"}
             onSubmit={handleSubmit(onSubmit)}
+            isInvalid={!!errors}
             >
 
             <Flex width="100%" height="100%" p={"15px"}>
@@ -105,7 +106,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             type="email"
             label={"Email"}
             error={errors.email}
-            register={register("email")}
+            // register={register("email")}
             /> 
 
             <InputWithLabel
@@ -127,7 +128,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             register={register("cpf")}
             />
       
-      <InputWithLabel
+        <InputWithLabel
         placeHolder={`${user?.phone}`}
         id={"phone"}
         type="text"
@@ -180,6 +181,10 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
                 <Button variant={"negative"} size={"lg"} width={{base:"40%"}} onClick={cancelAndClose}>Cancelar</Button>
             </Flex>
 
+
+            </FormControl>
+
+            
             </ModalContent>
         </Modal>
 
