@@ -40,7 +40,6 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
     resolver: zodResolver(addressEditSchema),
   });
 
-<<<<<<< HEAD
   useEffect(() => {
     if (user) {
       reset({
@@ -54,8 +53,6 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
     }
   }, [user, isOpen]);
 
-=======
->>>>>>> dc175bed05891081c6e1228a8fec14e7eab32b32
   const onCloseAndReset = () =>{
     onClose()
     reset()
@@ -139,11 +136,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
                 <Select
                     border={"none"}
                     variant='unstyled'
-<<<<<<< HEAD
                     {...register("address.state")}>
-=======
-                    {...register("address.state", {required: false})}>
->>>>>>> dc175bed05891081c6e1228a8fec14e7eab32b32
                     <option value=''>--</option>
                     {states.map((state) => <option key={state} value={state}>{state}</option>)}
                 </Select>
