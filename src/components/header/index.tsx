@@ -15,7 +15,7 @@ import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import logo from "../../assets/Motors shop.svg";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/userContext";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import UserEditModal from "../userEditModal";
 import AddressEditModal from "../addressEditModal";
 
@@ -26,7 +26,7 @@ const Header = () => {
 
   const { isOpen: isOpenEditModal, onOpen: onOpenEditModal, onClose: onCloseEditModal } = useDisclosure()
   const { isOpen: isOpenAddressModal, onOpen: onOpenAddressModal, onClose: onCloseAddressModal } = useDisclosure()
-
+  const navigate = useNavigate()
   const location = useLocation()
   const isLoginOrRegister = location.pathname == '/login' || location.pathname == '/regiter' ? true : false
 
@@ -68,7 +68,7 @@ const Header = () => {
               </Box>
               {isSeller && (
                 <Box p={2}>
-                  <a href="/">Meus anuncios</a>
+                  <button onClick={() => navigate('/profile/seller')}>Meus anuncios</button>
                 </Box>
               )}
               <Box p={2}>
@@ -213,7 +213,7 @@ const Header = () => {
         <MenuList color={"black"}>
           <MenuItem onClick={onOpenEditModal}>Editar perfil</MenuItem>
           <MenuItem onClick={onOpenAddressModal}>Editar endereço</MenuItem>
-          {isSeller && <MenuItem>Meus anúncios</MenuItem>}
+          {isSeller && <MenuItem as={'button'} onClick={() => navigate('/profile/seller')}>Meus anúncios</MenuItem>}
           <MenuItem onClick={() => logout()}>Sair</MenuItem>
         </MenuList>
       </Menu>

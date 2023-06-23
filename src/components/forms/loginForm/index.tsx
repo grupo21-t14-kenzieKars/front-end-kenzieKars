@@ -79,6 +79,7 @@ const LoginForm = () => {
         textAlign={"right"}
         w={"full"}
         marginBottom={6}
+        href="/forgotPassword"
       >
         Esqueci minha senha
       </Link>

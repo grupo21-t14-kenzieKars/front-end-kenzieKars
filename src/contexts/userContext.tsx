@@ -20,6 +20,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const toast = useToast();
 
   const navigate = useNavigate();
+  console.log(user);
 
   useEffect(() => {
     const auth = async () => {
@@ -116,14 +117,14 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const resetPassword = async (data: IResetPassword,token:string) => {
-  try {
-    setLoading(true);
-    console.log(token);
+  const resetPassword = async (data: IResetPassword, token: string) => {
+    try {
+      setLoading(true);
+      console.log(token);
 
-    if (!token) {
-      throw new Error("Token não encontrado na URL.");
-    }
+      if (!token) {
+        throw new Error("Token não encontrado na URL.");
+      }
 
     await apiG21.post(`/user/recovery/${token}`, {
       password: data.password,
@@ -189,6 +190,7 @@ const deleteUser = async () => {
       }
   }
 }
+
 
   return (
     <>
