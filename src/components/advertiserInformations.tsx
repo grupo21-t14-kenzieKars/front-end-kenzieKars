@@ -1,11 +1,13 @@
 import { Flex, Text, Button, Avatar } from "@chakra-ui/react";
 import { IMockedUser } from "../interfaces/mocksInterfaces";
+import { useNavigate } from "react-router-dom";
 
 interface IAdvertiserInformationsProps {
   user: IMockedUser;
 }
 
 function AdvertiserInformations({ user }: IAdvertiserInformationsProps) {
+  const navigate = useNavigate();
   function getInitials(name: string) {
     const nameArr = name.split(" ");
 
@@ -34,8 +36,14 @@ function AdvertiserInformations({ user }: IAdvertiserInformationsProps) {
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry. Lorem Ipsum has been the industry's
       </Text>
-      <Button width={"max-content"} variant="grey1">
-        Ver todos anuncios
+      <Button
+        onClick={() => {
+          navigate(`/profile/${user.id}`);
+        }}
+        width={"max-content"}
+        variant="grey1"
+      >
+        Ver todos os anuncios
       </Button>
     </Flex>
   );
