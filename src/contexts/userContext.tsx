@@ -157,6 +157,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 const editUser = async (data: IEditUser) => {
   const token = localStorage.getItem("@kenzie-cars:token")
 
+<<<<<<< HEAD
   if (user) {
       try {
           const response = await apiG21.patch(`/user/${user.id}`, data, {
@@ -169,6 +170,58 @@ const editUser = async (data: IEditUser) => {
           console.error(error)
       }
   }
+=======
+        if (user) {
+            try {
+                const response = await apiG21.patch(`/user/${user.id}`, data, {
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
+                })
+                setUser(response.data)
+            } catch (error) {
+                console.error(error)
+            }
+        }
+    }
+
+    const deleteUser = async () => {
+        const token = localStorage.getItem("@kenzie-cars:token")
+
+        if (user) {
+            try {
+                await apiG21.delete(`/user/${user.id}`, {
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
+                });
+                setUser(null)
+                localStorage.removeItem("@kenzie-cars:token")
+                navigate("/login")
+            } catch (error) {
+                console.error(error)
+            }
+        }
+    }
+
+    return (
+        <>
+            <UserContext.Provider value={{
+                loginUser,
+                createUser,
+                user,
+                loading,
+                isSeller,
+                setLoading,
+                logout,
+                editUser,
+                deleteUser
+            }}>
+                {children}
+            </UserContext.Provider>
+        </>
+    )
+>>>>>>> dc175bed05891081c6e1228a8fec14e7eab32b32
 }
 
 const deleteUser = async () => {

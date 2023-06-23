@@ -40,6 +40,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
     resolver: zodResolver(addressEditSchema),
   });
 
+<<<<<<< HEAD
   useEffect(() => {
     if (user) {
       reset({
@@ -53,6 +54,8 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
     }
   }, [user, isOpen]);
 
+=======
+>>>>>>> dc175bed05891081c6e1228a8fec14e7eab32b32
   const onCloseAndReset = () =>{
     onClose()
     reset()
@@ -114,7 +117,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
                 event.target.value = value;
               }
             }}
-            register={register("address.zip_code")}
+            register={register("address.zip_code", {required: false})}
           />
 
           <Flex gap={5}>
@@ -136,7 +139,11 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
                 <Select
                     border={"none"}
                     variant='unstyled'
+<<<<<<< HEAD
                     {...register("address.state")}>
+=======
+                    {...register("address.state", {required: false})}>
+>>>>>>> dc175bed05891081c6e1228a8fec14e7eab32b32
                     <option value=''>--</option>
                     {states.map((state) => <option key={state} value={state}>{state}</option>)}
                 </Select>
@@ -148,7 +155,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
               type="text"
               label={"Cidade"}
               error={errors.address?.city}
-              register={register("address.city")}
+              register={register("address.city", {required: false})}
             />
           </Flex>
 
@@ -158,7 +165,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
             type="text"
             label={"Rua"}
             error={errors.address?.street}
-            register={register("address.street")}
+            register={register("address.street", {required: false})}
           />
 
           <Flex gap={"15px"}>
@@ -168,7 +175,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
               type="text"
               label={"Numero"}
               error={errors.address?.number}
-              register={register("address.number")}
+              register={register("address.number", {required: false})}
             />
 
             <InputWithLabel
@@ -177,7 +184,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
               type="text"
               label={"Complemento"}
               error={errors.address?.complement}
-              register={register("address.complement")}
+              register={register("address.complement", {required: false})}
             />
           </Flex>
 

@@ -20,8 +20,6 @@ export interface ICarProviderData {
     carModels: Array<IMockedCar>
     selectedCarModel: IModelCar | null
     setSelectedCarModel: React.Dispatch<React.SetStateAction<any | null>>
-
-    
 }
 
 export interface IUserProviderData {
@@ -36,7 +34,6 @@ export interface IUserProviderData {
   resetPassword: (data: IResetPassword, token:string) => Promise<void>;
   editUser:(data: IEditUser) => Promise<void>
   deleteUser: () => Promise<void>;
-
 }
 
 export interface IUserAddressData{
