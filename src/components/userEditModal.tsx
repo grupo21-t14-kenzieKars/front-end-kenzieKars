@@ -24,11 +24,24 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
         resolver: zodResolver(editUserSchema)
     })
 
+    useEffect(() => {
+        if (user) {
+          reset({
+            name: user.name,
+            email: user.email,
+            cpf: user.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"),
+            phone: user.phone.replace(/^(\d{2})(\d{5})(\d{4})/, "($1) $2-$3"),
+            birth_date: user.birth_date.split("-").reverse().join("/"),
+            description: user.description,
+          });
+        }
+      }, [user, isOpen, reset]);
+
     const onSubmit = async (data: IEditUser) => {
         setLoading(true);
-        data.phone = `55${data.phone?.replace(/[\s()-]/g, "")}`;
-        data.birth_date = data.birth_date?.replace(/[/]/g, "-");
         console.log(data)
+        data.phone = `${data.phone?.replace(/[\s()-]/g, "")}`;
+        data.birth_date = data.birth_date?.replace(/[/]/g, "/");
         await editUser(data);
         onClose();
         reset();
@@ -114,24 +127,24 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             register={register("cpf")}
             />
       
-            <InputWithLabel
-                placeHolder={"Digitar numero"}
-                id={"phone"}
-                type="text"
-                label={"Celular"}
-                error={errors.phone}
-                onKeyUp={(event: any) => {
-                const value = event.target.value.replace(/\D/g, "");
-                const match = value.match(/^(\d{2})(\d{5})(\d{4})$/);
+      <InputWithLabel
+        placeHolder={`${user?.phone}`}
+        id={"phone"}
+        type="text"
+        label={"Celular"}
+        error={errors.phone}
+        onKeyUp={(event: any) => {
+          const value = event.target.value.replace(/\D/g, "");
+          const match = value.match(/^(\d{2})(\d{5})(\d{4})$/);
 
-                if (match) {
-                    event.target.value = `(${match[1]}) ${match[2]}-${match[3]}`;
-                } else {
-                    event.target.value = value;
-                }
-                }}
-                register={register("phone")}
-            />
+          if (match) {
+            event.target.value = `(${match[1]}) ${match[2]}-${match[3]}`;
+          } else {
+            event.target.value = value;
+          }
+        }}
+        register={register("phone")}
+      />
 
             <InputWithLabel
             placeHolder={`${user?.birth_date}`}

@@ -12,22 +12,22 @@ export const addressSchema = z.object({
 }).partial()
 
 export const editUserSchema = z.object({
-    email: z.string().email('Digite um email valido').optional(),
-    name: z.string().max(50).min(3, 'O nome deve conter no minimo 3 caracteres').optional(),
+    email: z.string().email('Digite um email valido'),
+    name: z.string().max(50).min(3, 'O nome deve conter no minimo 3 caracteres'),
     cpf: z
         .string()
         .length(14, "Deve conter 11 dígitos")
-        .transform((cpf) => cpf.replace(/\D/g, "")).optional(),
-    phone: z.string()
+        .transform((cpf) => cpf.replace(/\D/g, "")),
+        phone: z.string()
         .refine((value) => /^\([1-9]{2}\)\s9?[6-9]{1}[0-9]{3}-[0-9]{4}$/.test(value),
-            { message: 'Número de telefone inválido. Insira um número de telefone válido no formato DDD 9xxxx-xxxx.' }).optional(),
+            { message: 'Número de telefone inválido. Insira um número de telefone válido no formato DDD 9xxxx-xxxx.' }),
     birth_date: z.string().refine((value) => {
         const regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
         return regex.test(value);
     }, {
         message: 'Data inválida. O formato deve ser DD/MM/AAAA.',
-    }).optional(),
-    description: z.string().optional(),
+    }),
+    description: z.string(),
     address: addressSchema.partial()
 });
 
