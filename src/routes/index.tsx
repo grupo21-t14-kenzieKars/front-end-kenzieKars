@@ -4,6 +4,8 @@ import CarDetailPage from "../pages/CarDetailPage";
 import AdvertiserPage from "../pages/AdvertiserPage";
 import Login from "../pages/loginPage";
 import Register from "../pages/registerPage";
+import ForgotPasswordPage from './../pages/ForgotPasswordPage/index';
+import ResetPasswordPage from "../pages/resetPasswordPage";
 
 const RoutesMain = () => {
   return (
@@ -13,6 +15,9 @@ const RoutesMain = () => {
       <Route path="/profile/seller" element={<AdvertiserPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/forgotPassword" element={< ForgotPasswordPage />} />
+      <Route path="/resetPassword/:token" element={< ResetPasswordPage />} />
+      
     </Routes>
   );
 };

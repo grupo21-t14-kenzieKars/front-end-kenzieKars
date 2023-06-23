@@ -1,9 +1,11 @@
 import React from "react"
 import { LoginData } from "../components/forms/loginForm/loginSchema"
 import { RegisterData } from "../components/forms/registerForm/registerSchema"
-import { IMockedCar } from "../interfaces/mocksInterfaces"
+import { IForgotPassword, IResetPassword } from "../interfaces/forgotPassword.interfaces"
+import { IMockedCar, IMockedUser } from "../interfaces/mocksInterfaces"
 import { IModelCar, INewPoster } from "../interfaces/posterInterfaces"
 import { IEditUser } from "../interfaces/userInterfaces"
+import ResetPasswordForm from './../components/forms/resetPasswordForm/index';
 
 export interface ICarProviderData {
     createPoster: (data: INewPoster) => void
@@ -18,18 +20,20 @@ export interface ICarProviderData {
     carModels: Array<IMockedCar>
     selectedCarModel: IModelCar | null
     setSelectedCarModel: React.Dispatch<React.SetStateAction<any | null>>
+
+    
 }
 
 export interface IUserProviderData {
-    loginUser: (data: LoginData) => Promise<void>
-    createUser: (data: RegisterData) => Promise<void>
-    editUser: (data: IEditUser) => Promise<void>
-    deleteUser: () => Promise<void>
-    user: IUserData | null
-    loading: boolean
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>
-    isSeller: boolean
-    logout: () => void
+  loginUser: (data: LoginData) => Promise<void>;
+  createUser: (data: RegisterData) => Promise<void>;
+  user: IMockedUser | null;
+  loading: boolean;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  isSeller: boolean;
+  logout: () => void;
+  sendResetPassworEmail: (data: IForgotPassword) => Promise<void>;
+  resetPassword: (data: IResetPassword, token:string) => Promise<void>
 }
 
 export interface IUserAddressData{
