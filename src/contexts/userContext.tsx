@@ -1,12 +1,14 @@
-import { createContext, useEffect, useState } from "react";
-import { IUserProviderData } from "./Interfaces";
-import { LoginData } from "../components/forms/loginForm/loginSchema";
-import { RegisterData } from "../components/forms/registerForm/registerSchema";
-import { apiG21 } from "../services/api";
-import { useNavigate } from "react-router-dom";
-import { IMockedUser } from "../interfaces/mocksInterfaces";
-import { IForgotPassword } from "../interfaces/forgotPassword.interfaces";
-import { useToast } from "@chakra-ui/react";
+import { createContext, useEffect, useState } from "react"
+import { IUserData, IUserProviderData } from "./Interfaces"
+import { LoginData } from "../components/forms/loginForm/loginSchema"
+import { apiG21 } from "../services/api"
+import { useLocation, useNavigate } from "react-router-dom"
+import { IEditUser } from "../interfaces/userInterfaces"
+import { RegisterData } from "../components/forms/registerForm/registerSchema"
+import { useToast } from "@chakra-ui/react"
+import { IForgotPassword, IResetPassword } from "../interfaces/forgotPassword.interfaces"
+import { IMockedUser } from "../interfaces/mocksInterfaces"
+import ResetPasswordForm from './../components/forms/resetPasswordForm/index';
 
 export const UserContext = createContext<IUserProviderData>(
   {} as IUserProviderData
@@ -115,6 +117,43 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const resetPassword = async (data: IResetPassword,token:string) => {
+  try {
+    setLoading(true);
+    console.log(token);
+
+    if (!token) {
+      throw new Error("Token não encontrado na URL.");
+    }
+
+    await apiG21.post(`/user/recovery/${token}`, {
+      password: data.password,
+    });
+
+    toast({
+      status: "success",
+      description: "Senha alterada com sucesso, faça o login novamente",
+      duration: 4000,
+      position: "bottom-right",
+      variant: "subtle",
+    });
+
+    navigate("/login");
+  } catch (error: any) {
+    console.error(error);
+    toast({
+      status: "error",
+      description:
+        error.response?.data.message ||
+        "Ops... ocorreu um erro! Tente novamente mais tarde.",
+      duration: 3000,
+      position: "bottom-right",
+      variant: "subtle",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
   return (
     <>
       <UserContext.Provider
@@ -127,6 +166,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
           isSeller,
           setLoading,
           logout,
+          resetPassword,
         }}
       >
         {children}

@@ -1,13 +1,24 @@
-import { Button, FormControl, FormErrorMessage, Text } from "@chakra-ui/react";
+import {
+  Button,
+  FormControl,
+  FormErrorMessage,
+  Text,
+  Toast,
+} from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { IResetPassword } from "../../../interfaces/forgotPassword.interfaces";
 import resetPasswordSchema from "../../../schemas/resetPassword.schema";
 import InputWithLabel from "../../input";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../../../contexts/userContext";
+import { useParams } from "react-router-dom";
 
 const ResetPasswordForm = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const { resetPassword } = useContext(UserContext);
+  const { token } = useParams();
+  const tokenValue = token || "";
 
   const {
     register,
@@ -20,13 +31,9 @@ const ResetPasswordForm = () => {
   });
 
   const onSubmit = (data: IResetPassword): void => {
-    setTimeout(() => {
-      setLoading(true);
-      console.log(data);
-      setLoading(false);
-      reset();
-    }, 5000);
-
+    setLoading(true);
+    resetPassword(data, tokenValue);
+    setLoading(false);
     reset();
   };
 

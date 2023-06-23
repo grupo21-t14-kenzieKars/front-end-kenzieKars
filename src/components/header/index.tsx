@@ -16,11 +16,17 @@ import logo from "../../assets/Motors shop.svg";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/userContext";
 import { useLocation } from "react-router-dom";
+import UserEditModal from "../userEditModal";
+import AddressEditModal from "../addressEditModal";
 
 
 const Header = () => {
   const { isOpen, onToggle } = useDisclosure();
   const { user, isSeller, logout } = useContext(UserContext)
+
+  const { isOpen: isOpenEditModal, onOpen: onOpenEditModal, onClose: onCloseEditModal } = useDisclosure()
+  const { isOpen: isOpenAddressModal, onOpen: onOpenAddressModal, onClose: onCloseAddressModal } = useDisclosure()
+
   const location = useLocation()
   const isLoginOrRegister = location.pathname == '/login' || location.pathname == '/regiter' ? true : false
 
@@ -55,10 +61,10 @@ const Header = () => {
               width={"full"}
             >
               <Box p={2} display={{ base: "block", md: "none" }}>
-                <a href="/">Editar Perfil</a>
+                <a onClick={onOpenEditModal}>Editar Perfil</a>
               </Box>
               <Box p={2} display={{ base: "block", md: "none" }}>
-                <a href="/">Editar Endereço</a>
+                <a onClick={onOpenAddressModal}>Editar Endereço</a>
               </Box>
               {isSeller && (
                 <Box p={2}>
@@ -205,12 +211,15 @@ const Header = () => {
           </Stack>
         )}
         <MenuList color={"black"}>
-          <MenuItem>Editar perfil</MenuItem>
-          <MenuItem>Editar endereço</MenuItem>
+          <MenuItem onClick={onOpenEditModal}>Editar perfil</MenuItem>
+          <MenuItem onClick={onOpenAddressModal}>Editar endereço</MenuItem>
           {isSeller && <MenuItem>Meus anúncios</MenuItem>}
           <MenuItem onClick={() => logout()}>Sair</MenuItem>
         </MenuList>
       </Menu>
+
+      <UserEditModal isOpen={isOpenEditModal} onClose={onCloseEditModal} />
+      <AddressEditModal isOpen={isOpenAddressModal} onClose={onCloseAddressModal} />
     </Flex>
   );
 };
