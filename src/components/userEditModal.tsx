@@ -1,5 +1,5 @@
 import { Flex, Heading, Modal, ModalCloseButton, ModalContent, useDisclosure, Text, Button, ModalOverlay } from "@chakra-ui/react"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../contexts/userContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -17,19 +17,33 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
 
     const { isOpen: isOpenDeleteModal, onOpen: onOpenDeleteModal, onClose: onCloseDeleteModal} = useDisclosure()
 
-    const { user, editUser, deleteUser} = useContext(UserContext)
+    const { user, editUser, deleteUser } = useContext(UserContext)
 
     const { register, handleSubmit, reset, formState: {errors}}=useForm<IEditUser>({
         mode: "onBlur",
         resolver: zodResolver(editUserSchema)
     })
 
-    const onSubmit = async(data: IEditUser) => {
-        setLoading(true)
-        data.birth_date = data.birth_date?.replace(/[/]/g, "-")
-        await editUser(data)
+    const onSubmit = async (data: IEditUser) => {
+        setLoading(true);
+        data.phone = `55${data.phone?.replace(/[\s()-]/g, "")}`;
+        data.birth_date = data.birth_date?.replace(/[/]/g, "-");
+        console.log(data)
+        await editUser(data);
+        onClose();
+        reset();
+        setLoading(false);
+    }
+
+    const cancelAndClose = async () =>{
+        onClose(),
         reset()
-        setLoading(false)
+    }
+
+    const deleteAndClose = async () =>{
+        onCloseDeleteModal()
+        onClose()
+        await deleteUser()
     }
 
     return(
@@ -37,7 +51,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
         <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick>
             <ModalOverlay />
             <ModalContent 
-            as="form"
+            as={"form"}
             width="100%"
             maxWidth="520px" 
             color={"grey.1"}
@@ -101,22 +115,22 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             />
       
             <InputWithLabel
-            placeHolder={`${user?.phone}`}
-            id={"phone"}
-            type="text"
-            label={"Celular"}
-            error={errors.phone}
-            onKeyUp={(event: any) => {
-            const value = event.target.value.replace(/\D/g, "");
-            const match = value.match(/^(\d{2})(\d{5})(\d{4})$/);
+                placeHolder={"Digitar numero"}
+                id={"phone"}
+                type="text"
+                label={"Celular"}
+                error={errors.phone}
+                onKeyUp={(event: any) => {
+                const value = event.target.value.replace(/\D/g, "");
+                const match = value.match(/^(\d{2})(\d{5})(\d{4})$/);
 
-            if (match) {
-                event.target.value = `(${match[1]}) ${match[2]}-${match[3]}`;
-            } else {
-                event.target.value = value;
-            }
-            }}
-            register={register("phone")}
+                if (match) {
+                    event.target.value = `(${match[1]}) ${match[2]}-${match[3]}`;
+                } else {
+                    event.target.value = value;
+                }
+                }}
+                register={register("phone")}
             />
 
             <InputWithLabel
@@ -150,7 +164,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             <Flex width="100%" flexDirection={"row-reverse"} justifyContent={"space-evenly"} wrap={{base: "wrap-reverse", sm: "nowrap"}} p={"15px"} gap={"10px"}>
                 <Button type="submit" variant={"brand1"} size={"lg"} width={{base:"80%", sm: "50%"}}>Salvar alterações</Button>
                 <Button variant={"alert"} size={"lg"} width={{base: "40%"}} onClick={onOpenDeleteModal}>Excluir perfil</Button>
-                <Button variant={"negative"} size={"lg"} width={{base:"40%"}} onClick={onClose}>Cancelar</Button>
+                <Button variant={"negative"} size={"lg"} width={{base:"40%"}} onClick={cancelAndClose}>Cancelar</Button>
             </Flex>
 
             </ModalContent>
@@ -158,13 +172,22 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
 
         <Modal isOpen={isOpenDeleteModal} onClose={onCloseDeleteModal}>
             <ModalOverlay />
-            <ModalContent>
+            <ModalContent
+                       width="100%"
+                       maxWidth="520px" 
+                       color={"grey.1"}
+                       backgroundColor={"white"}
+                       gap={"15px"}
+                       p={"15px"} 
+                       fontFamily={"heading"}
+                       borderRadius={"6px"} 
+                       fontWeight={"semibold"} >
                 <Flex>
                     <Text fontSize={"heading.1"} color={"grey.2"}>Tem certeza que deseja excluir sua conta? </Text>
                 </Flex>
                 
                 <Button variant={"negative"} size={"lg"} onClick={onCloseDeleteModal}>Cancelar</Button>
-                <Button variant={"alert"} size={"lg"} onClick={async () => await deleteUser()}>Sim, excluir minha conta</Button>
+                <Button variant={"alert"} size={"lg"} onClick={deleteAndClose}>Sim, excluir minha conta</Button>
             </ModalContent>
         </Modal>
         </>

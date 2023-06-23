@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Flex,
   Heading,
@@ -8,6 +8,8 @@ import {
   Text,
   Button,
   ModalOverlay,
+  FormLabel,
+  Select,
 } from "@chakra-ui/react";
 import { UserContext } from "../contexts/userContext";
 import { useForm } from "react-hook-form";
@@ -15,31 +17,13 @@ import { IAddressEdit } from "../interfaces/userInterfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { addressEditSchema } from "../schemas/editUserSchema";
 import InputWithLabel from "./input";
-import StateSelect from "./input/stateSelect";
 
 interface IAddressEditModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const user = {
-  id: "9d931a02-a54d-487e-b6e4-70323edecd6e",
-  email: "maria.souza@email.com",
-  name: "Maria Souza",
-  cpf: "12345678900",
-  phone: "1234567890007",
-  birth_date: "2000-02-13",
-  description: `Uma pessoa incrível com interesses diversos. Lorem ipsum dolor sit amet consectetur adipisicing elit. Distinctio autem soluta
-    molestias voluptates veniam consequatur sint officia aperiam dolorum nobis.`,
-  password: "1234",
-  is_seller: false,
-  address: {
-    zip_code: "12345671",
-    city: "Santos",
-    state: "BA",
-    street: "Avenida Elementar",
-  }
-}
+const states = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
 
 const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
   const [loading, setLoading] = useState(false);
@@ -56,10 +40,31 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
     resolver: zodResolver(addressEditSchema),
   });
 
+  useEffect(() => {
+    if (user) {
+      reset({
+        address: {
+          zip_code: user.address.zip_code.replace(/(\d{5})(\d{3})/, "$1-$2"),
+          state: user.address.state,
+          city: user.address.city,
+          street: user.address.street,
+        },
+      });
+    }
+  }, [ user, isOpen]);
+
+  const onCloseAndReset = () =>{
+    onClose()
+    reset()
+  }
+
   const onSubmit = async (data: IAddressEdit) => {
     setLoading(true);
+    console.log(data)
+    data.address.zip_code = data.address.zip_code?.replace(/[-]/g, "");
     await editUser(data);
     reset();
+    onClose();
     setLoading(false);
   };
 
@@ -113,11 +118,29 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
           />
 
           <Flex gap={5}>
-            <StateSelect
-              id={"state"}
-              label={"Estado"}
-              register={register("address.state")}
-            />
+          <Flex
+                direction={"column"}
+                justify={"start"}
+                alignItems={"start"}
+                w={"full"}
+                fontFamily={'body'}>
+                <FormLabel
+                    w={"full"}
+                    textAlign={"left"}
+                    fontSize='heading.1'
+                    fontWeight='medium'
+                    color='grey.1'
+                    htmlFor={"state"}>
+                    {"Estado"}
+                </FormLabel>
+                <Select
+                    border={"none"}
+                    variant='unstyled'
+                    {...register("address.state")}>
+                    <option value=''>--</option>
+                    {states.map((state) => <option key={state} value={state}>{state}</option>)}
+                </Select>
+            </Flex>
 
             <InputWithLabel
               placeHolder={`${user?.address.city}`}
@@ -160,7 +183,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
 
           <Flex flexDirection={"row-reverse"} gap={"10px"} p={"25px"}>
             <Button type="submit" variant={"brand1"} size={"lg"} width={{ base: "100%", sm: "40%" }}>Salvar alterações</Button>
-            <Button variant={"negative"} size={"lg"} width={{ base: "50%", sm: "auto" }} onClick={onClose}>Cancelar</Button>
+            <Button variant={"negative"} size={"lg"} width={{ base: "50%", sm: "auto" }} onClick={onCloseAndReset}>Cancelar</Button>
           </Flex>
 
         </ModalContent>
