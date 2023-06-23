@@ -90,11 +90,18 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     const deleteUser = async () => {
+        const token = localStorage.getItem("@kenzie-cars:token")
+
         if (user) {
             try {
-                await apiG21.delete(`/user/${user.id}`);
+                await apiG21.delete(`/user/${user.id}`, {
+                    headers: {
+                        authorization: `Bearer ${token}`
+                    }
+                });
                 setUser(null)
-                navigate("/")
+                localStorage.removeItem("@kenzie-cars:token")
+                navigate("/login")
             } catch (error) {
                 console.error(error)
             }

@@ -8,7 +8,7 @@ export const addressSchema = z.object({
     state: z.string().length(2, "Somente a sigla"),
     street: z.string().max(127, 'maximo de 127 caracteres').min(3, 'minimo de 3 caracteres'),
     number: z.string().max(20).optional(),
-    complement: z.string().max(127, 'maximo de 127 caracteres').optional(),
+    complement: z.string().max(127, 'maximo de 127 caracteres').optional()
 }).partial()
 
 export const editUserSchema = z.object({

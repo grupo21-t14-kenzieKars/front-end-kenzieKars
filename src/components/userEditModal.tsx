@@ -17,19 +17,28 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
 
     const { isOpen: isOpenDeleteModal, onOpen: onOpenDeleteModal, onClose: onCloseDeleteModal} = useDisclosure()
 
-    const { user, editUser, deleteUser} = useContext(UserContext)
+    const { user, editUser, deleteUser } = useContext(UserContext)
 
     const { register, handleSubmit, reset, formState: {errors}}=useForm<IEditUser>({
         mode: "onBlur",
         resolver: zodResolver(editUserSchema)
     })
 
-    const onSubmit = async(data: IEditUser) => {
-        setLoading(true)
-        data.birth_date = data.birth_date?.replace(/[/]/g, "-")
-        await editUser(data)
-        reset()
-        setLoading(false)
+    const onSubmit = async (data: IEditUser) => {
+        setLoading(true);
+        console.log(data);
+        data.phone = `55${data.phone?.replace(/[\s()-]/g, "")}`;
+        data.birth_date = data.birth_date?.replace(/[/]/g, "-");
+        await editUser(data);
+        onClose();
+        reset();
+        setLoading(false);
+    }
+
+    const deleteAndClose = async () =>{
+        onCloseDeleteModal()
+        onClose()
+        await deleteUser()
     }
 
     return(
@@ -37,7 +46,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
         <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick>
             <ModalOverlay />
             <ModalContent 
-            as="form"
+            as={"form"}
             width="100%"
             maxWidth="520px" 
             color={"grey.1"}
@@ -158,13 +167,22 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
 
         <Modal isOpen={isOpenDeleteModal} onClose={onCloseDeleteModal}>
             <ModalOverlay />
-            <ModalContent>
+            <ModalContent
+                       width="100%"
+                       maxWidth="520px" 
+                       color={"grey.1"}
+                       backgroundColor={"white"}
+                       gap={"15px"}
+                       p={"15px"} 
+                       fontFamily={"heading"}
+                       borderRadius={"6px"} 
+                       fontWeight={"semibold"} >
                 <Flex>
                     <Text fontSize={"heading.1"} color={"grey.2"}>Tem certeza que deseja excluir sua conta? </Text>
                 </Flex>
                 
                 <Button variant={"negative"} size={"lg"} onClick={onCloseDeleteModal}>Cancelar</Button>
-                <Button variant={"alert"} size={"lg"} onClick={async () => await deleteUser()}>Sim, excluir minha conta</Button>
+                <Button variant={"alert"} size={"lg"} onClick={deleteAndClose}>Sim, excluir minha conta</Button>
             </ModalContent>
         </Modal>
         </>
