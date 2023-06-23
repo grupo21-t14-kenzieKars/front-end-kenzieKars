@@ -28,8 +28,9 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
         if (user) {
           reset({
             name: user.name,
+            email: user.email,
             cpf: user.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"),
-            phone: user.phone.replace(/^(\d{2})(\d{5})(\d{4})/, "($1) $2-$3"),
+            phone: "(" + user.phone.slice(2, 4) + ") " + user.phone.slice(4, 9) + "-" + user.phone.slice(9),
             birth_date: user.birth_date.split("-").reverse().join("/"),
             description: user.description,
           });
@@ -106,7 +107,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             type="email"
             label={"Email"}
             error={errors.email}
-            // register={register("email")}
+            register={register("email")}
             /> 
 
             <InputWithLabel
