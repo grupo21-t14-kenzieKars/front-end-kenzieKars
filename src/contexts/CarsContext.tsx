@@ -1,17 +1,16 @@
 import { createContext, useEffect, useState } from "react"
-import { IMockedCar } from "../interfaces/mocksInterfaces"
 import { apiG21, apiKenzieKars } from '../services/api'
 import { ICarProviderData } from "./Interfaces"
-import { INewPoster } from "../interfaces/posterInterfaces"
+import { IAllCars, INewPoster } from "../interfaces/posterInterfaces"
 
 export const CarContext = createContext<ICarProviderData>({} as ICarProviderData)
 
 const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   //Lista de todos os carros da API Kenzie
-  const [allCarsList, setAllCarsList] = useState([] as Array<IMockedCar>)
+  const [allCarsList, setAllCarsList] = useState([] as Array<IAllCars>)
 
-  const [carList, setCarList] = useState([] as Array<IMockedCar>)
+  const [carList, setCarList] = useState([] as Array<IAllCars>)
 
   //Lista com as marcas dos carros da API Kenzie
   const [carsByBrand, setCarsByBrand] = useState([] as Array<object>)
@@ -20,7 +19,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   //Modelo do carro selecionado
   const [selectedCarModel, setSelectedCarModel] = useState(null)
 
-  const [filteredCarList, setFilteredCarList] = useState<IMockedCar[]>([])
+  const [filteredCarList, setFilteredCarList] = useState<IAllCars[]>([])
 
   const token = localStorage.getItem("@kenzie-cars:token")
 
@@ -50,8 +49,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     }
     getCars()
   }, [])
-
-
 
   const createPoster = async (data: INewPoster) => {
     try {
@@ -92,7 +89,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
       }
     })
   }
-
 
   return (
     <>
