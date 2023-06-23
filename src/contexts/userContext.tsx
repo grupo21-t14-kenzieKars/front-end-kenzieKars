@@ -12,8 +12,7 @@ export const UserContext = createContext<IUserProviderData>(
   {} as IUserProviderData
 );
 
-const
-    UserProvider = ({ children }: { children: React.ReactNode }) => {
+const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<IMockedUser | null>(null);
   const [isSeller, setIsSeller] = useState<boolean>(false);
@@ -88,7 +87,7 @@ const
 
   const sendResetPassworEmail = async (data: IForgotPassword) => {
     try {
-      await apiG21.post("/recovery", data);
+      await apiG21.post("/user/recovery", data);
 
       toast({
         status: "success",
@@ -106,7 +105,7 @@ const
         status: "error",
         description:
           error.response?.data.message ||
-          "Ops... ocorreu um erro ! tente novamente mais tarde",
+          "Ops... ocorreu um erro! tente novamente mais tarde",
         duration: 3000,
         position: "bottom-right",
         containerStyle: {

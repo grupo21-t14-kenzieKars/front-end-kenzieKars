@@ -4,8 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { IResetPassword } from "../../../interfaces/forgotPassword.interfaces";
 import resetPasswordSchema from "../../../schemas/resetPassword.schema";
 import InputWithLabel from "../../input";
+import { useState } from "react";
 
 const ResetPasswordForm = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+
   const {
     register,
     handleSubmit,
@@ -17,7 +20,13 @@ const ResetPasswordForm = () => {
   });
 
   const onSubmit = (data: IResetPassword): void => {
-    console.log(data);
+    setTimeout(() => {
+      setLoading(true);
+      console.log(data);
+      setLoading(false);
+      reset();
+    }, 5000);
+
     reset();
   };
 
@@ -38,6 +47,7 @@ const ResetPasswordForm = () => {
         padding={"40px"}
         borderRadius={"4px"}
         bg="white"
+        isInvalid={!!errors}
       >
         <Text
           w={"full"}
@@ -55,10 +65,8 @@ const ResetPasswordForm = () => {
           type="password"
           label={"Nova Senha"}
           register={register("password")}
+          error={errors.password}
         />
-        <FormErrorMessage>
-          {errors.password && errors.password.message}
-        </FormErrorMessage>
         <InputWithLabel
           placeHolder={"Confirme a nova senha"}
           id={"confirmPassword"}
@@ -69,7 +77,13 @@ const ResetPasswordForm = () => {
         <FormErrorMessage>
           {errors.confirmPassword && errors.confirmPassword.message}
         </FormErrorMessage>
-        <Button type="submit" size={"lg"} w={"full"}>
+        <Button
+          type="submit"
+          size={"lg"}
+          w={"full"}
+          isLoading={loading}
+          loadingText="atualizando a nova senha..."
+        >
           Atualizar Senha
         </Button>
       </FormControl>

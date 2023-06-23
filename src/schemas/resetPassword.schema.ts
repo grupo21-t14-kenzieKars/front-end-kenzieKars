@@ -8,6 +8,10 @@ const PasswordResetSchema = z.object({
   confirmPassword: z
     .string()
     .nonempty("Confirmação de senha obrigatória")
+  
+}).refine(({ password, confirmPassword }) => password === confirmPassword, {
+    message: "As senhas precisam ser iguais",
+    path: ["confirmPassword"],
 });
 
 export default PasswordResetSchema;
