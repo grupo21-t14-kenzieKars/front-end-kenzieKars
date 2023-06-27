@@ -12,8 +12,8 @@ export const imageSchema = z.object({
 export const createPosterSchema = z.object({
     brand: z.string().nonempty("Marca é obrigatória"),
     model: z.string().nonempty("Modelo é obrigatório"),
-    year: z.string().nonempty("Ano é obrigatório"),
-    fuel_type: z.string().nonempty("Escolha um tipo de combustível"),
+    year: z.string(),
+    fuel_type: z.string(),
     kilometers: z.string().nonempty("Quilometragem é obrigatória"),
     color: z.string().nonempty("Cor é obrigatória"),
     fipe_price: z.string(),
