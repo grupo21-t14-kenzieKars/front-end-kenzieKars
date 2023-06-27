@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createPosterSchema } from "../schemas/createPosterSchema";
+import { createPosterSchema } from "../schemas/posterSchema";
 import { carModelSchema } from '../schemas/carModelSchema';
 import { IUser } from './userInterfaces';
 
@@ -25,10 +25,10 @@ export interface IAllCars {
     brand: string;
     model: string;
     year: string;
-    fuelType: string;
+    fuel_type: string;
     kilometers: number;
     color: string;
-    fipePrice: number;
+    fipe_price: number;
     price: number;
     description: string;
     isPublished: boolean;

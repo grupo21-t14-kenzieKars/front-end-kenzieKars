@@ -2,11 +2,11 @@ import { z } from 'zod';
 
 export const imageSchema = z.object({
     one: z.string(),
-    two: z.string().optional(),
-    three: z.string().optional(),
-    four: z.string().optional(),
-    five: z.string().optional(),
-    six: z.string().optional(),
+    two: z.string().optional().nullable().default(null),
+    three: z.string().optional().nullable().default(null),
+    four: z.string().optional().nullable().default(null),
+    five: z.string().optional().nullable().default(null),
+    six: z.string().optional().nullable().default(null),
 }).partial()
 
 export const createPosterSchema = z.object({

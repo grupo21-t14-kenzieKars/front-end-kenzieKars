@@ -1,81 +1,81 @@
 import {
-  Button,
-  Flex,
-  FormControl,
-  FormErrorMessage,
-  FormLabel,
-  Heading,
-  Input,
-  Modal,
-  ModalCloseButton,
-  ModalContent,
-  ModalOverlay,
-  Select,
-  Text,
-} from "@chakra-ui/react";
-import { zodResolver } from "@hookform/resolvers/zod";
+    Button,
+    Flex,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    Heading,
+    Input,
+    Modal,
+    ModalCloseButton,
+    ModalContent,
+    ModalOverlay,
+    Select,
+    Text,
+  } from "@chakra-ui/react";
+import { useContext, useState } from "react"
+import { CarContext } from "../contexts/CarsContext"
 import { useForm } from "react-hook-form";
-import { useContext, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { createPosterSchema } from "../schemas/posterSchema";
-import { CarContext } from "../contexts/CarsContext";
 
-interface IPosterCreateModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
-  const [loading, setLoading] = useState(false);
-  const [carBrand, setCarBrand] = useState("");
-  const [imagesCount, setImagesCount] = useState(1);
-
-  const handleAddImageButton = () => {
-    if(imagesCount != 6){
-        setImagesCount(imagesCount + 1)
-    }
+interface IPosterEditModalProps {
+    isOpen: boolean;
+    onClose: () => void;
   }
 
-  const {
-    createPoster,
-    allCarsList,
-    carModels,
-    getCarModels,
-    getSelectedCarModel,
-    selectedCarModel,
-    setSelectedCarModel,
-  } = useContext(CarContext);
+const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
+    const {
+        allCarsList,
+        carModels, 
+        getCarModels, 
+        getSelectedCarModel, 
+        selectedCarModel, 
+        setSelectedCarModel,
+        editCarPoster 
+    } = useContext(CarContext)
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({
-    mode: "onBlur",
-    resolver: zodResolver(createPosterSchema),
-  });
+    const [imagesCount, setImagesCount] = useState(1);
+    const [loading, setLoading] = useState(false);
+    const [carBrand, setCarBrand] = useState("");
 
-  const handleBrandSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+      } = useForm({
+        mode: "onBlur",
+        resolver: zodResolver(createPosterSchema),
+      });
+
+    const handleAddImageButton = () => {
+        if(imagesCount != 6){
+            setImagesCount(imagesCount + 1)
+        }
+    }
+
+    const handleBrandSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCarModel(null);
     const brand = e.target.value;
     setCarBrand(brand);
     getCarModels(brand);
-  };
-
-  const handleModelSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    };
+    
+    const handleModelSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCarModel(null);
     const model = e.target.value;
     getSelectedCarModel(model, carBrand);
-  };
-
-  const closeAndReset = () =>{
+    };
+    
+    const closeAndReset = () =>{
     setImagesCount(1)
     setSelectedCarModel(null)
     reset()
     onClose()
-  }
+    }
 
-  const carOptionsSelect =
+    const carOptionsSelect =
     allCarsList &&
     Object.keys(allCarsList).map((brand) => (
       <option key={brand} value={brand}>
@@ -91,40 +91,39 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
 
   const onSubmit = (data: any) => {
     if(selectedCarModel){
-      setLoading(true);
-
-      data.year = selectedCarModel.year;
-      data.fuel_type = (selectedCarModel && Number(selectedCarModel.fuel_type) === 1) ? "Flex" :
-      (selectedCarModel && Number(selectedCarModel.fuel_type) === 2) ? "Híbrido" :
-      (selectedCarModel && Number(selectedCarModel.fuel_type) === 3) ? "Elétrico" :"";
-
-      const formatColor = (color: string) =>{
-        const firstLetter = color.charAt(0).toUpperCase()
-        const restOfWord = color.slice(1).toLowerCase()
-        return firstLetter + restOfWord
-      };
-
-      data.color = formatColor(data.color);
-      data.fipe_price = parseFloat((data.fipe_price).slice(2));
-      data.kilometers = Number(data.kilometers);
-      data.price = Number(data.price);
-      data.images = {
-        one: data.images.one,
-        two: data.images.two || null,
-        three: data.images.three || null,
-        four: data.images.four || null,
-        five: data.images.five || null,
-        six: data.images.six || null,
-      };
+        setLoading(true);
   
-      createPoster(data);
-      reset();
-      onClose()
-      setLoading(false);
-    }
-  };
+        const formatColor = (color: string) =>{
+          const firstLetter = color.charAt(0).toUpperCase()
+          const restOfWord = color.slice(1).toLowerCase()
+          return firstLetter + restOfWord
+        };
+        data.year = selectedCarModel.year;
+        data.fuel_type = (selectedCarModel && Number(selectedCarModel.fuel_type) === 1) ? "Flex" :
+        (selectedCarModel && Number(selectedCarModel.fuel_type) === 2) ? "Híbrido" :
+        (selectedCarModel && Number(selectedCarModel.fuel_type) === 3) ? "Elétrico" :"";
+  
+        data.color = formatColor(data.color);
+        data.fipe_price = parseFloat(((data.fipe_price).toString()).slice(2));
+        data.kilometers = Number(data.kilometers);
+        data.price = Number(data.price);
+        data.images = {
+          one: data.images.one,
+          two: data.images.two || null,
+          three: data.images.three || null,
+          four: data.images.four || null,
+          five: data.images.five || null,
+          six: data.images.six || null,
+        };
 
-  return (
+        editCarPoster(data)
+        reset();
+        onClose()
+        setLoading(false);
+      }
+  }
+
+  return(
     <Modal isOpen={isOpen} onClose={closeAndReset}>
       <ModalOverlay width="100%" height="100%" />
       <ModalContent
@@ -304,7 +303,6 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
       </FormControl>
       </ModalContent>
     </Modal>
-  );
-};
+  )
 
-export default PosterCreateModal;
+}

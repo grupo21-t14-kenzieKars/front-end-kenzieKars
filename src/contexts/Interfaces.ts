@@ -2,24 +2,25 @@ import React from "react"
 import { LoginData } from "../components/forms/loginForm/loginSchema"
 import { RegisterData } from "../components/forms/registerForm/registerSchema"
 import { IForgotPassword, IResetPassword } from "../interfaces/forgotPassword.interfaces"
-import { IMockedCar, IMockedUser } from "../interfaces/mocksInterfaces"
-import { IModelCar, INewPoster } from "../interfaces/posterInterfaces"
+import { IAllCars, INewPoster } from "../interfaces/posterInterfaces"
 import { IEditUser } from "../interfaces/userInterfaces"
-import ResetPasswordForm from './../components/forms/resetPasswordForm/index';
 
 export interface ICarProviderData {
     createPoster: (data: INewPoster) => void
-    allCarsList: Array<IMockedCar>
-    carList: Array<IMockedCar>
-    filteredCarList: Array<IMockedCar>
-    setFilteredCarList: React.Dispatch<React.SetStateAction<IMockedCar[]>>
+    allCarsList: Array<IAllCars>
+    carList: Array<IAllCars>
+    filteredCarList: Array<IAllCars>
+    setFilteredCarList: React.Dispatch<React.SetStateAction<IAllCars[]>>
     carsByBrand: Array<object>
     getCarsByBrand: (brand: string) => void
     getCarModels: (model: string) => Promise<void>
     getSelectedCarModel: (name: string, brand: string) => Promise<void>
-    carModels: Array<IMockedCar>
-    selectedCarModel: IModelCar | null
+    carModels: Array<IAllCars>
+    selectedCarModel: IAllCars | null;
     setSelectedCarModel: React.Dispatch<React.SetStateAction<any | null>>
+    editCarPoster: (data: INewPoster) => void;
+    deleteCarPoster: () => void;
+    setCarId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface IUserProviderData {
