@@ -17,7 +17,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useContext, useState } from "react";
 import { createPosterSchema } from "../schemas/createPosterSchema";
-import { CarContext } from "../contexts/carsContext";
+import { CarContext } from "../contexts/CarsContext";
 
 interface IPosterCreateModalProps {
   isOpen: boolean;
@@ -55,14 +55,14 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
     resolver: zodResolver(createPosterSchema),
   });
 
-  const handleBrandSelect = (e: any) => {
+  const handleBrandSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCarModel(null);
     const brand = e.target.value;
     setCarBrand(brand);
     getCarModels(brand);
   };
 
-  const handleModelSelect = (e: any) => {
+  const handleModelSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCarModel(null);
     const model = e.target.value;
     getSelectedCarModel(model, carBrand);
@@ -90,8 +90,19 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
   ));
 
   const onSubmit = (data: any) => {
-    createPoster(data);
-    reset();
+    if(selectedCarModel){
+      setLoading(true);
+      data.year = (data.year).toString();
+      data.fuel_type = (data.fuel_type).toString();
+  
+      data.images = Object.fromEntries(
+        Object.entries(data.images).filter(([key, value]) => value !== '')
+      );
+  
+      createPoster(data);
+      reset();
+      setLoading(false)
+    }
   };
 
   return (
@@ -99,15 +110,20 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
       <ModalOverlay width="100%" height="100%" />
       <ModalContent
         color={"grey.1"}
-        as="form"
-        onSubmit={handleSubmit(onSubmit)}
         width="100%"
         maxW={"520px"}
         backgroundColor={"white"}
         p={"18px"}
         fontFamily={"heading"}
       >
-        <Flex width="100%" height="100%" p={"15px"}>
+
+        <FormControl
+        as={"form"}
+        onSubmit={handleSubmit(onSubmit)}
+        isInvalid={!!errors}
+        >
+
+         <Flex width="100%" height="100%" p={"15px"}>
           <Heading fontWeight={"semibold"} fontSize={"heading.2"}>
             Criar anúncio
           </Heading>
@@ -119,7 +135,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
             Informações do veículo
           </Text>
 
-          <FormControl id="brand" isInvalid={!!errors}>
+          <FormControl id="brand">
             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
               Marca
             </FormLabel>
@@ -127,17 +143,17 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
               <option value="">Escolha a marca</option>
                 {carOptionsSelect}
             </Select>
-            <FormErrorMessage>{errors.brand?.message?.toString()}</FormErrorMessage>
+            <FormErrorMessage>{errors && errors.brand?.message?.toString()}</FormErrorMessage>
           </FormControl>
 
-          <FormControl id="model" isInvalid={!!errors}>
+          <FormControl id="model">
             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
               Modelo
             </FormLabel>
             <Select placeholder="Selecione o modelo" {...register("model")} onChange={handleModelSelect}>
                 {carModelOptionsSelect}
             </Select>
-            <FormErrorMessage>{errors.model?.message?.toString()}</FormErrorMessage>
+            <FormErrorMessage>{errors && errors.model?.message?.toString()}</FormErrorMessage>
           </FormControl>
 
           <Flex width="100%" wrap={"wrap"} justifyContent={"space-between"}>
@@ -152,7 +168,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                 value={selectedCarModel?.year}
                 {...register("year")}
               />
-              <FormErrorMessage>{errors.year?.message?.toString()}</FormErrorMessage>
+              <FormErrorMessage>{errors && errors.year?.message?.toString()}</FormErrorMessage>
             </FormControl>
 
             <FormControl id="fuel_type" width="48%" isInvalid={!!errors}>
@@ -170,7 +186,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                     ""}
                 {...register("fuel_type")}
               />
-              <FormErrorMessage>{errors.fuel_type?.message?.toString()}</FormErrorMessage>
+              <FormErrorMessage>{errors && errors.fuel_type?.message?.toString()}</FormErrorMessage>
             </FormControl>
 
             <FormControl id="kilometers" width="48%" isInvalid={!!errors}>
@@ -183,7 +199,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                 placeholder="30.000"
                 {...register("kilometers")}
               />
-              <FormErrorMessage>{errors.kilometers?.message?.toString()}</FormErrorMessage>
+              <FormErrorMessage>{errors && errors.kilometers?.message?.toString()}</FormErrorMessage>
             </FormControl>
 
             <FormControl id="color" width="48%" isInvalid={!!errors}>
@@ -191,7 +207,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                 Cor
               </FormLabel>
               <Input type="text" placeholder="Branco" {...register("color")} />
-              <FormErrorMessage>{errors.color?.message?.toString()}</FormErrorMessage>
+              <FormErrorMessage>{errors && errors.color?.message?.toString()}</FormErrorMessage>
             </FormControl>
 
             <FormControl id="fipe_price" width="48%" isInvalid={!!errors}>
@@ -205,7 +221,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                 value={selectedCarModel? `R$ ${selectedCarModel?.value},00` : "R$0,00"}
                 {...register("fipe_price")}
               />
-              <FormErrorMessage>{errors.fipe_price?.message?.toString()}</FormErrorMessage>
+              <FormErrorMessage>{errors && errors.fipe_price?.message?.toString()}</FormErrorMessage>
             </FormControl>
 
             <FormControl id="price" width="48%" isInvalid={!!errors}>
@@ -217,7 +233,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                 placeholder="R$50.000,00"
                 {...register("price")}
               />
-              <FormErrorMessage>{errors.price?.message?.toString()}</FormErrorMessage>
+              <FormErrorMessage>{errors && errors.price?.message?.toString()}</FormErrorMessage>
             </FormControl>
           </Flex>
 
@@ -231,21 +247,22 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
               maxLength={600}
               {...register("description")}
             />
-            <FormErrorMessage>{errors.description?.message?.toString()}</FormErrorMessage>
+            <FormErrorMessage>{errors && errors.description?.message?.toString()}</FormErrorMessage>
           </FormControl>
 
-          <FormControl id="img">
+          <FormControl id="main_image">
             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
               Imagem da capa
             </FormLabel>
-            <Input type="text" placeholder="https://image.com" {...register('main_image')}/>
+            <Input type="text" placeholder="https://image.com" {...register('images.one')}/>
           </FormControl>
                 
             {Array.from({length: imagesCount}, (value, index) =>(
                 <>
-                    <FormLabel id="image_url">{index+1}ª Imagem da galeria</FormLabel>
-                    <Input key={index} type="text" placeholder="https://image.com" {...register(`images[${index}].image_url`)}/>
-                    <FormErrorMessage>{errors.images?.message?.toString()}</FormErrorMessage>
+                    <FormLabel id={`images${index + 1}`}>{index+1}ª Imagem da galeria</FormLabel>
+                    <Input key={index} type="text" placeholder="https://image.com" 
+                    {...register(`images.${index === 0? "two" : index === 1 ? "three" : index === 2 ? "four": index === 3 ? "five" : "six"}`)}/>
+                    <FormErrorMessage>{errors && errors.images?.message?.toString()}</FormErrorMessage>
                 </>
             ))}
 
@@ -259,11 +276,13 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
             <Button onClick={onClose} variant={"negative"}>
               Cancelar
             </Button>
-            <Button type="submit" variant={"brandDisable"}>
+            <Button type="submit" variant={"brand1"}>
               Criar anúncio
             </Button>
           </Flex>
         </Flex>
+
+      </FormControl>
       </ModalContent>
     </Modal>
   );

@@ -20,7 +20,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const toast = useToast();
 
   const navigate = useNavigate();
-  console.log(user);
 
   useEffect(() => {
     const auth = async () => {

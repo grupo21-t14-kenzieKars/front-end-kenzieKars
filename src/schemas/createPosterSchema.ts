@@ -1,8 +1,13 @@
 import { z } from 'zod';
 
 export const imageSchema = z.object({
-    image_url: z.string()
-})
+    one: z.string(),
+    two: z.string().optional(),
+    three: z.string().optional(),
+    four: z.string().optional(),
+    five: z.string().optional(),
+    six: z.string().optional(),
+}).partial()
 
 export const createPosterSchema = z.object({
     brand: z.string().nonempty("Marca é obrigatória"),
@@ -14,6 +19,6 @@ export const createPosterSchema = z.object({
     fipe_price: z.string(),
     price: z.string().nonempty("Preço é obrigatório"),
     description: z.string().nonempty("Coloque uma descrição"),
-    images: z.array(imageSchema),
+    images: imageSchema,
 })
 

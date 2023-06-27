@@ -8,10 +8,10 @@ export const CarContext = createContext<ICarProviderData>({} as ICarProviderData
 const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   //Lista de todos os carros da API Kenzie
+  const [allCarsList, setAllCarsList] = useState([] as Array<IAllCars>)
 
-  const [allCarsList, setAllCarsList] = useState([] as Array<IMockedCar>)
   //listas todos os carros da nossa API
-  const [carList, setCarList] = useState([] as Array<IMockedCar>)
+  const [carList, setCarList] = useState([] as Array<IAllCars>)
 
   //Lista com as marcas dos carros da API Kenzie
   const [carsByBrand, setCarsByBrand] = useState([] as Array<object>)
@@ -21,7 +21,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedCarModel, setSelectedCarModel] = useState(null)
 
   //filtra os carros da nossa API
-  const [filteredCarList, setFilteredCarList] = useState<IMockedCar[]>([])
+  const [filteredCarList, setFilteredCarList] = useState<IAllCars[]>([])
 
 
   const token = localStorage.getItem("@kenzie-cars:token")
@@ -54,9 +54,14 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   const createPoster = async (data: INewPoster) => {
+    const token = localStorage.getItem("@kenzie-cars:token")
+
     try {
-      apiG21.defaults.headers.authorization = `Bearer ${token}`
-      await apiG21.post("/posters", data);
+      const response = await apiG21.post("/car", data, {
+        headers: {
+          authorization: `Bearer ${token}`
+        }
+      });
       //Colocar função de carregar carros do usuário logado
     } catch {
       console.error(Error)
