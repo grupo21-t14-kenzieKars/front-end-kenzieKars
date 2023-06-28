@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 
 interface ICommentProps {
-  name: string;
+  name: string | undefined
 }
 
 function CommentForm({ name }: ICommentProps) {
@@ -29,7 +29,7 @@ function CommentForm({ name }: ICommentProps) {
         gap={"5px"}
         alignItems={"center"}
       >
-        <Avatar name={name} color="white" size="sm" />
+        <Avatar name={name!} color="white" size="sm" />
         <Text color="grey.1" fontWeight={"medium"} fontSize={"heading.1"}>
           {name}
         </Text>

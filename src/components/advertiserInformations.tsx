@@ -1,13 +1,13 @@
 import { Flex, Text, Button, Avatar } from "@chakra-ui/react";
-import { IMockedUser } from "../interfaces/mocksInterfaces";
+import { IUserData } from "../contexts/Interfaces";
 
 interface IAdvertiserInformationsProps {
-  user: IMockedUser;
+  user: IUserData;
 }
 
 function AdvertiserInformations({ user }: IAdvertiserInformationsProps) {
   function getInitials(name: string) {
-    const nameArr = name.split(" ");
+    const nameArr = name?.split(" ");
 
     if (nameArr[1]) {
       return nameArr[0][0] + nameArr[1][0];
@@ -26,13 +26,12 @@ function AdvertiserInformations({ user }: IAdvertiserInformationsProps) {
       width={"100%"}
       alignItems={"center"}
     >
-      <Avatar name={user.name} color="white" size="xl" />
+      <Avatar name={user?.name} color="white" size="xl" />
       <Text color="grey.1" fontWeight={"semibold"} fontSize={"heading.3"}>
-        {user.name}
+        {user?.name}
       </Text>
       <Text textAlign={"center"} fontSize={"body.3"} color={"grey.2"}>
-        Lorem Ipsum is simply dummy text of the printing and typesetting
-        industry. Lorem Ipsum has been the industry's
+        {user?.description}
       </Text>
       <Button width={"max-content"} variant="grey1">
         Ver todos anuncios

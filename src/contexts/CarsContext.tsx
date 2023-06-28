@@ -27,7 +27,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     const getCars = async () => {
       try {
         const { data } = await apiG21.get('/car')
-        console.log(data);
 
         setCarList(data)
         setFilteredCarList(data)
