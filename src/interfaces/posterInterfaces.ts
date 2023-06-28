@@ -41,4 +41,14 @@ export interface IAllCars {
     }>;
   }
 
+  export interface IKenzieAPICar {
+    id: string;
+    brand: string;
+    model: string;
+    year: string;
+    fuel: string;
+    kilometers: number;
+    value: number;
+    }
+
 export type IModelCar = z.infer<typeof carModelSchema>;

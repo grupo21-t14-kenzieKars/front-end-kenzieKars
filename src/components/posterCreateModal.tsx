@@ -94,9 +94,9 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
       setLoading(true);
 
       data.year = selectedCarModel.year;
-      data.fuel_type = (selectedCarModel && Number(selectedCarModel.fuel_type) === 1) ? "Flex" :
-      (selectedCarModel && Number(selectedCarModel.fuel_type) === 2) ? "Híbrido" :
-      (selectedCarModel && Number(selectedCarModel.fuel_type) === 3) ? "Elétrico" :"";
+      data.fuel_type = (selectedCarModel && Number(selectedCarModel.fuel) === 1) ? "Flex" :
+      (selectedCarModel && Number(selectedCarModel.fuel) === 2) ? "Híbrido" :
+      (selectedCarModel && Number(selectedCarModel.fuel) === 3) ? "Elétrico" :"";
 
       const formatColor = (color: string) =>{
         const firstLetter = color.charAt(0).toUpperCase()
@@ -199,9 +199,9 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
                 type="text"
                 placeholder="Gasolina/Etanol"
                 value={
-                    (selectedCarModel && Number(selectedCarModel.fuel_type) === 1) ? "Flex" :
-                    (selectedCarModel && Number(selectedCarModel.fuel_type) === 2) ? "Híbrido" :
-                    (selectedCarModel && Number(selectedCarModel.fuel_type) === 3) ? "Elétrico" :
+                    (selectedCarModel && Number(selectedCarModel.fuel) === 1) ? "Flex" :
+                    (selectedCarModel && Number(selectedCarModel.fuel) === 2) ? "Híbrido" :
+                    (selectedCarModel && Number(selectedCarModel.fuel) === 3) ? "Elétrico" :
                     ""}
                 {...register("fuel_type")}
               />

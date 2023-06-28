@@ -97,10 +97,10 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
     </option>
   ));
 
-  useEffect(() => {
-    if (user?.is_seller) {
-      reset({
-        // brand:
+  // useEffect(() => {
+  //   if (user?.is_seller) {
+  //     reset({
+        // brand: cars.brand
         // model:
         // year:
         // fuel_type:
@@ -109,7 +109,7 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
         // fipe_price:
         // price:
         // description:
-        // is_active: isActive,
+        // is_active: 
         // images: {
         //   one:
         //   two:
@@ -118,23 +118,24 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
         //   five:
         //   six:
         // }
-      });
-    }
-  }, [user, isOpen, reset]);
+  //     });
+  //   }
+  // }, [user, isOpen, reset]);
 
   const onSubmit = (data: any) => {
     if(selectedCarModel){
         setLoading(true);
-  
+
         const formatColor = (color: string) =>{
           const firstLetter = color.charAt(0).toUpperCase()
           const restOfWord = color.slice(1).toLowerCase()
           return firstLetter + restOfWord
         };
+
         data.year = selectedCarModel.year;
-        data.fuel_type = (selectedCarModel && Number(selectedCarModel.fuel_type) === 1) ? "Flex" :
-        (selectedCarModel && Number(selectedCarModel.fuel_type) === 2) ? "Híbrido" :
-        (selectedCarModel && Number(selectedCarModel.fuel_type) === 3) ? "Elétrico" :"";
+        data.fuel_type = (selectedCarModel && Number(selectedCarModel.fuel) === 1) ? "Flex" :
+        (selectedCarModel && Number(selectedCarModel.fuel) === 2) ? "Híbrido" :
+        (selectedCarModel && Number(selectedCarModel.fuel) === 3) ? "Elétrico" :"";
   
         data.color = formatColor(data.color);
         data.fipe_price = parseFloat(((data.fipe_price).toString()).slice(2));
@@ -148,6 +149,7 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
           five: data.images.five || null,
           six: data.images.six || null,
         };
+        data.is_active = isActive
 
         editCarPoster(data)
         reset();
@@ -238,9 +240,9 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
                 type="text"
                 placeholder="Gasolina/Etanol"
                 value={
-                    (selectedCarModel && Number(selectedCarModel.fuel_type) === 1) ? "Flex" :
-                    (selectedCarModel && Number(selectedCarModel.fuel_type) === 2) ? "Híbrido" :
-                    (selectedCarModel && Number(selectedCarModel.fuel_type) === 3) ? "Elétrico" :
+                    (selectedCarModel && Number(selectedCarModel.fuel) === 1) ? "Flex" :
+                    (selectedCarModel && Number(selectedCarModel.fuel) === 2) ? "Híbrido" :
+                    (selectedCarModel && Number(selectedCarModel.fuel) === 3) ? "Elétrico" :
                     ""}
                 {...register("fuel_type")}
               />
@@ -318,26 +320,48 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
           >
             Publicado
           </Text>
-
-          <Flex w={"full"} justifyContent={"space-between"}>
-            <Button
-              size={"md"}
-              type="button"
-              w="45%"
-              onClick={() => setIsActive(true)}
-            >
-              Sim
-            </Button>
-            <Button
-              size={"md"}
-              type="button"
-              variant={"outline2"}
-              w="45%"
-              onClick={() => setIsActive(false)}
-            >
-              Não
-            </Button>
+          
+          {!isActive ? (
+        <Flex w={"full"} justifyContent={"space-between"}>
+          <Button
+            size={"md"}
+            type="button"
+            w="45%"
+            onClick={() => setIsActive(true)}
+          >
+            Sim
+          </Button>
+          <Button
+            size={"md"}
+            type="button"
+            variant={"outline2"}
+            w="45%"
+            onClick={() => setIsActive(false)}
+          >
+            Não
+          </Button>
         </Flex>
+      ) : (
+        <Flex w={"full"} justifyContent={"space-between"}>
+          <Button
+            size={"md"}
+            type="button"
+            w="45%"
+            variant={"outline2"}
+            onClick={() => setIsActive(true)}
+          >
+            Sim
+          </Button>
+          <Button
+            size={"md"}
+            type="button"
+            w="45%"
+            onClick={() => setIsActive(false)}
+          >
+            Não
+          </Button>
+        </Flex>
+      )}
 
           <FormControl id="main_image">
             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
@@ -362,7 +386,7 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
           </Flex>
 
           <Flex justifyContent={"flex-end"} p={"30px 10px 5px 0"} gap={"10px"}>
-            <Button onClick={onClose} variant={"negative"}>
+            <Button onClick={onOpenDeleteModal} variant={"negative"}>
               Excluir anúncio
             </Button>
             <Button type="submit" variant={"brand1"}>

@@ -1,12 +1,15 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { apiG21, apiKenzieKars } from '../services/api'
 import { ICarProviderData } from "./Interfaces"
 import { IAllCars, INewPoster } from "../interfaces/posterInterfaces"
 import { useToast } from "@chakra-ui/react"
+import { UserContext } from "./userContext"
 
 export const CarContext = createContext<ICarProviderData>({} as ICarProviderData)
 
 const CarProvider = ({ children }: { children: React.ReactNode }) => {
+
+  const { setUserCars } = useContext(UserContext)
 
   //Lista de todos os carros da API Kenzie
   const [allCarsList, setAllCarsList] = useState([] as Array<IAllCars>)
@@ -34,8 +37,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     const getCars = async () => {
       try {
         const { data } = await apiG21.get('/car')
-        console.log(data);
-
         setCarList(data)
         setFilteredCarList(data)
       } catch (error) {
@@ -58,9 +59,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     getCars()
   }, [])
 
-
-  
-
   const createPoster = async (data: INewPoster) => {
     try {
       const response = await apiG21.post("/car", data, {
@@ -79,7 +77,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         },
         isClosable: true,
       });
-      //Colocar função de carregar carros do usuário logado
+      setUserCars(response.data)
     } catch(error: any) {
       console.error(Error)
       toast({
