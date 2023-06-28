@@ -2,16 +2,20 @@ import { createContext, useEffect, useState } from "react"
 import { apiG21, apiKenzieKars } from '../services/api'
 import { ICarProviderData } from "./Interfaces"
 import { IAllCars, INewPoster } from "../interfaces/posterInterfaces"
+import { useToast } from "@chakra-ui/react"
 
 export const CarContext = createContext<ICarProviderData>({} as ICarProviderData)
 
 const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   //Lista de todos os carros da API Kenzie
+  const [allCarsList, setAllCarsList] = useState([] as Array<IAllCars>)
 
-  const [allCarsList, setAllCarsList] = useState([] as Array<IMockedCar>)
   //listas todos os carros da nossa API
-  const [carList, setCarList] = useState([] as Array<IMockedCar>)
+  const [carList, setCarList] = useState([] as Array<IAllCars>)
+
+  //Pega o id do carro
+  const [carId, setCarId] = useState("")
 
   //Lista com as marcas dos carros da API Kenzie
   const [carsByBrand, setCarsByBrand] = useState([] as Array<object>)
@@ -21,9 +25,9 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedCarModel, setSelectedCarModel] = useState(null)
 
   //filtra os carros da nossa API
-  const [filteredCarList, setFilteredCarList] = useState<IMockedCar[]>([])
+  const [filteredCarList, setFilteredCarList] = useState<IAllCars[]>([])
 
-
+  const toast = useToast()
   const token = localStorage.getItem("@kenzie-cars:token")
 
   useEffect(() => {
@@ -40,6 +44,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     }
     getCars()
   }, [])
+
   // Pega todos os carros da API
   useEffect(() => {
     const getCars = async () => {
@@ -53,14 +58,104 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     getCars()
   }, [])
 
+
+  
+
   const createPoster = async (data: INewPoster) => {
     try {
-      apiG21.defaults.headers.authorization = `Bearer ${token}`
-      await apiG21.post("/posters", data);
+      const response = await apiG21.post("/car", data, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      toast({
+        status: "success",
+        description: "Anúncio criado com sucesso",
+        duration: 3000,
+        position: "bottom-right",
+        containerStyle: {
+          color: "white",
+        },
+        isClosable: true,
+      });
       //Colocar função de carregar carros do usuário logado
-    } catch {
+    } catch(error: any) {
       console.error(Error)
+      toast({
+        status: "error",
+        description:
+          error.response?.data.message ||
+          "Ops... ocorreu um erro! Tente novamente mais tarde.",
+        duration: 3000,
+        position: "bottom-right",
+        variant: "subtle",
+      });
     }
+  }
+
+  const editCarPoster = async (data: INewPoster) =>{
+    try {
+      const response = await apiG21.post(`/car/${carId}`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      toast({
+        status: "success",
+        description: "Anúncio criado com sucesso",
+        duration: 3000,
+        position: "bottom-right",
+        containerStyle: {
+          color: "white",
+        },
+        isClosable: true,
+      });
+    } catch(error: any) {
+      console.error(Error)
+      toast({
+        status: "error",
+        description:
+          error.response?.data.message ||
+          "Ops... ocorreu um erro!",
+        duration: 3000,
+        position: "bottom-right",
+        variant: "subtle",
+      });
+    }
+  }
+
+  const deleteCarPoster = async () => {
+    try {
+      await apiG21.delete(`/car/${carId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      toast({
+        status: "success",
+        description: "Anúncio criado com sucesso",
+        duration: 3000,
+        position: "bottom-right",
+        containerStyle: {
+          color: "white",
+        },
+        isClosable: true,
+      });
+    }catch(error: any){
+        console.error(Error)
+        toast({
+          status: "error",
+          description:
+            error.response?.data.message ||
+            "Ops... ocorreu um erro!",
+          duration: 3000,
+          position: "bottom-right",
+          variant: "subtle",
+        });
+      }
   }
 
   //Pega os carros pela marca
@@ -108,6 +203,9 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         carModels,
         setSelectedCarModel,
         selectedCarModel,
+        editCarPoster,
+        deleteCarPoster,
+        setCarId
       }}>
         {children}
       </CarContext.Provider>

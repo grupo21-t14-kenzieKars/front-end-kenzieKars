@@ -2,12 +2,10 @@ import { createContext, useEffect, useState } from "react"
 import { IUserData, IUserProviderData } from "./Interfaces"
 import { LoginData } from "../components/forms/loginForm/loginSchema"
 import { apiG21 } from "../services/api"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { IEditUser } from "../interfaces/userInterfaces"
-import { RegisterData } from "../components/forms/registerForm/registerSchema"
 import { useToast } from "@chakra-ui/react"
 import { IForgotPassword, IResetPassword } from "../interfaces/forgotPassword.interfaces"
-import ResetPasswordForm from './../components/forms/resetPasswordForm/index';
 
 export const UserContext = createContext<IUserProviderData>(
   {} as IUserProviderData
@@ -17,10 +15,11 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<IUserData | null>(null);
   const [isSeller, setIsSeller] = useState<boolean>(false);
+  const [userCars, setUserCars] = useState([])
+
   const toast = useToast();
 
   const navigate = useNavigate();
-  console.log(user);
 
   useEffect(() => {
     const auth = async () => {
@@ -46,6 +45,15 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     auth();
   }, []);
 
+  const getUserCars = async (userId: string) =>{
+    try{
+      const { data } = await apiG21.get(`/car/seller/${userId}`);
+      setUserCars(data)
+    } catch (error){
+      console.error(error)
+    }
+  }
+
   const loginUser = async (loginData: LoginData): Promise<void> => {
     try {
       setLoading(true);
@@ -60,6 +68,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       });
       setUser(user.data);
       setIsSeller(user.data.is_seller);
+      getUserCars(user.data.id)
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -73,6 +82,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       setLoading(true);
       await apiG21.post("/user", createUserData);
+      
 
       navigate("/login");
     } catch (error) {
@@ -165,9 +175,30 @@ const editUser = async (data: IEditUser) => {
                   authorization: `Bearer ${token}`
               }
           })
+
+          toast({
+            status: "success",
+            description: "Usuário editado com sucesso",
+            duration: 3000,
+            position: "bottom-right",
+            containerStyle: {
+              color: "white",
+            },
+            isClosable: true,
+          });
+
           setUser(response.data)
-      } catch (error) {
+      } catch (error: any) {
           console.error(error)
+          toast({
+            status: "error",
+            description:
+              error.response?.data.message ||
+              "Ops... ocorreu um erro! Tente novamente mais tarde.",
+            duration: 3000,
+            position: "bottom-right",
+            variant: "subtle",
+          });
       }
   }
 }
@@ -184,9 +215,30 @@ const deleteUser = async () => {
           });
           setUser(null)
           localStorage.removeItem("@kenzie-cars:token")
+
+          toast({
+            status: "success",
+            description: "Usuário deletado com sucesso",
+            duration: 3000,
+            position: "bottom-right",
+            containerStyle: {
+              color: "white",
+            },
+            isClosable: true,
+          });
+
           navigate("/login")
-      } catch (error) {
+      } catch (error: any) {
           console.error(error)
+          toast({
+            status: "error",
+            description:
+              error.response?.data.message ||
+              "Ops... ocorreu um erro! Tente novamente mais tarde.",
+            duration: 3000,
+            position: "bottom-right",
+            variant: "subtle",
+          });
       }
   }
 }
@@ -202,6 +254,7 @@ const deleteUser = async () => {
           user,
           loading,
           isSeller,
+          userCars,
           setLoading,
           logout,
           resetPassword,

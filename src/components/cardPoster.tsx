@@ -10,9 +10,13 @@ import {
   Image,
   Tag,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { IMockedCar } from "../interfaces/mocksInterfaces";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { CarContext } from "../contexts/CarsContext";
+import EditPosterModal from "./posterEditModal";
 
 interface ICardPosterProps {
   carPost: IMockedCar;
@@ -20,6 +24,9 @@ interface ICardPosterProps {
 }
 
 const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { setCarId } = useContext(CarContext)
+
   const cardStatus = true;
 
   const navigate = useNavigate();
@@ -35,6 +42,7 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
       gap={"18px"}
       as={"a"}
       href={""}
+      key={carPost.id}
       data-group
     >
       <CardHeader p={0}>
@@ -180,8 +188,9 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
         {isOwner && (
           <Flex gap={"15px"}>
             <Button
-              onClick={(e) => {
-                e.preventDefault();
+              onClick={() => {
+                setCarId(carPost.id)
+                onOpen()
               }}
               variant={"outline1"}
             >
@@ -198,6 +207,7 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
           </Flex>
         )}
       </CardFooter>
+      <EditPosterModal isOpen={isOpen} onClose={onClose} />
     </Card>
   );
 };

@@ -202,6 +202,13 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
                        borderRadius={"6px"} 
                        fontWeight={"semibold"} >
                 <Flex>
+
+                <Flex width="100%" height="100%" p={"15px"}>
+                    <Heading fontWeight={"semibold"} fontSize={"heading.2"}>
+                        Excluir anúncio
+                    </Heading>
+                    <ModalCloseButton color={"grey.4"} />
+                 </Flex>
                     <Text fontSize={"heading.1"} color={"grey.2"}>Tem certeza que deseja excluir sua conta? </Text>
                 </Flex>
                 
