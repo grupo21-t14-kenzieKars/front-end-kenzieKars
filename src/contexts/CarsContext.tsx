@@ -58,6 +58,9 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     getCars()
   }, [])
 
+
+  
+
   const createPoster = async (data: INewPoster) => {
     try {
       const response = await apiG21.post("/car", data, {
@@ -93,7 +96,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   const editCarPoster = async (data: INewPoster) =>{
     try {
-      const response = await apiG21.post(`/car/${posterId}`, data, {
+      const response = await apiG21.post(`/car/${carId}`, data, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -125,7 +128,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   const deleteCarPoster = async () => {
     try {
-      await apiG21.delete(`/car/${posterId}`, {
+      await apiG21.delete(`/car/${carId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -200,6 +203,9 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         carModels,
         setSelectedCarModel,
         selectedCarModel,
+        editCarPoster,
+        deleteCarPoster,
+        setCarId
       }}>
         {children}
       </CarContext.Provider>

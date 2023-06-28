@@ -12,12 +12,14 @@ import {
     ModalOverlay,
     Select,
     Text,
+    useDisclosure,
   } from "@chakra-ui/react";
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { CarContext } from "../contexts/CarsContext"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createPosterSchema } from "../schemas/posterSchema";
+import { UserContext } from "../contexts/userContext";
 
 interface IPosterEditModalProps {
     isOpen: boolean;
@@ -25,6 +27,8 @@ interface IPosterEditModalProps {
   }
 
 const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
+    const { user } = useContext(UserContext)
+  
     const {
         allCarsList,
         carModels, 
@@ -32,12 +36,16 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
         getSelectedCarModel, 
         selectedCarModel, 
         setSelectedCarModel,
-        editCarPoster 
+        editCarPoster,
+        deleteCarPoster
     } = useContext(CarContext)
+
+    const { isOpen: isOpenDeleteModal, onOpen: onOpenDeleteModal, onClose: onCloseDeleteModal} = useDisclosure()
 
     const [imagesCount, setImagesCount] = useState(1);
     const [loading, setLoading] = useState(false);
     const [carBrand, setCarBrand] = useState("");
+    const [ isActive, setIsActive ] = useState(true)
 
     const {
         register,
@@ -89,6 +97,31 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
     </option>
   ));
 
+  useEffect(() => {
+    if (user?.is_seller) {
+      reset({
+        // brand:
+        // model:
+        // year:
+        // fuel_type:
+        // kilometers:
+        // color:
+        // fipe_price:
+        // price:
+        // description:
+        // is_active: isActive,
+        // images: {
+        //   one:
+        //   two:
+        //   three:
+        //   four:
+        //   five:
+        //   six:
+        // }
+      });
+    }
+  }, [user, isOpen, reset]);
+
   const onSubmit = (data: any) => {
     if(selectedCarModel){
         setLoading(true);
@@ -123,8 +156,15 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
       }
   }
 
+  const deleteAndClose = () =>{
+    onCloseDeleteModal()
+    onClose()
+    deleteCarPoster()
+  }
+
   return(
-    <Modal isOpen={isOpen} onClose={closeAndReset}>
+    <>
+    <Modal isOpen={isOpen} onClose={closeAndReset} closeOnOverlayClick>
       <ModalOverlay width="100%" height="100%" />
       <ModalContent
         color={"grey.1"}
@@ -268,6 +308,37 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
             <FormErrorMessage>{errors && errors.description?.message?.toString()}</FormErrorMessage>
           </FormControl>
 
+          <Text
+            w={"full"}
+            textAlign={"left"}
+            fontSize="heading.1"
+            fontWeight="medium"
+            color="grey.0"
+            marginBottom={2}
+          >
+            Publicado
+          </Text>
+
+          <Flex w={"full"} justifyContent={"space-between"}>
+            <Button
+              size={"md"}
+              type="button"
+              w="45%"
+              onClick={() => setIsActive(true)}
+            >
+              Sim
+            </Button>
+            <Button
+              size={"md"}
+              type="button"
+              variant={"outline2"}
+              w="45%"
+              onClick={() => setIsActive(false)}
+            >
+              Não
+            </Button>
+        </Flex>
+
           <FormControl id="main_image">
             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
               Imagem da capa
@@ -292,10 +363,10 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
 
           <Flex justifyContent={"flex-end"} p={"30px 10px 5px 0"} gap={"10px"}>
             <Button onClick={onClose} variant={"negative"}>
-              Cancelar
+              Excluir anúncio
             </Button>
             <Button type="submit" variant={"brand1"}>
-              Criar anúncio
+              Salvar alterações
             </Button>
           </Flex>
         </Flex>
@@ -303,6 +374,36 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
       </FormControl>
       </ModalContent>
     </Modal>
-  )
 
+    <Modal isOpen={isOpenDeleteModal} onClose={onCloseDeleteModal}>
+      <ModalOverlay />
+      <ModalContent
+                width="100%"
+                maxWidth="520px" 
+                color={"grey.1"}
+                backgroundColor={"white"}
+                gap={"15px"}
+                p={"15px"} 
+                fontFamily={"heading"}
+                borderRadius={"6px"} 
+                fontWeight={"semibold"} >
+          <Flex>
+            <Flex width="100%" height="100%" p={"15px"}>
+              <Heading fontWeight={"semibold"} fontSize={"heading.2"}>
+                Excluir anúncio
+              </Heading>
+              <ModalCloseButton color={"grey.4"} />
+            </Flex>
+              <Text fontSize={"heading.1"} fontWeight="semibold" color={"grey.2"}>Tem certeza que deseja remover este anúncio? </Text>
+              <Text fontSize={"heading.1"} color={"grey.2"}>Essa ação não pode ser desfeita. Isso excluirá permanentemente seu anúncio dos nossos servidores</Text>
+          </Flex>
+          
+          <Button variant={"negative"} size={"lg"} onClick={onCloseDeleteModal}>Cancelar</Button>
+          <Button variant={"alert"} size={"lg"} onClick={deleteAndClose}>Sim, excluir anúncio</Button>
+      </ModalContent>
+    </Modal>
+    </>
+  )
 }
+
+export default EditPosterModal;

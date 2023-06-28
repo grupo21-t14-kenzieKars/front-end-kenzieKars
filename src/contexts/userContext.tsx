@@ -15,6 +15,8 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<IUserData | null>(null);
   const [isSeller, setIsSeller] = useState<boolean>(false);
+  const [userCars, setUserCars] = useState([])
+
   const toast = useToast();
 
   const navigate = useNavigate();
@@ -43,6 +45,15 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     auth();
   }, []);
 
+  const getUserCars = async (userId: string) =>{
+    try{
+      const { data } = await apiG21.get(`/car/seller/${userId}`);
+      setUserCars(data)
+    } catch (error){
+      console.error(error)
+    }
+  }
+
   const loginUser = async (loginData: LoginData): Promise<void> => {
     try {
       setLoading(true);
@@ -57,6 +68,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       });
       setUser(user.data);
       setIsSeller(user.data.is_seller);
+      getUserCars(user.data.id)
       navigate("/");
     } catch (error) {
       console.error(error);
@@ -242,6 +254,7 @@ const deleteUser = async () => {
           user,
           loading,
           isSeller,
+          userCars,
           setLoading,
           logout,
           resetPassword,

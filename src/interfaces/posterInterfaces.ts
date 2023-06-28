@@ -28,7 +28,7 @@ export interface IAllCars {
     fuel_type: string;
     kilometers: number;
     color: string;
-    fipe_price: number;
+    value: number;
     price: number;
     description: string;
     isPublished: boolean;

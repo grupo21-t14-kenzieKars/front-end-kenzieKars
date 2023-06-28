@@ -30,6 +30,7 @@ export interface IUserProviderData {
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   isSeller: boolean;
+  userCars: IAllCars[];
   logout: () => void;
   sendResetPassworEmail: (data: IForgotPassword) => Promise<void>;
   resetPassword: (data: IResetPassword, token:string) => Promise<void>;
