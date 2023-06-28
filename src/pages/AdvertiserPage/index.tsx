@@ -1,7 +1,6 @@
 import { Avatar, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
-import { MockedCarPostList, mockedUser2 } from "../../mocks";
 import CarPostList from "./../../components/carPosterListComponet";
 import PosterCreateModal from "../../components/posterCreateModal";
 import { useContext } from "react";
