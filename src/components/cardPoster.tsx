@@ -12,6 +12,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { IMockedCar } from "../interfaces/mocksInterfaces";
+import { useNavigate } from "react-router-dom";
 
 interface ICardPosterProps {
   carPost: IMockedCar;
@@ -20,6 +21,8 @@ interface ICardPosterProps {
 
 const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
   const cardStatus = true;
+
+  const navigate = useNavigate();
 
   return (
     <Card
@@ -123,7 +126,13 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
         </Flex>
 
         {!isOwner && (
-          <Flex alignItems={"center"}>
+          <Flex
+            alignItems={"center"}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(`/profile/${carPost.user.id}`);
+            }}
+          >
             <Avatar
               name={carPost.user.name}
               w={"32px"}

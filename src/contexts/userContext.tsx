@@ -5,7 +5,6 @@ import { apiG21 } from "../services/api"
 import { useNavigate } from "react-router-dom"
 import { useToast } from "@chakra-ui/react"
 import { IForgotPassword, IResetPassword } from "../interfaces/forgotPassword.interfaces"
-import { IMockedUser } from "../interfaces/mocksInterfaces"
 
 
 export const UserContext = createContext<IUserProviderData>(
@@ -14,7 +13,7 @@ export const UserContext = createContext<IUserProviderData>(
 
 const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState<IMockedUser | null>(null);
+  const [user, setUser] = useState<IUserData | null>(null);
   const [isSeller, setIsSeller] = useState<boolean>(false);
   const toast = useToast();
   const navigate = useNavigate();
@@ -164,34 +163,72 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
         throw new Error("Token não encontrado na URL.");
       }
 
-      await apiG21.post(`/user/recovery/${token}`, {
-        password: data.password,
-      });
+    await apiG21.post(`/user/recovery/${token}`, {
+      password: data.password,
+    });
 
-      toast({
-        status: "success",
-        description: "Senha alterada com sucesso, faça o login novamente",
-        duration: 4000,
-        position: "bottom-right",
-        variant: "subtle",
-      });
+    toast({
+      status: "success",
+      description: "Senha alterada com sucesso, faça o login novamente",
+      duration: 4000,
+      position: "bottom-right",
+      variant: "subtle",
+    });
 
-      navigate("/login");
-    } catch (error: any) {
-      console.error(error);
-      toast({
-        status: "error",
-        description:
-          error.response?.data.message ||
-          "Ops... ocorreu um erro! Tente novamente mais tarde.",
-        duration: 3000,
-        position: "bottom-right",
-        variant: "subtle",
-      });
-    } finally {
-      setLoading(false);
-    }
-  };
+    navigate("/login");
+  } catch (error: any) {
+    console.error(error);
+    toast({
+      status: "error",
+      description:
+        error.response?.data.message ||
+        "Ops... ocorreu um erro! Tente novamente mais tarde.",
+      duration: 3000,
+      position: "bottom-right",
+      variant: "subtle",
+    });
+  } finally {
+    setLoading(false);
+  }
+};
+
+const editUser = async (data: IEditUser) => {
+  const token = localStorage.getItem("@kenzie-cars:token")
+
+  if (user) {
+      try {
+          const response = await apiG21.patch(`/user/${user.id}`, data, {
+              headers: {
+                  authorization: `Bearer ${token}`
+              }
+          })
+          setUser(response.data)
+      } catch (error) {
+          console.error(error)
+      }
+  }
+}
+
+const deleteUser = async () => {
+  const token = localStorage.getItem("@kenzie-cars:token")
+
+  if (user) {
+      try {
+          await apiG21.delete(`/user/${user.id}`, {
+              headers: {
+                  authorization: `Bearer ${token}`
+              }
+          });
+          setUser(null)
+          localStorage.removeItem("@kenzie-cars:token")
+          navigate("/login")
+      } catch (error) {
+          console.error(error)
+      }
+  }
+}
+
+
   return (
     <>
       <UserContext.Provider
@@ -205,6 +242,8 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
           setLoading,
           logout,
           resetPassword,
+          editUser,
+          deleteUser,
         }}
       >
         {children}
