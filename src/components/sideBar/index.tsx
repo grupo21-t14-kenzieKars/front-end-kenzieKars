@@ -2,9 +2,9 @@ import { Button, Flex, Heading } from "@chakra-ui/react"
 import InputSide from "./inputSide"
 import FilterCategory from "./filterCategory"
 import { useContext } from "react"
-import { CarContext } from "../../contexts/carsContext"
+import { CarContext } from "../../contexts/CarsContext"
 import { useForm } from "react-hook-form"
-import { IMockedCar } from "../../interfaces/mocksInterfaces"
+import { IAllCars } from "../../interfaces/posterInterfaces"
 
 const SideBar = () => {
     const { carList, filteredCarList, setFilteredCarList } = useContext(CarContext)
@@ -15,7 +15,7 @@ const SideBar = () => {
         models: [...new Set(filteredCarList.map(ele => ele.model))],
         colors: [...new Set(filteredCarList.map(ele => ele.color))],
         years: [...new Set(filteredCarList.map(ele => ele.year))],
-        fuels: [...new Set(filteredCarList.map(ele => ele.fuelType))]
+        fuels: [...new Set(filteredCarList.map(ele => ele.fuel_type))]
     }
 
     const { register, handleSubmit, reset } = useForm({
@@ -23,16 +23,16 @@ const SideBar = () => {
     })
 
     const onSubmit = (data: any) => {
-        const newListKM = filteredCarList.filter((car: IMockedCar) => car.kilometers >= data.minKm)
+        const newListKM = filteredCarList.filter((car: IAllCars) => car.kilometers >= data.minKm)
         setFilteredCarList(newListKM)
         if (data.maxKm > 0) {
-            const newListKM = filteredCarList.filter((car: IMockedCar) => car.kilometers <= data.maxKm)
+            const newListKM = filteredCarList.filter((car: IAllCars) => car.kilometers <= data.maxKm)
             setFilteredCarList(newListKM)
         }
-        const newListPrice = filteredCarList.filter((car: IMockedCar) => car.price >= data.minPrice)
+        const newListPrice = filteredCarList.filter((car: IAllCars) => car.price >= data.minPrice)
         setFilteredCarList(newListPrice)
         if (data.maxPrice > 0) {
-            const newListPrice = filteredCarList.filter((car: IMockedCar) => car.price <= data.maxPrice)
+            const newListPrice = filteredCarList.filter((car: IAllCars) => car.price <= data.maxPrice)
             setFilteredCarList(newListPrice)
         }
     }

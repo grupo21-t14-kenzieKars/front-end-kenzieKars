@@ -12,19 +12,23 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { IMockedCar } from "../interfaces/mocksInterfaces";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CarContext } from "../contexts/CarsContext";
 import EditPosterModal from "./posterEditModal";
+import { IAllCars } from "../interfaces/posterInterfaces";
+import { UserContext } from "../contexts/userContext";
 
 interface ICardPosterProps {
-  carPost: IMockedCar;
+  carPost: IAllCars;
   isOwner: boolean;
 }
 
 const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const { isOpen:isOpenEditPoster, onOpen:onOpenEditPoster, onClose:onCloseEditPoster } = useDisclosure();
+
+  const { user } = useContext(UserContext)
+  const { setCarId } = useContext(CarContext)
 
   const cardStatus = true;
 
@@ -70,7 +74,7 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
             transition="0.3s"
           />
 
-          {carPost.price <= carPost.fipePrice - carPost.fipePrice * 0.05 &&
+          {carPost.price <= carPost.value - carPost.value * 0.05 &&
             cardStatus && (
               <Flex
                 w={"15px"}
@@ -186,8 +190,10 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
         {isOwner && (
           <Flex gap={"15px"}>
             <Button
-              onClick={() => {
-                onOpen()
+              onClick={(e) => {
+                e.preventDefault()
+                setCarId(carPost.id)
+                onOpenEditPoster()
               }}
               variant={"outline1"}
             >
@@ -204,7 +210,7 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
           </Flex>
         )}
       </CardFooter>
-      <EditPosterModal isOpen={isOpen} onClose={onClose} />
+      <EditPosterModal isOpen={isOpenEditPoster} onClose={onCloseEditPoster} />
     </Card>
   );
 };

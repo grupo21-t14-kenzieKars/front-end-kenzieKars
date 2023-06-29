@@ -6,6 +6,7 @@ import { IEditUser } from "../interfaces/userInterfaces"
 import { useNavigate } from "react-router-dom"
 import { useToast } from "@chakra-ui/react"
 import { IForgotPassword, IResetPassword } from "../interfaces/forgotPassword.interfaces"
+import { IAllCars } from "../interfaces/posterInterfaces"
 
 
 export const UserContext = createContext<IUserProviderData>(
@@ -16,7 +17,9 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<IUserData | null>(null);
   const [isSeller, setIsSeller] = useState<boolean>(false);
-  const [userCars, setUserCars] = useState([])
+
+  //Lista os carros de um usuário
+  const [userCars, setUserCars] = useState<IAllCars[]>([])
 
   const toast = useToast();
   const navigate = useNavigate();
@@ -294,6 +297,7 @@ const deleteUser = async () => {
           loading,
           isSeller,
           userCars,
+          setUserCars,
           setLoading,
           logout,
           resetPassword,

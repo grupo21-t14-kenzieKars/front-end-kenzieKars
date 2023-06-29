@@ -1,12 +1,15 @@
-import { createContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { apiG21, apiKenzieKars } from '../services/api'
 import { ICarProviderData } from "./Interfaces"
-import { IAllCars, INewPoster } from "../interfaces/posterInterfaces"
+import { IAllCars, IEditPoster, INewPoster } from "../interfaces/posterInterfaces"
 import { useToast } from "@chakra-ui/react"
+import { UserContext } from "./userContext"
 
 export const CarContext = createContext<ICarProviderData>({} as ICarProviderData)
 
 const CarProvider = ({ children }: { children: React.ReactNode }) => {
+
+  const { setUserCars } = useContext(UserContext)
 
   //Lista de todos os carros da API Kenzie
   const [allCarsList, setAllCarsList] = useState([] as Array<IAllCars>)
@@ -80,9 +83,9 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         },
         isClosable: true,
       });
-      //Colocar função de carregar carros do usuário logado
-    } catch (error: any) {
-      console.log(Error)
+      setUserCars(response.data)
+    } catch(error: any) {
+      console.error(Error)
       toast({
         status: "error",
         description:
@@ -95,9 +98,9 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
-  const editCarPoster = async (data: INewPoster) => {
+  const editCarPoster = async (data: IEditPoster) =>{
     try {
-      const response = await apiG21.post(`/car/${carId}`, data, {
+      const response = await apiG21.patch(`/car/${carId}`, data, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -105,7 +108,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
       toast({
         status: "success",
-        description: "Anúncio criado com sucesso",
+        description: "Anúncio editado com sucesso!",
         duration: 3000,
         position: "bottom-right",
         containerStyle: {
@@ -137,7 +140,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
       toast({
         status: "success",
-        description: "Anúncio criado com sucesso",
+        description: "Anúncio deletado!",
         duration: 3000,
         position: "bottom-right",
         containerStyle: {

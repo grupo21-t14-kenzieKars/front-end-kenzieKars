@@ -1,9 +1,10 @@
 import { z } from "zod";
-import { createPosterSchema } from "../schemas/posterSchema";
+import { createPosterSchema, editPosterSchema } from "../schemas/posterSchema";
 import { carModelSchema } from '../schemas/carModelSchema';
 import { IUser } from './userInterfaces';
 
 export type ICreatePoster = z.infer<typeof createPosterSchema>;
+export type IEditPoster = z.infer<typeof editPosterSchema>;
 
 export interface INewPoster extends ICreatePoster{
     id: string,
@@ -40,5 +41,15 @@ export interface IAllCars {
       user: { name: string };
     }>;
   }
+
+  export interface IKenzieAPICar {
+    id: string;
+    brand: string;
+    model: string;
+    year: string;
+    fuel: string;
+    kilometers: number;
+    value: number;
+    }
 
 export type IModelCar = z.infer<typeof carModelSchema>;
