@@ -1,4 +1,4 @@
-import { Button, Flex, FormControl, Text } from "@chakra-ui/react";
+import { Button, Flex, FormControl, Spinner, Text } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import registerSchema, { RegisterData } from "./registerSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,7 +9,7 @@ import StateSelect from "../../input/stateSelect";
 
 const RegisterForm = () => {
   const [seller, setSeller] = useState(false);
-  const { createUser } = useContext(UserContext);
+  const { createUser, loading } = useContext(UserContext);
 
   const {
     register,
@@ -290,7 +290,7 @@ const RegisterForm = () => {
         register={register("repeat_password")}
       />
       <Button type="submit" size={"lg"} w={"full"}>
-        Finalizar cadastro
+        {loading ? <Spinner /> : <>Finalizar cadastro</>}
       </Button>
     </FormControl>
   );

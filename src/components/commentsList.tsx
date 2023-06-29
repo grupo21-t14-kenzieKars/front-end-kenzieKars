@@ -1,14 +1,8 @@
 import { Box, List, ListItem, Text, Flex, Avatar } from "@chakra-ui/react";
-
-interface comments {
-  comment: string;
-  user: {
-    name: string;
-  };
-}
+import { IComment } from "../contexts/Interfaces";
 
 interface commentListProps {
-  comments: comments[];
+  comments: IComment[] | undefined;
 }
 
 function CommentList({ comments }: commentListProps) {
@@ -26,9 +20,9 @@ function CommentList({ comments }: commentListProps) {
         Comentários
       </Text>
       <List display={"flex"} gap={"40px"} flexDirection={"column"}>
-        {comments.map((elem) => {
+        {comments?.map((elem, i) => {
           return (
-            <ListItem>
+            <ListItem key={i}>
               <Flex
                 flexDirection={"row"}
                 gap={"10px"}
@@ -54,7 +48,7 @@ function CommentList({ comments }: commentListProps) {
                 </Text>
               </Flex>
               <Text color="grey.2" fontSize={"heading.1"}>
-                {elem.comment}
+                {elem.content}
               </Text>
             </ListItem>
           );

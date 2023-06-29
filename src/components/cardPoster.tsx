@@ -25,7 +25,6 @@ interface ICardPosterProps {
 
 const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setCarId } = useContext(CarContext)
 
   const cardStatus = true;
 
@@ -41,9 +40,8 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
       boxShadow={"none"}
       gap={"18px"}
       as={"a"}
-      href={""}
+      href={`/car/${carPost?.id}`}
       key={carPost.id}
-      data-group
     >
       <CardHeader p={0}>
         <Flex
@@ -189,7 +187,6 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
           <Flex gap={"15px"}>
             <Button
               onClick={() => {
-                setCarId(carPost.id)
                 onOpen()
               }}
               variant={"outline1"}

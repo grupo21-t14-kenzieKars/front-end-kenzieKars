@@ -34,7 +34,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     const getCars = async () => {
       try {
         const { data } = await apiG21.get('/car')
-        console.log(data);
 
         setCarList(data)
         setFilteredCarList(data)
@@ -59,9 +58,11 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
 
-  
+
 
   const createPoster = async (data: INewPoster) => {
+    console.log(data);
+
     try {
       const response = await apiG21.post("/car", data, {
         headers: {
@@ -80,8 +81,8 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         isClosable: true,
       });
       //Colocar função de carregar carros do usuário logado
-    } catch(error: any) {
-      console.error(Error)
+    } catch (error: any) {
+      console.log(Error)
       toast({
         status: "error",
         description:
@@ -94,7 +95,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
-  const editCarPoster = async (data: INewPoster) =>{
+  const editCarPoster = async (data: INewPoster) => {
     try {
       const response = await apiG21.post(`/car/${carId}`, data, {
         headers: {
@@ -112,7 +113,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         },
         isClosable: true,
       });
-    } catch(error: any) {
+    } catch (error: any) {
       console.error(Error)
       toast({
         status: "error",
@@ -144,18 +145,18 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         },
         isClosable: true,
       });
-    }catch(error: any){
-        console.error(Error)
-        toast({
-          status: "error",
-          description:
-            error.response?.data.message ||
-            "Ops... ocorreu um erro!",
-          duration: 3000,
-          position: "bottom-right",
-          variant: "subtle",
-        });
-      }
+    } catch (error: any) {
+      console.error(Error)
+      toast({
+        status: "error",
+        description:
+          error.response?.data.message ||
+          "Ops... ocorreu um erro!",
+        duration: 3000,
+        position: "bottom-right",
+        variant: "subtle",
+      });
+    }
   }
 
   //Pega os carros pela marca

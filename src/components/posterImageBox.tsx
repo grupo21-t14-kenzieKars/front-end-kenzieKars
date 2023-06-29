@@ -7,10 +7,15 @@ import {
   Image,
 } from "@chakra-ui/react";
 import PosterImageModal from "./posterImageModal";
-import { mockedCarPost2 } from "../mocks";
 import { useState } from "react";
+import { ICar } from "../contexts/Interfaces";
 
-const PosterImageBox = () => {
+
+interface PosterImageBoxProps {
+  car: ICar
+}
+
+const PosterImageBox = ({ car }: PosterImageBoxProps) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
   const [posterImg, setPosterImg] = useState<string>("");
 
@@ -32,23 +37,24 @@ const PosterImageBox = () => {
           justifyContent={"center"}
           gap={"14px"}
         >
-          {mockedCarPost2.images.map((img, index) => (
-            <GridItem
-              key={index}
-              w={"auto"}
-              h={"auto"}
-              maxH={"108px"}
-              p={"10px"}
-              bgColor={"grey.7"}
-              cursor={"pointer"}
-              onClick={() => {
-                setPosterImg(img.url);
-                onOpen();
-              }}
-            >
-              <Image src={img.url} w={"100%"} h={"100%"} objectFit={"fill"} />
-            </GridItem>
-          ))}
+          {car != null && car.images != undefined && <>
+            {Object.values(car?.images).map((img, index) => (
+              <GridItem
+                key={index}
+                w={"auto"}
+                h={"auto"}
+                maxH={"108px"}
+                p={"10px"}
+                bgColor={"grey.7"}
+                cursor={"pointer"}
+                onClick={() => {
+                  setPosterImg(img);
+                  onOpen();
+                }}
+              >
+                <Image src={img} w={"100%"} h={"100%"} objectFit={"fill"} />
+              </GridItem>
+            ))}</>}
         </Grid>
       </Flex>
       <PosterImageModal
