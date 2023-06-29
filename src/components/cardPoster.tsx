@@ -25,7 +25,6 @@ interface ICardPosterProps {
 
 const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { setCarId } = useContext(CarContext)
 
   const cardStatus = true;
 
@@ -188,7 +187,6 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
           <Flex gap={"15px"}>
             <Button
               onClick={() => {
-                setCarId(carPost.id)
                 onOpen()
               }}
               variant={"outline1"}
