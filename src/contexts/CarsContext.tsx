@@ -60,9 +60,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     getCars()
   }, [])
 
-
-
-
   const createPoster = async (data: INewPoster) => {
     console.log(data);
 

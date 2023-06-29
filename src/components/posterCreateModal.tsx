@@ -105,7 +105,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
       };
 
       data.color = formatColor(data.color);
-      data.fipe_price = parseFloat((data.fipe_price).slice(2));
+      data.fipe_price = selectedCarModel.value
       data.kilometers = Number(data.kilometers);
       data.price = Number(data.price);
       data.images = {
