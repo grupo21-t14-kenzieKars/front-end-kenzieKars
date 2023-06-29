@@ -67,3 +67,38 @@ Utilize sua porta da API na porta do arquivo `api.ts` do Back-End.
 #### Outros
 - Modelo de design: Figma
 - Jira e método SCRUM para organização e desenvolvimento do projeto
+
+  #  :art: Layout (Desktop & Mobile)
+
+## Tela de Login
+
+<table>
+  <tr>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/Login.png"/></td>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/LoginMobile.png"/></td>
+  </tr>
+</table>
+
+## Tela do Anúncio
+<table>
+  <tr>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/Product.png"/></td>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProductMobile.png"/></td>
+  </tr>
+</table>
+
+## Tela Modal do Anúncio
+<table>
+  <tr>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewAdminCreateAnnouncementModal.png"/></td>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewAdminCreateAnnouncementModalMobile.png"/></td>
+  </tr>
+</table>
+
+## Tela do Anunciante (Pública)
+<table>
+  <tr>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewUser.png"/></td>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewUserMobile.png"/></td>
+  </tr>
+</table>
