@@ -5,15 +5,25 @@
 App desenvolvido para simular um e-commerce de carros, com as seguintes funcionalidades:
 
 ✔️ Cadastrar de usuário
+                                                                                                                                             
 ✔️ Login do usuário
+                                                                                                                                             
 ✔️ Edição do seu perfil
+                                                                                                                                             
 ✔️ Deletar perfil
+                                                                                                                                             
 ✔️ Visualização de anúncios sem necessidade de login
+                                                                                                                                             
 ✔️ Visualização dos detalhes um anúncio específico
+                                                                                                                                             
 ✔️ Criar anúncio caso for cadastrado como vendedor
+                                                                                                                                             
 ✔️ Edição dos seus anúncios
+                                                                                                                                             
 ✔️ Deletar anúncios
+                                                                                                                                             
 ✔️ Comentar sobre o anúncio caso estiver logado
+                                                                                                                                             
 
 <h2>✏️ Como instalar e rodar a aplicação</h2>
 
