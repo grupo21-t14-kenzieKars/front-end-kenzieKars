@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react"
 import { apiG21, apiKenzieKars } from '../services/api'
 import { ICarProviderData } from "./Interfaces"
-import { IAllCars, INewPoster } from "../interfaces/posterInterfaces"
+import { IAllCars, IEditPoster, INewPoster } from "../interfaces/posterInterfaces"
 import { useToast } from "@chakra-ui/react"
 import { UserContext } from "./userContext"
 
@@ -92,9 +92,9 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
-  const editCarPoster = async (data: INewPoster) =>{
+  const editCarPoster = async (data: IEditPoster) =>{
     try {
-      const response = await apiG21.post(`/car/${carId}`, data, {
+      const response = await apiG21.patch(`/car/${carId}`, data, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -102,7 +102,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
       toast({
         status: "success",
-        description: "Anúncio criado com sucesso",
+        description: "Anúncio editado com sucesso!",
         duration: 3000,
         position: "bottom-right",
         containerStyle: {
@@ -110,6 +110,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         },
         isClosable: true,
       });
+      
     } catch(error: any) {
       console.error(Error)
       toast({
@@ -134,7 +135,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
       toast({
         status: "success",
-        description: "Anúncio criado com sucesso",
+        description: "Anúncio deletado!",
         duration: 3000,
         position: "bottom-right",
         containerStyle: {

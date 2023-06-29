@@ -22,3 +22,15 @@ export const createPosterSchema = z.object({
     images: imageSchema,
 })
 
+export const editPosterSchema = z.object({
+    brand: z.string().optional(),
+    model: z.string().optional(),
+    year: z.string().optional(),
+    fuel_type: z.string().optional(),
+    kilometers: z.string().optional(),
+    color: z.string().optional(),
+    fipe_price: z.string().optional(),
+    price: z.string().optional(),
+    description: z.string().optional(),
+    images: imageSchema.optional(),
+}).partial()

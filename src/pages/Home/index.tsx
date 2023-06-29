@@ -18,7 +18,6 @@ import Header from "../../components/header";
 import HomeBg from "../../assets/HomeBg.png";
 import SideBar from "../../components/sideBar";
 import CarPostList from "./../../components/carPosterListComponet";
-import { MockedCarPostList } from "../../mocks";
 import { useContext } from "react";
 import { CarContext } from "../../contexts/CarsContext";
 

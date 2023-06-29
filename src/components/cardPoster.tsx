@@ -21,9 +21,10 @@ import { UserContext } from "../contexts/userContext";
 
 interface ICardPosterProps {
   carPost: IAllCars;
+  isOwner: boolean;
 }
 
-const CardPoster = ({ carPost }: ICardPosterProps) => {
+const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
   const { isOpen:isOpenEditPoster, onOpen:onOpenEditPoster, onClose:onCloseEditPoster } = useDisclosure();
 
   const { user } = useContext(UserContext)
@@ -135,7 +136,7 @@ const CardPoster = ({ carPost }: ICardPosterProps) => {
           </Text>
         </Flex>
 
-        {!user?.is_seller && (
+        {!isOwner && (
           <Flex
             alignItems={"center"}
             onClick={(e) => {
@@ -187,7 +188,7 @@ const CardPoster = ({ carPost }: ICardPosterProps) => {
             R${carPost.price.toFixed(2)}
           </Text>
         </Flex>
-        {user?.is_seller && (
+        {isOwner && (
           <Flex gap={"15px"}>
             <Button
               onClick={(e) => {

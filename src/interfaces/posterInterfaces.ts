@@ -1,9 +1,10 @@
 import { z } from "zod";
-import { createPosterSchema } from "../schemas/posterSchema";
+import { createPosterSchema, editPosterSchema } from "../schemas/posterSchema";
 import { carModelSchema } from '../schemas/carModelSchema';
 import { IUser } from './userInterfaces';
 
 export type ICreatePoster = z.infer<typeof createPosterSchema>;
+export type IEditPoster = z.infer<typeof editPosterSchema>;
 
 export interface INewPoster extends ICreatePoster{
     id: string,
