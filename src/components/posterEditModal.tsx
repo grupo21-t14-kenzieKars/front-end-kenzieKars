@@ -71,7 +71,6 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
     };
     
     const handleModelSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCarModel(null);
     const model = e.target.value;
     getSelectedCarModel(model, carBrand);
     };
@@ -101,41 +100,35 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
     if(selectedCarModel){
         setLoading(true);
 
-        const formatColor = (color: string) =>{
+        data.year = selectedCarModel.year;
+        data.fuel_type = (selectedCarModel && Number(selectedCarModel.fuel) === 1) ? "Flex" :
+          (selectedCarModel && Number(selectedCarModel.fuel) === 2) ? "Híbrido" :
+            (selectedCarModel && Number(selectedCarModel.fuel) === 3) ? "Elétrico" : "";
+  
+        const formatColor = (color: string) => {
           const firstLetter = color.charAt(0).toUpperCase()
           const restOfWord = color.slice(1).toLowerCase()
           return firstLetter + restOfWord
         };
-
-        const editedData = {
-          id: data.id,
-          brand: selectedCarModel.brand,
-          model: selectedCarModel.model,
-          year: selectedCarModel.year,
-          color: formatColor(data.color),
-          kilometers: Number(data.kilometers),
-          fipe_price: data.fipe_price = parseFloat(((data.fipe_price).toString()).slice(2)),
-          fuel_type: (selectedCarModel && Number(selectedCarModel.fuel) === 1) ? "Flex" :
-          (selectedCarModel && Number(selectedCarModel.fuel) === 2) ? "Híbrido" :
-          (selectedCarModel && Number(selectedCarModel.fuel) === 3) ? "Elétrico" :"",
-          price: data.price = Number(data.price),
-          description: data.description,
-          images:  data.images = {
-            one: data.images.one,
-            two: data.images.two || null,
-            three: data.images.three || null,
-            four: data.images.four || null,
-            five: data.images.five || null,
-            six: data.images.six || null,
-          }
+  
+        data.color = formatColor(data.color);
+        data.fipe_price = selectedCarModel.value
+        data.kilometers = Number(data.kilometers);
+        data.price = Number(data.price);
+        data.images = {
+          one: data.images.one,
+          two: data.images.two || null,
+          three: data.images.three || null,
+          four: data.images.four || null,
+          five: data.images.five || null,
+          six: data.images.six || null,
+        };
       }
-       
         // data.is_active = isActive
         editCarPoster(data)
         reset();
         onClose()
         setLoading(false);
-      }
   }
 
   const deleteAndClose = () =>{

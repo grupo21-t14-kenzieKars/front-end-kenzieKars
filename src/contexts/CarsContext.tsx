@@ -98,7 +98,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   const editCarPoster = async (data: IEditPoster) => {
     try {
-      const response = await apiG21.patch(`/car/${carId}`, data, {
+      await apiG21.patch(`/car/${carId}`, data, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -114,6 +114,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         },
         isClosable: true,
       });
+
     } catch (error: any) {
       console.error(Error)
       toast({
