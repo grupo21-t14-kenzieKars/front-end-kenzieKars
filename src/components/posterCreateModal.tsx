@@ -30,8 +30,8 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
   const [imagesCount, setImagesCount] = useState(1);
 
   const handleAddImageButton = () => {
-    if(imagesCount != 6){
-        setImagesCount(imagesCount + 1)
+    if (imagesCount != 6) {
+      setImagesCount(imagesCount + 1)
     }
   }
 
@@ -68,7 +68,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
     getSelectedCarModel(model, carBrand);
   };
 
-  const closeAndReset = () =>{
+  const closeAndReset = () => {
     setImagesCount(1)
     setSelectedCarModel(null)
     reset()
@@ -90,22 +90,22 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
   ));
 
   const onSubmit = (data: any) => {
-    if(selectedCarModel){
+    if (selectedCarModel) {
       setLoading(true);
 
       data.year = selectedCarModel.year;
       data.fuel_type = (selectedCarModel && Number(selectedCarModel.fuel) === 1) ? "Flex" :
-      (selectedCarModel && Number(selectedCarModel.fuel) === 2) ? "Híbrido" :
-      (selectedCarModel && Number(selectedCarModel.fuel) === 3) ? "Elétrico" :"";
+        (selectedCarModel && Number(selectedCarModel.fuel) === 2) ? "Híbrido" :
+          (selectedCarModel && Number(selectedCarModel.fuel) === 3) ? "Elétrico" : "";
 
-      const formatColor = (color: string) =>{
+      const formatColor = (color: string) => {
         const firstLetter = color.charAt(0).toUpperCase()
         const restOfWord = color.slice(1).toLowerCase()
         return firstLetter + restOfWord
       };
 
       data.color = formatColor(data.color);
-      data.fipe_price = parseFloat((data.fipe_price).slice(2));
+      data.fipe_price = selectedCarModel.value
       data.kilometers = Number(data.kilometers);
       data.price = Number(data.price);
       data.images = {
@@ -116,7 +116,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
         five: data.images.five || null,
         six: data.images.six || null,
       };
-  
+
       createPoster(data);
       reset();
       onClose()
@@ -137,171 +137,171 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
       >
 
         <FormControl
-        as={"form"}
-        onSubmit={handleSubmit(onSubmit)}
-        isInvalid={!!errors}
+          as={"form"}
+          onSubmit={handleSubmit(onSubmit)}
+          isInvalid={!!errors}
         >
 
-         <Flex width="100%" height="100%" p={"15px"}>
-          <Heading fontWeight={"semibold"} fontSize={"heading.2"}>
-            Criar anúncio
-          </Heading>
-          <ModalCloseButton color={"grey.4"} />
-        </Flex>
-
-        <Flex flexDirection={"column"} gap={"15px"}>
-          <Text as={"h3"} fontWeight={"semibold"} fontSize={"heading.1"}>
-            Informações do veículo
-          </Text>
-
-          <FormControl id="brand">
-            <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
-              Marca
-            </FormLabel>
-            <Select {...register("brand")} onChange={handleBrandSelect} >
-              <option value="">Escolha a marca</option>
-                {carOptionsSelect}
-            </Select>
-            <FormErrorMessage>{errors && errors.brand?.message?.toString()}</FormErrorMessage>
-          </FormControl>
-
-          <FormControl id="model">
-            <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
-              Modelo
-            </FormLabel>
-            <Select placeholder="Selecione o modelo" {...register("model")} onChange={handleModelSelect}>
-                {carModelOptionsSelect}
-            </Select>
-            <FormErrorMessage>{errors && errors.model?.message?.toString()}</FormErrorMessage>
-          </FormControl>
-
-          <Flex width="100%" wrap={"wrap"} justifyContent={"space-between"}>
-            <FormControl id="year" width="48%" isInvalid={!!errors}>
-              <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
-                Ano
-              </FormLabel>
-              <Input
-                readOnly
-                type="text"
-                placeholder="Ano"
-                value={selectedCarModel?.year}
-                {...register("year")}
-              />
-              <FormErrorMessage>{errors && errors.year?.message?.toString()}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl id="fuel_type" width="48%" isInvalid={!!errors}>
-              <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
-                Combustível
-              </FormLabel>
-              <Input
-                readOnly
-                type="text"
-                placeholder="Gasolina/Etanol"
-                value={
-                    (selectedCarModel && Number(selectedCarModel.fuel) === 1) ? "Flex" :
-                    (selectedCarModel && Number(selectedCarModel.fuel) === 2) ? "Híbrido" :
-                    (selectedCarModel && Number(selectedCarModel.fuel) === 3) ? "Elétrico" :
-                    ""}
-                {...register("fuel_type")}
-              />
-              <FormErrorMessage>{errors && errors.fuel_type?.message?.toString()}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl id="kilometers" width="48%" isInvalid={!!errors}>
-              <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
-                Quilometragem
-              </FormLabel>
-              <Input
-                type="number"
-                min={0}
-                placeholder="30.000"
-                {...register("kilometers")}
-              />
-              <FormErrorMessage>{errors && errors.kilometers?.message?.toString()}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl id="color" width="48%" isInvalid={!!errors}>
-              <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
-                Cor
-              </FormLabel>
-              <Input type="text" placeholder="Branco" {...register("color")} />
-              <FormErrorMessage>{errors && errors.color?.message?.toString()}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl id="fipe_price" width="48%" isInvalid={!!errors}>
-              <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
-                Preço tabela FIPE
-              </FormLabel>
-              <Input
-                readOnly
-                type="text"
-                placeholder="R$30.000,00"
-                value={`R$${selectedCarModel?.value},00`}
-                {...register("fipe_price")}
-              />
-              <FormErrorMessage>{errors && errors.value?.message?.toString()}</FormErrorMessage>
-            </FormControl>
-
-            <FormControl id="price" width="48%" isInvalid={!!errors}>
-              <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
-                Preço
-              </FormLabel>
-              <Input
-                type="number"
-                placeholder="R$50.000,00"
-                {...register("price")}
-              />
-              <FormErrorMessage>{errors && errors.price?.message?.toString()}</FormErrorMessage>
-            </FormControl>
+          <Flex width="100%" height="100%" p={"15px"}>
+            <Heading fontWeight={"semibold"} fontSize={"heading.2"}>
+              Criar anúncio
+            </Heading>
+            <ModalCloseButton color={"grey.4"} />
           </Flex>
 
-          <FormControl id="description" isInvalid={!!errors}>
-            <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
-              Descrição
-            </FormLabel>
-            <Input
-              type="text"
-              placeholder="Descreva seu anúncio aqui"
-              maxLength={600}
-              {...register("description")}
-            />
-            <FormErrorMessage>{errors && errors.description?.message?.toString()}</FormErrorMessage>
-          </FormControl>
+          <Flex flexDirection={"column"} gap={"15px"}>
+            <Text as={"h3"} fontWeight={"semibold"} fontSize={"heading.1"}>
+              Informações do veículo
+            </Text>
 
-          <FormControl id="main_image">
-            <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
-              Imagem da capa
-            </FormLabel>
-            <Input type="text" placeholder="https://image.com" {...register('images.one')}/>
-          </FormControl>
-                
-            {Array.from({length: imagesCount}, (value, index) =>(
-                <>
-                    <FormLabel id={`images${index + 1}`}>{index+1}ª Imagem da galeria</FormLabel>
-                    <Input key={index} type="text" placeholder="https://image.com" 
-                    {...register(`images.${index === 0? "two" : index === 1 ? "three" : index === 2 ? "four": index === 3 ? "five" : "six"}`)}/>
-                    <FormErrorMessage>{errors && errors.images?.message?.toString()}</FormErrorMessage>
-                </>
+            <FormControl id="brand">
+              <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
+                Marca
+              </FormLabel>
+              <Select {...register("brand")} onChange={handleBrandSelect} >
+                <option value="">Escolha a marca</option>
+                {carOptionsSelect}
+              </Select>
+              <FormErrorMessage>{errors && errors.brand?.message?.toString()}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl id="model">
+              <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
+                Modelo
+              </FormLabel>
+              <Select placeholder="Selecione o modelo" {...register("model")} onChange={handleModelSelect}>
+                {carModelOptionsSelect}
+              </Select>
+              <FormErrorMessage>{errors && errors.model?.message?.toString()}</FormErrorMessage>
+            </FormControl>
+
+            <Flex width="100%" wrap={"wrap"} justifyContent={"space-between"}>
+              <FormControl id="year" width="48%" isInvalid={!!errors}>
+                <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
+                  Ano
+                </FormLabel>
+                <Input
+                  readOnly
+                  type="text"
+                  placeholder="Ano"
+                  value={selectedCarModel?.year}
+                  {...register("year")}
+                />
+                <FormErrorMessage>{errors && errors.year?.message?.toString()}</FormErrorMessage>
+              </FormControl>
+
+              <FormControl id="fuel_type" width="48%" isInvalid={!!errors}>
+                <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
+                  Combustível
+                </FormLabel>
+                <Input
+                  readOnly
+                  type="text"
+                  placeholder="Gasolina/Etanol"
+                  value={
+                    (selectedCarModel && Number(selectedCarModel.fuel) === 1) ? "Flex" :
+                      (selectedCarModel && Number(selectedCarModel.fuel) === 2) ? "Híbrido" :
+                        (selectedCarModel && Number(selectedCarModel.fuel) === 3) ? "Elétrico" :
+                          ""}
+                  {...register("fuel_type")}
+                />
+                <FormErrorMessage>{errors && errors.fuel_type?.message?.toString()}</FormErrorMessage>
+              </FormControl>
+
+              <FormControl id="kilometers" width="48%" isInvalid={!!errors}>
+                <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
+                  Quilometragem
+                </FormLabel>
+                <Input
+                  type="number"
+                  min={0}
+                  placeholder="30.000"
+                  {...register("kilometers")}
+                />
+                <FormErrorMessage>{errors && errors.kilometers?.message?.toString()}</FormErrorMessage>
+              </FormControl>
+
+              <FormControl id="color" width="48%" isInvalid={!!errors}>
+                <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
+                  Cor
+                </FormLabel>
+                <Input type="text" placeholder="Branco" {...register("color")} />
+                <FormErrorMessage>{errors && errors.color?.message?.toString()}</FormErrorMessage>
+              </FormControl>
+
+              <FormControl id="fipe_price" width="48%" isInvalid={!!errors}>
+                <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
+                  Preço tabela FIPE
+                </FormLabel>
+                <Input
+                  readOnly
+                  type="text"
+                  placeholder="R$30.000,00"
+                  value={`R$${selectedCarModel?.value},00`}
+                  {...register("fipe_price")}
+                />
+                <FormErrorMessage>{errors && errors.value?.message?.toString()}</FormErrorMessage>
+              </FormControl>
+
+              <FormControl id="price" width="48%" isInvalid={!!errors}>
+                <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
+                  Preço
+                </FormLabel>
+                <Input
+                  type="number"
+                  placeholder="R$50.000,00"
+                  {...register("price")}
+                />
+                <FormErrorMessage>{errors && errors.price?.message?.toString()}</FormErrorMessage>
+              </FormControl>
+            </Flex>
+
+            <FormControl id="description" isInvalid={!!errors}>
+              <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
+                Descrição
+              </FormLabel>
+              <Input
+                type="text"
+                placeholder="Descreva seu anúncio aqui"
+                maxLength={600}
+                {...register("description")}
+              />
+              <FormErrorMessage>{errors && errors.description?.message?.toString()}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl id="main_image">
+              <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
+                Imagem da capa
+              </FormLabel>
+              <Input type="text" placeholder="https://image.com" {...register('images.one')} />
+            </FormControl>
+
+            {Array.from({ length: imagesCount }, (value, index) => (
+              <>
+                <FormLabel id={`images${index + 1}`}>{index + 1}ª Imagem da galeria</FormLabel>
+                <Input key={index} type="text" placeholder="https://image.com"
+                  {...register(`images.${index === 0 ? "two" : index === 1 ? "three" : index === 2 ? "four" : index === 3 ? "five" : "six"}`)} />
+                <FormErrorMessage>{errors && errors.images?.message?.toString()}</FormErrorMessage>
+              </>
             ))}
 
-          <Flex width="100%" justifyContent={"flex-start"} paddingTop={"15px"}>
-            <Button width="75%" variant={"brandOpacity"} onClick={handleAddImageButton}>
-              Adicionar campo para imagem da galeria
-            </Button>
+            <Flex width="100%" justifyContent={"flex-start"} paddingTop={"15px"}>
+              <Button width="75%" variant={"brandOpacity"} onClick={handleAddImageButton}>
+                Adicionar campo para imagem da galeria
+              </Button>
+            </Flex>
+
+            <Flex justifyContent={"flex-end"} p={"30px 10px 5px 0"} gap={"10px"}>
+              <Button onClick={onClose} variant={"negative"}>
+                Cancelar
+              </Button>
+              <Button type="submit" variant={"brand1"}>
+                Criar anúncio
+              </Button>
+            </Flex>
           </Flex>
 
-          <Flex justifyContent={"flex-end"} p={"30px 10px 5px 0"} gap={"10px"}>
-            <Button onClick={onClose} variant={"negative"}>
-              Cancelar
-            </Button>
-            <Button type="submit" variant={"brand1"}>
-              Criar anúncio
-            </Button>
-          </Flex>
-        </Flex>
-
-      </FormControl>
+        </FormControl>
       </ModalContent>
     </Modal>
   );

@@ -10,8 +10,8 @@ import { CarContext } from "../../contexts/CarsContext";
 
 const AdvertiserPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { user } = useContext(UserContext)
-  const { carList } = useContext(CarContext)
+  const { user, userCars } = useContext(UserContext)
+
 
   return (
     <>
@@ -59,7 +59,7 @@ const AdvertiserPage = () => {
               </Button>
               <PosterCreateModal isOpen={isOpen} onClose={onClose} />
             </Flex>
-            <CarPostList carsList={carList} isOwner={true} />
+            <CarPostList carsList={userCars} isOwner={true} />
           </Flex>
           <Footer />
         </Flex>
