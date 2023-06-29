@@ -1,18 +1,19 @@
 # Front-end KenzieKars
 
-<h2> 💻 Sobre o projeto </h2>
+# 💻 Sobre o projeto
+
 App desenvolvido para simular um e-commerce de carros, com as seguintes funcionalidades:
 
-- Cadastrar de usuário
-- Login do usuário
-- Edição do seu perfil
-- Deletar perfil
-- Visualização de anúncios sem necessidade de login
-- Visualização dos detalhes um anúncio específico
-- Criar anúncio caso for cadastrado como vendedor
-- Edição dos seus anúncios
-- Deletar anúncios
-- Comentar sobre o anúncio caso estiver logado
+✔️ Cadastrar de usuário
+✔️ Login do usuário
+✔️ Edição do seu perfil
+✔️ Deletar perfil
+✔️ Visualização de anúncios sem necessidade de login
+✔️ Visualização dos detalhes um anúncio específico
+✔️ Criar anúncio caso for cadastrado como vendedor
+✔️ Edição dos seus anúncios
+✔️ Deletar anúncios
+✔️ Comentar sobre o anúncio caso estiver logado
 
 <h2>✏️ Como instalar e rodar a aplicação</h2>
 
@@ -42,6 +43,8 @@ Utilize sua porta da API na porta do arquivo `api.ts` do Back-End.
 #### Bibliotecas
 
 - @HOOKFORM/RESOLVERS
+- REGEX
+- TYPEORM
 - AXIOS
 - REACT-HOOK-FORM
 - REACT-ICONS
@@ -50,3 +53,7 @@ Utilize sua porta da API na porta do arquivo `api.ts` do Back-End.
 - CHAKRA UI
 - UUID
 - ZOD
+
+#### Outros
+- Modelo de design: Figma
+- Jira e método SCRUM para organização e desenvolvimento do projeto
