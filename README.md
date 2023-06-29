@@ -71,22 +71,34 @@ Utilize sua porta da API na porta do arquivo `api.ts` do Back-End.
   #  :art: Layout (Desktop & Mobile)
 
 ## Tela de Login
-<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/Login.png"></div>
 
-<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/LoginMobile.png"></div>
+<table>
+  <tr>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/Login.png"/></td>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/LoginMobile.png"/></td>
+  </tr>
+</table>
 
 ## Tela do Anúncio
-<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/Product.png"></div>
-<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProductMobile.png"></div>
+<table>
+  <tr>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/Product.png"/></td>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProductMobile.png"/></td>
+  </tr>
+</table>
 
 ## Tela Modal do Anúncio
-<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewAdminCreateAnnouncementModal.png"></div>
-<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewAdminCreateAnnouncementModalMobile.png"></div>
-
+<table>
+  <tr>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewAdminCreateAnnouncementModal.png"/></td>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewAdminCreateAnnouncementModalMobile.png"/></td>
+  </tr>
+</table>
 
 ## Tela do Anunciante (Pública)
-<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewUser.png"></div>
-<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewUserMobile.png"></div>
-
-<div align="center"><img src=""></div>
-<div align="center"><img src=""></div>
+<table>
+  <tr>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewUser.png"/></td>
+    <td valign="top"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewUserMobile.png"/></td>
+  </tr>
+</table>
