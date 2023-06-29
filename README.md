@@ -67,3 +67,26 @@ Utilize sua porta da API na porta do arquivo `api.ts` do Back-End.
 #### Outros
 - Modelo de design: Figma
 - Jira e método SCRUM para organização e desenvolvimento do projeto
+
+  #  :art: Layout (Desktop & Mobile)
+
+## Tela de Login
+<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/Login.png"></div>
+
+<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/LoginMobile.png"></div>
+
+## Tela do Anúncio
+<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/Product.png"></div>
+<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProductMobile.png"></div>
+
+## Tela Modal do Anúncio
+<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewAdminCreateAnnouncementModal.png"></div>
+<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewAdminCreateAnnouncementModalMobile.png"></div>
+
+
+## Tela do Anunciante (Pública)
+<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewUser.png"></div>
+<div align="center"><img src="https://github.com/grupo21-t14-kenzieKars/front-end-kenzieKars/blob/develop/src/assets/READ.ME/ProfileViewUserMobile.png"></div>
+
+<div align="center"><img src=""></div>
+<div align="center"><img src=""></div>
