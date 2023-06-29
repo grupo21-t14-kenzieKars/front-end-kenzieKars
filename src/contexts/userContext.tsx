@@ -2,11 +2,12 @@ import { createContext, useEffect, useState } from "react"
 import { IUserData, IUserProviderData } from "./Interfaces"
 import { LoginData } from "../components/forms/loginForm/loginSchema"
 import { apiG21 } from "../services/api"
-import { useNavigate } from "react-router-dom"
 import { IEditUser } from "../interfaces/userInterfaces"
+import { useNavigate } from "react-router-dom"
 import { useToast } from "@chakra-ui/react"
 import { IForgotPassword, IResetPassword } from "../interfaces/forgotPassword.interfaces"
 import { IAllCars } from "../interfaces/posterInterfaces"
+
 
 export const UserContext = createContext<IUserProviderData>(
   {} as IUserProviderData
@@ -21,7 +22,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [userCars, setUserCars] = useState<IAllCars[]>([])
 
   const toast = useToast();
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -71,11 +71,31 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
       });
       setUser(user.data);
       setIsSeller(user.data.is_seller);
-      getUserCars(user.data.id)
-      navigate("/");
-    } catch (error) {
+      toast({
+        status: "success",
+        description: `Bem vindo novamente, ${user.data.name}`,
+        duration: 3000,
+        position: "bottom-right",
+        containerStyle: {
+          color: "white",
+        },
+        isClosable: true,
+      });
+      navigate('/')
+    } catch (error: any) {
       console.error(error);
       window.localStorage.clear();
+      toast({
+        status: "error",
+        description:
+          error.response?.data.message ||
+          "Ops... ocorreu um erro! tente novamente mais tarde",
+        duration: 3000,
+        position: "bottom-right",
+        containerStyle: {
+          color: "white",
+        },
+      });
     } finally {
       setLoading(false);
     }
@@ -85,11 +105,30 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       setLoading(true);
       await apiG21.post("/user", createUserData);
-      
-
-      navigate("/login");
-    } catch (error) {
+      toast({
+        status: "success",
+        description: `Bem vindo, ${createUserData.name}`,
+        duration: 3000,
+        position: "bottom-right",
+        containerStyle: {
+          color: "white",
+        },
+        isClosable: true,
+      });
+      navigate('/login')
+    } catch (error: any) {
       console.error(error);
+      toast({
+        status: "error",
+        description:
+          error.response?.data.message ||
+          "Ops... ocorreu um erro! tente novamente mais tarde",
+        duration: 3000,
+        position: "bottom-right",
+        containerStyle: {
+          color: "white",
+        },
+      });
     } finally {
       setLoading(false);
     }

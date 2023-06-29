@@ -3,6 +3,7 @@ import {
   FormControl,
   FormErrorMessage,
   Link,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
@@ -13,7 +14,7 @@ import { useContext } from "react";
 import { UserContext } from "../../../contexts/userContext";
 
 const LoginForm = () => {
-  const { loginUser } = useContext(UserContext);
+  const { loginUser, loading } = useContext(UserContext);
 
   const {
     register,
@@ -45,6 +46,7 @@ const LoginForm = () => {
       padding={"40px"}
       borderRadius={"4px"}
       bg="white"
+      isInvalid={!!errors}
     >
       <Text
         w={"full"}
@@ -62,16 +64,15 @@ const LoginForm = () => {
         type="email"
         label={"Email"}
         register={register("email")}
+        error={errors.email}
       />
-      <FormErrorMessage>
-        {errors.email && errors.email.message}
-      </FormErrorMessage>
       <InputWithLabel
         placeHolder={"Digitar senha"}
         id={"password"}
         type="password"
         label={"Senha"}
         register={register("password")}
+        error={errors.password}
       />
       <Link
         fontSize={"heading.1"}
@@ -83,8 +84,9 @@ const LoginForm = () => {
       >
         Esqueci minha senha
       </Link>
-      <Button type="submit" size={"lg"} w={"full"}>
-        Entrar
+      <Button type="submit" size={"lg"} w={"full"} disabled={loading}>
+        {loading ? <Spinner /> :
+          <>Entrar</>}
       </Button>
       <Text
         fontSize={"heading.1"}

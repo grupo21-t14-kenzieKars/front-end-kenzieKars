@@ -44,9 +44,8 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
       boxShadow={"none"}
       gap={"18px"}
       as={"a"}
-      href={""}
+      href={`/car/${carPost?.id}`}
       key={carPost.id}
-      data-group
     >
       <CardHeader p={0}>
         <Flex

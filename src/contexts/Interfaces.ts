@@ -18,9 +18,6 @@ export interface ICarProviderData {
     carModels: Array<IAllCars>
     selectedCarModel: IKenzieAPICar | null;
     setSelectedCarModel: React.Dispatch<React.SetStateAction<any | null>>
-    editCarPoster: (data: INewPoster) => void;
-    deleteCarPoster: () => void;
-    setCarId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface IUserProviderData {
@@ -39,7 +36,7 @@ export interface IUserProviderData {
   deleteUser: () => Promise<void>;
 }
 
-export interface IUserAddressData{
+export interface IUserAddressData {
     zip_code: string
     city: string
     state: string
@@ -48,7 +45,7 @@ export interface IUserAddressData{
     complement: string | null
 }
 
-export interface IUserData{
+export interface IUserData {
     id: string
     email: string
     name: string
@@ -58,4 +55,49 @@ export interface IUserData{
     description: string
     is_seller: boolean
     address: IUserAddressData
+}
+
+export interface ICar {
+    brand: string;
+    model: string;
+    year: string;
+    fuel_type: string;
+    color: string;
+    images: Images;
+    kilometers: number;
+    fipe_price: number;
+    price: number;
+    description: string;
+    id: string;
+    user: ICarUser;
+    createdAt: Date;
+    comments: IComment[];
+}
+
+export interface IComment {
+    content: string;
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
+    user: CommentUser;
+}
+
+export interface CommentUser {
+    id: string;
+    name: string;
+}
+
+export interface Images {
+    one: string;
+    two: string | null;
+    three: string | null;
+    four: string | null;
+    five: string | null;
+    six: string | null;
+}
+
+export interface ICarUser {
+    name: string;
+    id: string;
+    description: string;
 }

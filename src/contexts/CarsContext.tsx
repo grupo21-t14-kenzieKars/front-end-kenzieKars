@@ -37,6 +37,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     const getCars = async () => {
       try {
         const { data } = await apiG21.get('/car')
+
         setCarList(data)
         setFilteredCarList(data)
       } catch (error) {
@@ -59,7 +60,12 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     getCars()
   }, [])
 
+
+
+
   const createPoster = async (data: INewPoster) => {
+    console.log(data);
+
     try {
       const response = await apiG21.post("/car", data, {
         headers: {
@@ -110,8 +116,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         },
         isClosable: true,
       });
-      
-    } catch(error: any) {
+    } catch (error: any) {
       console.error(Error)
       toast({
         status: "error",
@@ -143,18 +148,18 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         },
         isClosable: true,
       });
-    }catch(error: any){
-        console.error(Error)
-        toast({
-          status: "error",
-          description:
-            error.response?.data.message ||
-            "Ops... ocorreu um erro!",
-          duration: 3000,
-          position: "bottom-right",
-          variant: "subtle",
-        });
-      }
+    } catch (error: any) {
+      console.error(Error)
+      toast({
+        status: "error",
+        description:
+          error.response?.data.message ||
+          "Ops... ocorreu um erro!",
+        duration: 3000,
+        position: "bottom-right",
+        variant: "subtle",
+      });
+    }
   }
 
   //Pega os carros pela marca
