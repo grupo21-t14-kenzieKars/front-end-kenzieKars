@@ -9,7 +9,7 @@ export const CarContext = createContext<ICarProviderData>({} as ICarProviderData
 
 const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
-  const { setUserCars } = useContext(UserContext)
+  const { setUserCars, userCars } = useContext(UserContext)
 
   //Lista de todos os carros da API Kenzie
   const [allCarsList, setAllCarsList] = useState([] as Array<IAllCars>)
@@ -65,6 +65,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   const createPoster = async (data: INewPoster) => {
     console.log(data);
+    console.log(token);
 
     try {
       const response = await apiG21.post("/car", data, {
@@ -83,8 +84,8 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         },
         isClosable: true,
       });
-      setUserCars(response.data)
-    } catch(error: any) {
+      setUserCars([...userCars, response.data])
+    } catch (error: any) {
       console.error(Error)
       toast({
         status: "error",
@@ -98,7 +99,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
-  const editCarPoster = async (data: IEditPoster) =>{
+  const editCarPoster = async (data: IEditPoster) => {
     try {
       const response = await apiG21.patch(`/car/${carId}`, data, {
         headers: {
