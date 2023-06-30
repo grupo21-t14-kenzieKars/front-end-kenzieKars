@@ -89,19 +89,6 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
     </option>
   ));
 
-  // useEffect(() => {
-  //   if (user) {
-  //     reset({
-  //       name: user.name,
-  //       email: user.email,
-  //       cpf: user.cpf.replace(/^(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"),
-  //       phone: "(" + user.phone.slice(2, 4) + ") " + user.phone.slice(4, 9) + "-" + user.phone.slice(9),
-  //       birth_date: user.birth_date.split("-").reverse().join("/"),
-  //       description: user.description,
-  //     });
-  //   }
-  // }, [isOpen, reset]);
-
   const onSubmit = (data: any) => {
     if (selectedCarModel) {
       setLoading(true);

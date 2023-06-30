@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createPosterSchema, editPosterSchema } from "../schemas/posterSchema";
+import { createPosterSchema } from "../schemas/posterSchema";
 import { carModelSchema } from '../schemas/carModelSchema';
 import { IUser } from './userInterfaces';
 

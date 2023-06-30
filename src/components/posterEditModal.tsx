@@ -55,6 +55,7 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
         resolver: zodResolver(editPosterSchema),
       });
 
+
     const handleAddImageButton = () => {
         if(imagesCount != 6){
             setImagesCount(imagesCount + 1)
@@ -101,7 +102,7 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
         }
         return acc;
       }, {});
-      console.log(Object.entries(filledData.images));
+
       const filledDataImages = Object.entries(filledData.images).reduce((acc: any, [key, value]) => {
         if (value !== "") {
           acc[key] = value;
