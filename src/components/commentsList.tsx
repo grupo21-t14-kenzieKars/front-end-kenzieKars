@@ -6,6 +6,39 @@ interface commentListProps {
 }
 
 function CommentList({ comments }: commentListProps) {
+  function getCommentDate(data: Date) {
+    const date: any = new Date(data);
+
+    const today: any = new Date();
+
+    const d = today - date;
+
+    const seconds = parseInt("" + d / 1000);
+    const minuts = parseInt("" + d / 1000 / 60);
+    const hours = parseInt("" + d / 1000 / 60 / 60);
+    const days = parseInt("" + d / 1000 / 60 / 60 / 24);
+    const months = parseInt("" + d / 1000 / 60 / 60 / 24 / 30);
+    const years = parseInt("" + d / 1000 / 60 / 60 / 24 / 30 / 12);
+
+    if (seconds < 60) {
+      return `Há ${seconds} segundo${seconds !== 1 ? "s" : ""}`;
+    }
+    if (minuts < 60) {
+      return `Há ${minuts} minuto${minuts !== 1 ? "s" : ""}`;
+    }
+    if (hours < 24) {
+      return `Há ${hours} hora${hours !== 1 ? "s" : ""}`;
+    }
+    if (days < 30) {
+      return `Há ${days} dia${days !== 1 ? "s" : ""}`;
+    }
+    if (months < 12) {
+      return `Há ${months} mês${months !== 1 ? "es" : ""}`;
+    }
+
+    return `Há ${years} ano${years !== 1 ? "s" : ""}`;
+  }
+
   return (
     <Box
       bg="white"
@@ -44,7 +77,7 @@ function CommentList({ comments }: commentListProps) {
                   borderRadius={"50%"}
                 ></Box>
                 <Text color="grey.3" fontSize={"heading.1"}>
-                  3 dias atrás
+                  {getCommentDate(elem.createdAt)}
                 </Text>
               </Flex>
               <Text color="grey.2" fontSize={"heading.1"}>
