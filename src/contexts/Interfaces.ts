@@ -2,7 +2,7 @@ import React from "react"
 import { LoginData } from "../components/forms/loginForm/loginSchema"
 import { RegisterData } from "../components/forms/registerForm/registerSchema"
 import { IForgotPassword, IResetPassword } from "../interfaces/forgotPassword.interfaces"
-import { EditPoster2, IAllCars, IEditPoster, IKenzieAPICar, INewPoster } from "../interfaces/posterInterfaces"
+import { IAllCars, IEditPoster, IKenzieAPICar, INewPoster } from "../interfaces/posterInterfaces"
 import { IEditUser } from "../interfaces/userInterfaces"
 
 export interface ICarProviderData {
@@ -18,9 +18,12 @@ export interface ICarProviderData {
     carModels: Array<IAllCars>
     selectedCarModel: IKenzieAPICar | null;
     setSelectedCarModel: React.Dispatch<React.SetStateAction<any | null>>
-    editCarPoster: (data: EditPoster2) => void;
+    editCarPoster: (data: IEditPoster) => void;
     deleteCarPoster: () => void;
     setCarId: React.Dispatch<React.SetStateAction<string>>;
+    carId: string;
+    carData: IAllCars;
+    setCarData: React.Dispatch<React.SetStateAction<IAllCars>>;
 }
 
 export interface IUserProviderData {

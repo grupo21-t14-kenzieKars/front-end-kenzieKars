@@ -20,6 +20,9 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   //Pega o id do carro
   const [carId, setCarId] = useState("")
 
+  //Dados do carro por ID
+  const [carData, setCarData] = useState({} as IAllCars)
+
   //Lista com as marcas dos carros da API Kenzie
   const [carsByBrand, setCarsByBrand] = useState([] as Array<object>)
   //Lista de todos os modelos dos carros da API Kenzie
@@ -191,6 +194,23 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     })
   }
 
+  useEffect(() =>{
+      try{
+        console.log(carId)
+        const getCarById = async () => {
+          const { data } = await apiG21.get(`/car/${carId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
+          setCarData(data)
+        }
+        getCarById()
+      }catch(error){
+        console.log(error)
+      }
+  }, [carId])
+
   return (
     <>
       <CarContext.Provider value={{
@@ -208,7 +228,10 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         selectedCarModel,
         editCarPoster,
         deleteCarPoster,
-        setCarId
+        setCarId,
+        carId,
+        carData,
+        setCarData
       }}>
         {children}
       </CarContext.Provider>

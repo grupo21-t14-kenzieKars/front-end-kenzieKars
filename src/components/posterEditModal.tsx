@@ -14,7 +14,7 @@ import {
     Text,
     useDisclosure,
   } from "@chakra-ui/react";
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { CarContext } from "../contexts/CarsContext"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -37,8 +37,13 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
         selectedCarModel, 
         setSelectedCarModel,
         editCarPoster,
-        deleteCarPoster
+        deleteCarPoster,
+        carData,
+        setCarData,
+        carId
     } = useContext(CarContext)
+
+  
 
     const { isOpen: isOpenDeleteModal, onOpen: onOpenDeleteModal, onClose: onCloseDeleteModal} = useDisclosure()
 
@@ -97,38 +102,28 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
   ));
 
   const onSubmit = (data: any) => {
-    if(selectedCarModel){
-        setLoading(true);
+      const filledData = Object.entries(data).reduce((acc: any, [key, value]) => {
+        if (value !== "R$0,00" && value !== "") {
+          acc[key] = value;
+        }
+        return acc;
+      }, {});
+      console.log(Object.entries(filledData.images));
+      const filledDataImages = Object.entries(filledData.images).reduce((acc: any, [key, value]) => {
+        if (value !== "") {
+          acc[key] = value;
+        }
+        return acc;
+      }, {})
+      filledData.images = filledDataImages
 
-        data.year = selectedCarModel.year;
-        data.fuel_type = (selectedCarModel && Number(selectedCarModel.fuel) === 1) ? "Flex" :
-          (selectedCarModel && Number(selectedCarModel.fuel) === 2) ? "Híbrido" :
-            (selectedCarModel && Number(selectedCarModel.fuel) === 3) ? "Elétrico" : "";
-  
-        const formatColor = (color: string) => {
-          const firstLetter = color.charAt(0).toUpperCase()
-          const restOfWord = color.slice(1).toLowerCase()
-          return firstLetter + restOfWord
-        };
-  
-        data.color = formatColor(data.color);
-        data.fipe_price = selectedCarModel.value
-        data.kilometers = Number(data.kilometers);
-        data.price = Number(data.price);
-        data.images = {
-          one: data.images.one,
-          two: data.images.two || null,
-          three: data.images.three || null,
-          four: data.images.four || null,
-          five: data.images.five || null,
-          six: data.images.six || null,
-        };
+      if (filledData.price) {
+        filledData.price = Number(filledData.price)
       }
-        // data.is_active = isActive
-        editCarPoster(data)
-        reset();
-        onClose()
-        setLoading(false);
+      editCarPoster(filledData)
+      reset();
+      onClose()
+      setLoading(false);
   }
 
   const deleteAndClose = () =>{
@@ -173,7 +168,7 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
               Marca
             </FormLabel>
             <Select {...register("brand")} onChange={handleBrandSelect} >
-              <option value="">Escolha a marca</option>
+              {selectedCarModel === null && <option value={carData.brand}>{carData.brand}</option>}
                 {carOptionsSelect}
             </Select>
             <FormErrorMessage>{errors && errors.brand?.message?.toString()}</FormErrorMessage>
@@ -183,10 +178,10 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
               Modelo
             </FormLabel>
-            <Select placeholder="Selecione o modelo" {...register("model")} onChange={handleModelSelect}>
-                {carModelOptionsSelect}
+            <Select {...register("model")} onChange={handleModelSelect}>
+              {selectedCarModel === null && <option value={carData.model}>{carData.model}</option>}
+               {carModelOptionsSelect}
             </Select>
-            <FormErrorMessage>{errors && errors.model?.message?.toString()}</FormErrorMessage>
           </FormControl>
 
           <Flex width="100%" wrap={"wrap"} justifyContent={"space-between"}>
@@ -198,7 +193,7 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
                 readOnly
                 type="text"
                 placeholder="Ano"
-                value={selectedCarModel?.year}
+                value={selectedCarModel === null? carData.year : selectedCarModel.year}
                 {...register("year")}
               />
               <FormErrorMessage>{errors && errors.year?.message?.toString()}</FormErrorMessage>
@@ -212,7 +207,7 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
                 readOnly
                 type="text"
                 placeholder="Gasolina/Etanol"
-                value={
+                value={selectedCarModel === null? carData.fuel_type :
                     (selectedCarModel && Number(selectedCarModel.fuel) === 1) ? "Flex" :
                     (selectedCarModel && Number(selectedCarModel.fuel) === 2) ? "Híbrido" :
                     (selectedCarModel && Number(selectedCarModel.fuel) === 3) ? "Elétrico" :
@@ -229,7 +224,6 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
               <Input
                 type="number"
                 min={0}
-                placeholder="30.000"
                 {...register("kilometers")}
               />
               <FormErrorMessage>{errors && errors.kilometers?.message?.toString()}</FormErrorMessage>
@@ -239,7 +233,8 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
               <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
                 Cor
               </FormLabel>
-              <Input type="text" placeholder="Branco" {...register("color")} />
+              <Input type="text" 
+              {...register("color")} />
               <FormErrorMessage>{errors && errors.color?.message?.toString()}</FormErrorMessage>
             </FormControl>
 
@@ -251,7 +246,7 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
                 readOnly
                 type="text"
                 placeholder="R$30.000,00"
-                value={selectedCarModel? `R$${selectedCarModel?.value},00` : "R$0,00"}
+                value={carData.fipe_price? `R$${carData?.fipe_price}`: "R$0,00"}
                 {...register("fipe_price")}
               />
               <FormErrorMessage>{errors && errors.value?.message?.toString()}</FormErrorMessage>
@@ -263,7 +258,6 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
               </FormLabel>
               <Input
                 type="number"
-                placeholder="R$50.000,00"
                 {...register("price")}
               />
               <FormErrorMessage>{errors && errors.price?.message?.toString()}</FormErrorMessage>
@@ -276,7 +270,6 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
             </FormLabel>
             <Input
               type="text"
-              placeholder="Descreva seu anúncio aqui"
               maxLength={600}
               {...register("description")}
             />
@@ -340,13 +333,16 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
             <FormLabel fontSize={"heading.1"} fontWeight={"semibold"}>
               Imagem da capa
             </FormLabel>
-            <Input type="text" placeholder="https://image.com" {...register('images.one')}/>
+            <Input type="text" 
+            // defaultValue={carData.images?.one} 
+            {...register('images.one')}/>
           </FormControl>
                 
             {Array.from({length: imagesCount}, (value, index) =>(
                 <>
                     <FormLabel id={`images${index + 1}`}>{index+1}ª Imagem da galeria</FormLabel>
-                    <Input key={index} type="text" placeholder="https://image.com" 
+                    <Input key={index} type="text" 
+                    // defaultValue={carData.images[index === 0 ? "two" : index === 1 ? "three" : index === 2 ? "four" : index === 3 ? "five" : "six"] ?? ""}
                     {...register(`images.${index === 0? "two" : index === 1 ? "three" : index === 2 ? "four": index === 3 ? "five" : "six"}`)}/>
                     <FormErrorMessage>{errors && errors.images?.message?.toString()}</FormErrorMessage>
                 </>
