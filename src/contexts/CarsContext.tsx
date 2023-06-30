@@ -196,13 +196,8 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() =>{
       try{
-        console.log(carId)
         const getCarById = async () => {
-          const { data } = await apiG21.get(`/car/${carId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
+          const { data } = await apiG21.get(`/car/${carId}`)
           setCarData(data)
         }
         getCarById()

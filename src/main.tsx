@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 
 import { ChakraProvider } from '@chakra-ui/react'
 import customTheme from './styles/theme';
-import CarProvider from './contexts/carsContext';
+import CarProvider from './contexts/CarsContext';
 import UserProvider from './contexts/userContext';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

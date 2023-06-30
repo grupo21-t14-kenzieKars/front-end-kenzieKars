@@ -38,12 +38,8 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
         setSelectedCarModel,
         editCarPoster,
         deleteCarPoster,
-        carData,
-        setCarData,
-        carId
+        carData
     } = useContext(CarContext)
-
-  
 
     const { isOpen: isOpenDeleteModal, onOpen: onOpenDeleteModal, onClose: onCloseDeleteModal} = useDisclosure()
 
@@ -334,7 +330,6 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
               Imagem da capa
             </FormLabel>
             <Input type="text" 
-            // defaultValue={carData.images?.one} 
             {...register('images.one')}/>
           </FormControl>
                 
@@ -342,7 +337,6 @@ const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
                 <>
                     <FormLabel id={`images${index + 1}`}>{index+1}ª Imagem da galeria</FormLabel>
                     <Input key={index} type="text" 
-                    // defaultValue={carData.images[index === 0 ? "two" : index === 1 ? "three" : index === 2 ? "four" : index === 3 ? "five" : "six"] ?? ""}
                     {...register(`images.${index === 0? "two" : index === 1 ? "three" : index === 2 ? "four": index === 3 ? "five" : "six"}`)}/>
                     <FormErrorMessage>{errors && errors.images?.message?.toString()}</FormErrorMessage>
                 </>
