@@ -3,15 +3,28 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import CarPostList from "./../../components/carPosterListComponet";
 import PosterCreateModal from "../../components/posterCreateModal";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../../contexts/userContext";
-import { CarContext } from "../../contexts/CarsContext";
+import { apiG21 } from "../../services/api";
 
 const AdvertiserPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { user, userCars } = useContext(UserContext)
+  const { user, userCars, setUserCars } = useContext(UserContext)
 
+  useEffect(() =>{
+    if(user){
+    const getUserCars = async () => {
+      try {
+        const car = await apiG21.get(`/car/seller/${user.id}`);
+        setUserCars(car.data.cars)
+      } catch (error) {
+        console.error(error)
+      }
+    }
+      getUserCars()
+    }
+  }, [user?.id, userCars])
 
   return (
     <>

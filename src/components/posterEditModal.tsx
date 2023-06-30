@@ -19,7 +19,6 @@ import { CarContext } from "../contexts/CarsContext"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { editPosterSchema } from "../schemas/posterSchema";
-import { UserContext } from "../contexts/userContext";
 
 interface IPosterEditModalProps {
     isOpen: boolean;
@@ -27,8 +26,6 @@ interface IPosterEditModalProps {
   }
 
 const EditPosterModal = ({isOpen, onClose}: IPosterEditModalProps) => {
-    const { user } = useContext(UserContext)
-  
     const {
         allCarsList,
         carModels, 

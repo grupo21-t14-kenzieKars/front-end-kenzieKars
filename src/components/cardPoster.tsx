@@ -17,7 +17,6 @@ import { useContext } from "react";
 import { CarContext } from "../contexts/CarsContext";
 import EditPosterModal from "./posterEditModal";
 import { IAllCars } from "../interfaces/posterInterfaces";
-import { UserContext } from "../contexts/userContext";
 
 interface ICardPosterProps {
   carPost: IAllCars;
@@ -213,7 +212,7 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
               Ver detalhes
             </Button>
             {carId && (
-              <EditPosterModal isOpen={isOpenEditPoster} onClose={closeAndResetId}/>
+              <EditPosterModal key={carId} isOpen={isOpenEditPoster} onClose={closeAndResetId}/>
               )}
           </Flex>
         )}
