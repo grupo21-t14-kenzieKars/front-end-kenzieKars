@@ -11,40 +11,58 @@ import {
 import PosterImageBox from "./posterImageBox";
 import AdvertiserInformations from "./advertiserInformations";
 import CommentList from "./commentsList";
-import CommentForm from "./commentsForm";
+import CommentForm, { commentData } from "./commentsForm";
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { ICar } from "../contexts/Interfaces";
+import { ICar, IComment } from "../contexts/Interfaces";
 import { apiG21 } from "../services/api";
 import { UserContext } from "../contexts/userContext";
-
+import { useForm } from "react-hook-form";
 
 const PosterContainer = () => {
-  const { user } = useContext(UserContext)
-  const { carId } = useParams()
-  const [car, setCar] = useState<ICar | null>(null)
-  const [loading, setLoading] = useState(false)
+  const { user } = useContext(UserContext);
+  const { carId } = useParams();
+  const [car, setCar] = useState<ICar | null>(null);
+  const [loading, setLoading] = useState(false);
+
+  const [comments, setComents] = useState<IComment[] | null>();
+
+  const createComment = async (commentData: commentData) => {
+    const token = localStorage.getItem("@kenzie-cars:token");
+    try {
+      const { data } = await apiG21.post(`/comment/${carId}`, commentData, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+
+      setComents([...comments, { user: user, ...data }]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   useEffect(() => {
-    const token = localStorage.getItem("@kenzie-cars:token")
+    const token = localStorage.getItem("@kenzie-cars:token");
 
     const getCarById = async () => {
       try {
-        setLoading(true)
+        setLoading(true);
         const { data } = await apiG21.get(`/car/${carId}`, {
           headers: {
             authorization: `Bearer ${token}`,
           },
-        })
-        setCar(data)
+        });
+        setCar(data);
+        setComents(data.comments);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    getCarById()
-  }, [])
+    };
+    getCarById();
+  }, []);
 
   function setPosterImage(url: string) {
     throw new Error("Function not implemented.");
@@ -171,10 +189,8 @@ const PosterContainer = () => {
                 <Box>
                   <Button
                     _disabled={{ _hover: { bg: "grey.5" } }}
-                    variant={
-                      user ? "brand1" : "disable"
-                    }
-                  //   onClick={handleBuy}
+                    variant={user ? "brand1" : "disable"}
+                    //   onClick={handleBuy}
                   >
                     Comprar
                   </Button>
@@ -207,7 +223,7 @@ const PosterContainer = () => {
               gap={"30px"}
             >
               <PosterImageBox car={car!} />
-              <AdvertiserInformations user={user!} />
+              <AdvertiserInformations user={car?.user} />
             </Flex>
           </Flex>
           <Flex
@@ -216,8 +232,18 @@ const PosterContainer = () => {
             flexDirection={"column"}
             w={{ base: "100%", md: "62%" }}
           >
-            <CommentList comments={car?.comments} />
-            <CommentForm name={user?.name} />
+            {comments ? (
+              <CommentList comments={comments} />
+            ) : (
+              <Text>Sem Comentários</Text>
+            )}
+            {car && (
+              <CommentForm
+                isLog={user ? true : false}
+                user={user}
+                createComment={createComment}
+              />
+            )}
           </Flex>
         </Flex>
       </Box>
