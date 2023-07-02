@@ -21,6 +21,9 @@ export interface ICarProviderData {
     editCarPoster: (data: IEditPoster) => void;
     deleteCarPoster: () => void;
     setCarId: React.Dispatch<React.SetStateAction<string>>;
+    carId: string;
+    carData: IAllCars;
+    setCarData: React.Dispatch<React.SetStateAction<IAllCars>>;
 }
 
 export interface IUserProviderData {

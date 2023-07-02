@@ -17,7 +17,6 @@ import { useContext } from "react";
 import { CarContext } from "../contexts/CarsContext";
 import EditPosterModal from "./posterEditModal";
 import { IAllCars } from "../interfaces/posterInterfaces";
-import { UserContext } from "../contexts/userContext";
 
 interface ICardPosterProps {
   carPost: IAllCars;
@@ -27,14 +26,19 @@ interface ICardPosterProps {
 const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
   const { isOpen:isOpenEditPoster, onOpen:onOpenEditPoster, onClose:onCloseEditPoster } = useDisclosure();
 
-  const { user } = useContext(UserContext)
-  const { setCarId } = useContext(CarContext)
+  const { setCarId, carId } = useContext(CarContext)
 
   const cardStatus = true;
+
+  const closeAndResetId = () => {
+    onCloseEditPoster();
+    setCarId("")
+  }
 
   const navigate = useNavigate();
 
   return (
+    <>
     <Card
       w={"100%"}
       maxWidth={"300px"}
@@ -74,7 +78,7 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
             transition="0.3s"
           />
 
-          {carPost.price <= carPost.value - carPost.value * 0.05 &&
+          {carPost.price <= carPost.fipe_price - carPost.fipe_price * 0.05 &&
             cardStatus && (
               <Flex
                 w={"15px"}
@@ -207,11 +211,14 @@ const CardPoster = ({ carPost, isOwner }: ICardPosterProps) => {
             >
               Ver detalhes
             </Button>
+            {carId && (
+              <EditPosterModal key={carId} isOpen={isOpenEditPoster} onClose={closeAndResetId}/>
+              )}
           </Flex>
         )}
       </CardFooter>
-      <EditPosterModal isOpen={isOpenEditPoster} onClose={onCloseEditPoster} />
     </Card>
+</>
   );
 };
 

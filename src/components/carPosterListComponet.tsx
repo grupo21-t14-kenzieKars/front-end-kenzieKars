@@ -17,7 +17,7 @@ const CarPostList = ({ carsList, isOwner }: any) => {
       {carsList &&
         carsList.map((elem: any, i: any) => (
           <ListItem key={elem.id}>
-            <CardPoster carPost={elem} isOwner={isOwner} />
+            <CardPoster key={i} carPost={elem} isOwner={isOwner} />
           </ListItem>
         ))}
     </List>

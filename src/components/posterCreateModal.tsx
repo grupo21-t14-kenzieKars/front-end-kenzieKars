@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { createPosterSchema } from "../schemas/posterSchema";
 import { CarContext } from "../contexts/CarsContext";
 

@@ -20,6 +20,9 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   //Pega o id do carro
   const [carId, setCarId] = useState("")
 
+  //Dados do carro por ID
+  const [carData, setCarData] = useState({} as IAllCars)
+
   //Lista com as marcas dos carros da API Kenzie
   const [carsByBrand, setCarsByBrand] = useState([] as Array<object>)
   //Lista de todos os modelos dos carros da API Kenzie
@@ -60,9 +63,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     getCars()
   }, [])
 
-
-
-
   const createPoster = async (data: INewPoster) => {
     console.log(data);
     console.log(token);
@@ -101,7 +101,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   const editCarPoster = async (data: IEditPoster) => {
     try {
-      const response = await apiG21.patch(`/car/${carId}`, data, {
+      await apiG21.patch(`/car/${carId}`, data, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -117,6 +117,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         },
         isClosable: true,
       });
+
     } catch (error: any) {
       console.error(Error)
       toast({
@@ -193,6 +194,18 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     })
   }
 
+  useEffect(() =>{
+      try{
+        const getCarById = async () => {
+          const { data } = await apiG21.get(`/car/${carId}`)
+          setCarData(data)
+        }
+        getCarById()
+      }catch(error){
+        console.log(error)
+      }
+  }, [carId])
+
   return (
     <>
       <CarContext.Provider value={{
@@ -210,7 +223,10 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         selectedCarModel,
         editCarPoster,
         deleteCarPoster,
-        setCarId
+        setCarId,
+        carId,
+        carData,
+        setCarData
       }}>
         {children}
       </CarContext.Provider>

@@ -3,15 +3,29 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import CarPostList from "./../../components/carPosterListComponet";
 import PosterCreateModal from "../../components/posterCreateModal";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { UserContext } from "../../contexts/userContext";
+import { apiG21 } from "../../services/api";
 import { CarContext } from "../../contexts/CarsContext";
 
 const AdvertiserPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { user, userCars } = useContext(UserContext)
+  const { user } = useContext(UserContext)
+  const { editCarPoster } = useContext(CarContext)
 
+const [sellerCars, setSellerCars] = useState()
+
+  useEffect(() => {
+    (async () =>{
+      try{
+        const response = await apiG21.get(`/car/seller/${user?.id}`)
+        setSellerCars(response.data.cars);
+      }catch(error){
+        console.log(error)
+      }
+    })()
+  }, [editCarPoster]);
 
   return (
     <>
@@ -59,7 +73,7 @@ const AdvertiserPage = () => {
               </Button>
               <PosterCreateModal isOpen={isOpen} onClose={onClose} />
             </Flex>
-            <CarPostList carsList={userCars} isOwner={true} />
+            <CarPostList carsList={sellerCars} isOwner={true} />
           </Flex>
           <Footer />
         </Flex>
