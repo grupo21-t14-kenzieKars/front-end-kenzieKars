@@ -5,7 +5,8 @@ import CarPostList from "../../components/carPosterListComponet";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { apiG21 } from "../../services/api";
-import { ICarByUser } from "../../interfaces/posterInterfaces";
+import { ICarByUser } from "../../contexts/Interfaces";
+
 
 const AdvertiserPagePublic = () => {
   const [carByUser, setCarByUser] = useState<ICarByUser>();

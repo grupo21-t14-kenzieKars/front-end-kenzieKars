@@ -27,19 +27,19 @@ export interface ICarProviderData {
 }
 
 export interface IUserProviderData {
-  loginUser: (data: LoginData) => Promise<void>;
-  createUser: (data: RegisterData) => Promise<void>;
-  user: IUserData | null;
-  loading: boolean;
-  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  isSeller: boolean;
-  setUserCars: React.Dispatch<React.SetStateAction<IAllCars[]>>;
-  userCars: IAllCars[];
-  logout: () => void;
-  sendResetPassworEmail: (data: IForgotPassword) => Promise<void>;
-  resetPassword: (data: IResetPassword, token:string) => Promise<void>;
-  editUser:(data: IEditUser) => Promise<void>
-  deleteUser: () => Promise<void>;
+    loginUser: (data: LoginData) => Promise<void>;
+    createUser: (data: RegisterData) => Promise<void>;
+    user: IUserData | null;
+    loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+    isSeller: boolean;
+    setUserCars: React.Dispatch<React.SetStateAction<IAllCars[]>>;
+    userCars: IAllCars[];
+    logout: () => void;
+    sendResetPassworEmail: (data: IForgotPassword) => Promise<void>;
+    resetPassword: (data: IResetPassword, token: string) => Promise<void>;
+    editUser: (data: IEditUser) => Promise<void>
+    deleteUser: () => Promise<void>;
 }
 
 export interface IUserAddressData {
@@ -106,4 +106,13 @@ export interface ICarUser {
     name: string;
     id: string;
     description: string;
+}
+type OmitComments = "comments"
+
+type ICarWithoutComment = Omit<ICar, OmitComments>
+export interface ICarByUser {
+    name: string;
+    id: string;
+    description: string;
+    cars: ICarWithoutComment[]
 }

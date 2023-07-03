@@ -34,6 +34,9 @@ const RegisterForm = () => {
     const formatData = { ...data, address: address }
     formatData.phone = `55${formatData.phone.replace(/[\s()-]/g, "")}`
     formatData.birth_date = formatData.birth_date.replace(/[/]/g, "-")
+    const splitDate = formatData.birth_date.split("-");
+    formatData.birth_date = splitDate[2] + "-" + splitDate[1] + "-" + splitDate[0];
+
     formatData.is_seller = seller
     createUser(formatData);
   };

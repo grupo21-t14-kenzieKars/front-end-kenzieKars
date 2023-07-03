@@ -1,5 +1,5 @@
 import { Flex, Heading, Modal, ModalCloseButton, ModalContent, useDisclosure, Text, Button, ModalOverlay, FormControl } from "@chakra-ui/react"
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 import { UserContext } from "../contexts/userContext"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
@@ -13,7 +13,6 @@ interface IEditUserModalProps {
 }
 
 const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
-    const [loading, setLoading] = useState(false)
 
     const { isOpen: isOpenDeleteModal, onOpen: onOpenDeleteModal, onClose: onCloseDeleteModal} = useDisclosure()
 
@@ -38,13 +37,13 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
       }, [user, isOpen, reset]);
 
     const onSubmit = async (data: IEditUser) => {
-        setLoading(true);
+
         data.phone = `55${data.phone?.replace(/[\s()-]/g, "")}`;
         data.birth_date = data.birth_date?.replace(/[/]/g, "/");
         await editUser(data);
         onClose();
         reset();
-        setLoading(false);
+
     }
 
     const cancelAndClose = async () =>{

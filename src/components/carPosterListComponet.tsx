@@ -2,7 +2,7 @@
 import { List, ListItem } from "@chakra-ui/react";
 import CardPoster from "./cardPoster";
 
-const CarPostList = ({ carsList, isOwner }: any) => {
+const CarPostList = ({ carsList }: any) => {
   return (
     <List
       display={"flex"}
@@ -17,7 +17,7 @@ const CarPostList = ({ carsList, isOwner }: any) => {
       {carsList &&
         carsList.map((elem: any, i: any) => (
           <ListItem key={elem.id}>
-            <CardPoster key={i} carPost={elem} isOwner={isOwner} />
+            <CardPoster key={i} carPost={elem} />
           </ListItem>
         ))}
     </List>

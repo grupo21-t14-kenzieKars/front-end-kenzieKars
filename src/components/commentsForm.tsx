@@ -7,10 +7,8 @@ import {
   Button,
   Avatar,
 } from "@chakra-ui/react";
-import { IComment, IUserData } from "../contexts/Interfaces";
+import { IUserData } from "../contexts/Interfaces";
 import { useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 
@@ -74,7 +72,7 @@ function CommentForm({ user, isLog, createComment }: ICommentProps) {
           right={"10px"}
           width={"max-content"}
           variant={isLog ? "brand1" : "disable"}
-          onClick={(e) => {
+          onClick={() => {
             if (comment) {
               createComment({ content: comment });
             }
@@ -94,7 +92,7 @@ function CommentForm({ user, isLog, createComment }: ICommentProps) {
           borderRadius={"10px"}
           width={"max-content"}
           padding={"0 5px"}
-          onClick={(e) => {
+          onClick={() => {
             setComment("Gostei muito!");
           }}
           cursor={"pointer"}
@@ -107,7 +105,7 @@ function CommentForm({ user, isLog, createComment }: ICommentProps) {
           borderRadius={"10px"}
           width={"max-content"}
           padding={"0 5px"}
-          onClick={(e) => {
+          onClick={() => {
             setComment("Incrível");
           }}
           cursor={"pointer"}
@@ -121,7 +119,7 @@ function CommentForm({ user, isLog, createComment }: ICommentProps) {
           width={"max-content"}
           padding={"0 5px"}
           display={{ base: "none", md: "flex" }}
-          onClick={(e) => {
+          onClick={() => {
             setComment("Recomendarei para meus amigos!");
           }}
           cursor={"pointer"}
