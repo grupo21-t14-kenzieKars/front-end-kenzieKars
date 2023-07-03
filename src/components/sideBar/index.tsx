@@ -9,7 +9,6 @@ import { IAllCars } from "../../interfaces/posterInterfaces"
 const SideBar = () => {
     const { carList, filteredCarList, setFilteredCarList } = useContext(CarContext)
 
-
     const filters = {
         brands: [...new Set(filteredCarList.map(ele => ele.brand))],
         models: [...new Set(filteredCarList.map(ele => ele.model))],
@@ -19,22 +18,27 @@ const SideBar = () => {
     }
 
     const { register, handleSubmit, reset } = useForm({
-        mode: 'onBlur',
+        mode: 'onSubmit',
     })
 
     const onSubmit = (data: any) => {
-        const newListKM = filteredCarList.filter((car: IAllCars) => car.kilometers >= data.minKm)
-        setFilteredCarList(newListKM)
-        if (data.maxKm > 0) {
-            const newListKM = filteredCarList.filter((car: IAllCars) => car.kilometers <= data.maxKm)
-            setFilteredCarList(newListKM)
+        if (data.minPrice > 0) {
+            const newListPrice = filteredCarList.filter((car: IAllCars) => car.price >= data.minPrice)
+            setFilteredCarList(newListPrice)
         }
-        const newListPrice = filteredCarList.filter((car: IAllCars) => car.price >= data.minPrice)
-        setFilteredCarList(newListPrice)
         if (data.maxPrice > 0) {
             const newListPrice = filteredCarList.filter((car: IAllCars) => car.price <= data.maxPrice)
             setFilteredCarList(newListPrice)
         }
+        if (data.minKM > 0) {
+            const newListKM = filteredCarList.filter((car: IAllCars) => car.kilometers >= data.minKM)
+            setFilteredCarList(newListKM)
+        }
+        if (data.maxKM > 0) {
+            const newListKM = filteredCarList.filter((car: IAllCars) => car.kilometers <= data.maxKM)
+            setFilteredCarList(newListKM)
+        }
+
     }
     const clearFilter = () => {
         setFilteredCarList(carList)
@@ -47,7 +51,7 @@ const SideBar = () => {
                 <FilterCategory filters={filters.models} category={'model'}>Modelo</FilterCategory>
                 <FilterCategory filters={filters.colors} category={'color'}>Cor</FilterCategory>
                 <FilterCategory filters={filters.years} category={'year'}>Ano</FilterCategory>
-                <FilterCategory filters={filters.fuels} category={'fuelType'}>Combustivel</FilterCategory>
+                <FilterCategory filters={filters.fuels} category={'fuel_type'}>Combustivel</FilterCategory>
                 <Heading color="grey.0" fontSize="heading.5" fontWeight="semibold">
                     KM
                 </Heading>
