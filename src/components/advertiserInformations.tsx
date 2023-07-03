@@ -1,22 +1,14 @@
 import { Flex, Text, Button, Avatar } from "@chakra-ui/react";
-import { IMockedUser } from "../interfaces/mocksInterfaces";
 import { useNavigate } from "react-router-dom";
+import { ICarUser } from "../contexts/Interfaces";
 
 interface IAdvertiserInformationsProps {
-  user: IUserData;
+  user: ICarUser
 }
 
 function AdvertiserInformations({ user }: IAdvertiserInformationsProps) {
   const navigate = useNavigate();
-  function getInitials(name: string) {
-    const nameArr = name?.split(" ");
 
-    if (nameArr[1]) {
-      return nameArr[0][0] + nameArr[1][0];
-    } else {
-      return nameArr[0][0];
-    }
-  }
 
   return (
     <Flex
@@ -37,7 +29,7 @@ function AdvertiserInformations({ user }: IAdvertiserInformationsProps) {
       </Text>
       <Button
         onClick={() => {
-          navigate(`/profile/${user.id}`);
+          navigate(`/profile/${user?.id}`);
         }}
         width={"max-content"}
         variant="grey1"

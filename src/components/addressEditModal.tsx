@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import {
   Flex,
   Heading,
@@ -26,7 +26,6 @@ interface IAddressEditModalProps {
 const states = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
 
 const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
-  const [loading, setLoading] = useState(false);
 
   const { user, editUser } = useContext(UserContext);
 
@@ -53,19 +52,16 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
     }
   }, [user, isOpen]);
 
-  const onCloseAndReset = () =>{
+  const onCloseAndReset = () => {
     onClose()
     reset()
   }
 
   const onSubmit = async (data: IAddressEdit) => {
-    setLoading(true);
-    console.log(data)
     data.address.zip_code = data.address.zip_code?.replace(/[-]/g, "");
     await editUser(data);
     reset();
     onClose();
-    setLoading(false);
   };
 
   return (
@@ -114,32 +110,32 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
                 event.target.value = value;
               }
             }}
-            register={register("address.zip_code", {required: false})}
+            register={register("address.zip_code", { required: false })}
           />
 
           <Flex gap={5}>
-          <Flex
-                direction={"column"}
-                justify={"start"}
-                alignItems={"start"}
+            <Flex
+              direction={"column"}
+              justify={"start"}
+              alignItems={"start"}
+              w={"full"}
+              fontFamily={'body'}>
+              <FormLabel
                 w={"full"}
-                fontFamily={'body'}>
-                <FormLabel
-                    w={"full"}
-                    textAlign={"left"}
-                    fontSize='heading.1'
-                    fontWeight='medium'
-                    color='grey.1'
-                    htmlFor={"state"}>
-                    {"Estado"}
-                </FormLabel>
-                <Select
-                    border={"none"}
-                    variant='unstyled'
-                    {...register("address.state")}>
-                    <option value=''>--</option>
-                    {states.map((state) => <option key={state} value={state}>{state}</option>)}
-                </Select>
+                textAlign={"left"}
+                fontSize='heading.1'
+                fontWeight='medium'
+                color='grey.1'
+                htmlFor={"state"}>
+                {"Estado"}
+              </FormLabel>
+              <Select
+                border={"none"}
+                variant='unstyled'
+                {...register("address.state")}>
+                <option value=''>--</option>
+                {states.map((state) => <option key={state} value={state}>{state}</option>)}
+              </Select>
             </Flex>
 
             <InputWithLabel
@@ -148,7 +144,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
               type="text"
               label={"Cidade"}
               error={errors.address?.city}
-              register={register("address.city", {required: false})}
+              register={register("address.city", { required: false })}
             />
           </Flex>
 
@@ -158,7 +154,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
             type="text"
             label={"Rua"}
             error={errors.address?.street}
-            register={register("address.street", {required: false})}
+            register={register("address.street", { required: false })}
           />
 
           <Flex gap={"15px"}>
@@ -168,7 +164,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
               type="text"
               label={"Numero"}
               error={errors.address?.number}
-              register={register("address.number", {required: false})}
+              register={register("address.number", { required: false })}
             />
 
             <InputWithLabel
@@ -177,7 +173,7 @@ const AddressEditModal = ({ isOpen, onClose }: IAddressEditModalProps) => {
               type="text"
               label={"Complemento"}
               error={errors.address?.complement}
-              register={register("address.complement", {required: false})}
+              register={register("address.complement", { required: false })}
             />
           </Flex>
 

@@ -6,7 +6,7 @@ const apiKenzieKars: AxiosInstance = axios.create({
 })
 
 const apiG21: AxiosInstance = axios.create({
-    baseURL: 'http://localhost:3000',
+    baseURL: 'https://kenzie-kars-backend-tiyz.onrender.com',
     timeout: 5000,
 })
 

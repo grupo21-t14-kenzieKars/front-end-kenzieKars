@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { createPosterSchema } from "../schemas/posterSchema";
 import { CarContext } from "../contexts/CarsContext";
 
@@ -25,7 +25,6 @@ interface IPosterCreateModalProps {
 }
 
 const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
-  const [loading, setLoading] = useState(false);
   const [carBrand, setCarBrand] = useState("");
   const [imagesCount, setImagesCount] = useState(1);
 
@@ -91,7 +90,6 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
 
   const onSubmit = (data: any) => {
     if (selectedCarModel) {
-      setLoading(true);
 
       data.year = selectedCarModel.year;
       data.fuel_type = (selectedCarModel && Number(selectedCarModel.fuel) === 1) ? "Flex" :
@@ -120,7 +118,6 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
       createPoster(data);
       reset();
       onClose()
-      setLoading(false);
     }
   };
 
@@ -276,7 +273,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
               <Input type="text" placeholder="https://image.com" {...register('images.one')} />
             </FormControl>
 
-            {Array.from({ length: imagesCount }, (value, index) => (
+            {Array.from({ length: imagesCount }, (_, index) => (
               <>
                 <FormLabel id={`images${index + 1}`}>{index + 1}ª Imagem da galeria</FormLabel>
                 <Input key={index} type="text" placeholder="https://image.com"

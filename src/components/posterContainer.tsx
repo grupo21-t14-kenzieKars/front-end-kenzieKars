@@ -17,13 +17,11 @@ import { useParams } from "react-router-dom";
 import { ICar, IComment } from "../contexts/Interfaces";
 import { apiG21 } from "../services/api";
 import { UserContext } from "../contexts/userContext";
-import { useForm } from "react-hook-form";
 
 const PosterContainer = () => {
   const { user } = useContext(UserContext);
   const { carId } = useParams();
   const [car, setCar] = useState<ICar | null>(null);
-  const [loading, setLoading] = useState(false);
 
   const [comments, setComents] = useState<IComment[] | null>();
 
@@ -35,8 +33,12 @@ const PosterContainer = () => {
           authorization: `Bearer ${token}`,
         },
       });
+      if (comments) {
+        setComents([...comments!, { user: user, ...data }]);
+      } else {
+        setComents([{ user: user, ...data }]);
+      }
 
-      setComents([...comments, { user: user, ...data }]);
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +49,7 @@ const PosterContainer = () => {
 
     const getCarById = async () => {
       try {
-        setLoading(true);
+
         const { data } = await apiG21.get(`/car/${carId}`, {
           headers: {
             authorization: `Bearer ${token}`,
@@ -57,16 +59,11 @@ const PosterContainer = () => {
         setComents(data.comments);
       } catch (error) {
         console.error(error);
-      } finally {
-        setLoading(false);
       }
     };
     getCarById();
   }, []);
 
-  function setPosterImage(url: string) {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <>
@@ -112,9 +109,6 @@ const PosterContainer = () => {
                   src={car?.images.one}
                   w={"auto"}
                   role={"button"}
-                  onClick={() => {
-                    setPosterImage(car!.images.one);
-                  }}
                   maxW={"100%"}
                   objectFit={{ base: "contain", md: "fill" }}
                 />
@@ -190,7 +184,7 @@ const PosterContainer = () => {
                   <Button
                     _disabled={{ _hover: { bg: "grey.5" } }}
                     variant={user ? "brand1" : "disable"}
-                    //   onClick={handleBuy}
+                  //   onClick={handleBuy}
                   >
                     Comprar
                   </Button>
@@ -223,7 +217,7 @@ const PosterContainer = () => {
               gap={"30px"}
             >
               <PosterImageBox car={car!} />
-              <AdvertiserInformations user={car?.user} />
+              <AdvertiserInformations user={car!.user} />
             </Flex>
           </Flex>
           <Flex

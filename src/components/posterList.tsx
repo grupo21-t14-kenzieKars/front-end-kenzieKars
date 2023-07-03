@@ -19,7 +19,7 @@ const PosterList = () => {
     >
       {carList.length > 0 ? (
         carList.map((carPost, i) => (
-          <CardPoster key={i} carPost={carPost} />
+          <CardPoster key={i} carPost={carPost}/>
         ))
       ) : (
         <Text fontSize={"heading.3"} fontWeight={"semibold"}>
