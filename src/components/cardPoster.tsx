@@ -27,8 +27,6 @@ const CardPoster = ({ carPost }: ICardPosterProps) => {
 
   const { setCarId, carId } = useContext(CarContext)
 
-  const cardStatus = true;
-
   const closeAndResetId = () => {
     onCloseEditPoster();
     setCarId("")
@@ -78,7 +76,7 @@ const CardPoster = ({ carPost }: ICardPosterProps) => {
             />
 
             {carPost.price <= carPost.fipe_price - carPost.fipe_price * 0.05 &&
-              cardStatus && (
+              carPost.is_active && (
                 <Flex
                   w={"15px"}
                   h={"27px"}
@@ -96,24 +94,22 @@ const CardPoster = ({ carPost }: ICardPosterProps) => {
                 </Flex>
               )}
 
-            {cardStatus && (
               <Flex
                 h={"24px"}
                 w={"51px"}
                 color={"white"}
-                bg={carPost.isPublished ? "brand.1" : "grey.4"}
+                bg={carPost.is_active ? "brand.1" : "grey.4"}
                 fontSize={"heading.1"}
                 position={"absolute"}
                 top={"10px"}
                 left={"15px"}
               >
-                {carPost.isPublished ? (
+                {carPost.is_active ? (
                   <Text px="8px">Ativo</Text>
                 ) : (
-                  <Text px={"5px"}>Inativo</Text>
+                  <Text px="5px">Inativo</Text>
                 )}
               </Flex>
-            )}
           </Flex>
         </CardHeader>
 

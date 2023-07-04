@@ -6,7 +6,7 @@ const apiKenzieKars: AxiosInstance = axios.create({
 })
 
 const apiG21: AxiosInstance = axios.create({
-    baseURL: 'https://typeorm-deploy.onrender.com',
+    baseURL: 'http://localhost:3000',
     timeout: 5000,
 })
 
