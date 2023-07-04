@@ -3,7 +3,6 @@ import {
   Container,
   Flex,
   Box,
-  Text,
   Button,
   useDisclosure,
   Modal,
@@ -18,12 +17,52 @@ import Header from "../../components/header";
 import HomeBg from "../../assets/HomeBg.png";
 import SideBar from "../../components/sideBar";
 import CarPostList from "./../../components/carPosterListComponet";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CarContext } from "../../contexts/CarsContext";
+import { apiG21 } from "../../services/api";
+import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md'
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { filteredCarList } = useContext(CarContext)
+  const { filteredCarList, setFilteredCarList } = useContext(CarContext);
+
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState({
+    prev: null,
+    next: null,
+    count: 0,
+    cars: [],
+  });
+
+  const getCarsByPage = async (page: number) => {
+    try{
+      const { data } = await apiG21.get(`/car/paging?page=${page}&perpage=9`)
+
+      setFilteredCarList(data.cars)
+      setPagination(data)
+      const totalPages = Math.ceil(data.count / 9)
+      setTotalPages(totalPages)
+    }catch(error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() =>{
+    getCarsByPage(currentPage)
+  }, [currentPage])
+
+  const handlePrevPage = () =>{
+    if(pagination.prev){
+      setCurrentPage(currentPage - 1)
+    }
+  }
+
+  const handleNextPage = () => {
+    if(pagination.next){
+      setCurrentPage(currentPage + 1)
+    }
+  }
 
   return (
     <>
@@ -61,7 +100,7 @@ const Home = () => {
             alignItems={"center"}
             width={{ base: "100%", md: "auto" }}
           >
-            <CarPostList carsList={filteredCarList} isOwner={false} />
+            <CarPostList carsList={filteredCarList} isOwner={false}/>
             <Button
               marginTop={5}
               display={{ base: "block", md: "none" }}
@@ -71,22 +110,40 @@ const Home = () => {
               Filtro
             </Button>
             <Flex
-              gap={"30px"}
               fontSize={"heading.3"}
               fontFamily={"heading"}
-              alignContent={"center"}
+              justifyContent={"center"}
+              alignItems={"center"}
+              gap={"10px"}
               p={{ base: "10px", md: "70px" }}
             >
-              <Text
-                bgGradient="linear(to-l, gray.400, gray.800)"
-                backgroundClip={"text"}
-                fontWeight={"medium"}
-              >
-                1 de 2
-              </Text>
-              <Text as={"a"} href="" color={"brand.2"} fontWeight={"medium"}>
-                Seguinte {">"}
-              </Text>
+              {currentPage > 1 && (
+                <Flex>
+                  <Button 
+                  color={"brand.1"} 
+                  fontWeight="light" 
+                  bg={"transparent"} 
+                  outline={"none"}
+                  variant={"link"} 
+                  onClick={handlePrevPage}>
+                    <MdNavigateBefore/> Anterior
+                  </Button>
+                </Flex>
+              )}
+                {currentPage} de {totalPages}
+              {currentPage < totalPages && (
+                <Flex color={"brand.1"}>
+                  <Button 
+                  color={"brand.1"} 
+                  fontWeight="light" 
+                  bg={"transparent"} 
+                  outline={"none"}
+                  variant={"link"}
+                  onClick={handleNextPage}> 
+                  Seguinte <MdNavigateNext/> 
+                  </Button>
+                </Flex>
+              )}
             </Flex>
           </Box>
         </Flex>

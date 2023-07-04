@@ -33,6 +33,14 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   //filtra os carros da nossa API
   const [filteredCarList, setFilteredCarList] = useState<IAllCars[]>([])
 
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pagination, setPagination] = useState({
+    prev: null,
+    next: null,
+    count: 0,
+    cars: [],
+  })
+
   const toast = useToast()
   const token = localStorage.getItem("@kenzie-cars:token")
 
@@ -64,8 +72,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   const createPoster = async (data: INewPoster) => {
-    console.log(data);
-    console.log(token);
 
     try {
       const response = await apiG21.post("/car", data, {

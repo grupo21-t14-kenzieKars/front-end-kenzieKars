@@ -10,7 +10,7 @@ const CarPostList = ({ carsList }: any) => {
       flexWrap={{ base: "nowrap", md: "wrap" }}
       justifyContent={{ base: "left", md: "center" }}
       padding={"40px 0"}
-      overflowX={"scroll"}
+      overflowX={{base: "scroll", md:"hidden"}}
       w={"100%"}
       maxW="100%"
     >
