@@ -109,7 +109,7 @@ const PosterContainer = () => {
                 >
                   <Image
                     h={"355px"}
-                    src={car?.images.one}
+                    src={car.images.one}
                     w={"auto"}
                     role={"button"}
                     maxW={"100%"}
@@ -130,7 +130,7 @@ const PosterContainer = () => {
                     align={"right"}
                     gap={{ base: "32px", md: "32px" }}
                   >
-                    <VStack align={"right"}>
+   '                 <VStack align={"right"}>
                       {/*                     {!carPoster?.isPublished && (
                       <Text
                         as={"span"}
@@ -142,15 +142,15 @@ const PosterContainer = () => {
                       >
                         Anúncio Inativo
                       </Text>
-                    )} */}
+                    )} */}'
                       <Heading
                         as={"h2"}
                         fontSize={"heading.6"}
                         lineHeight={"heading.6"}
                       >
-                        {`${car?.model
+                        {`${car.model
                           .split("")[0]
-                          .toUpperCase()}${car?.model.substring(1)}`}
+                          .toUpperCase()}${car.model.substring(1)}`}
                       </Heading>
                     </VStack>
 
@@ -162,7 +162,7 @@ const PosterContainer = () => {
                         color={"brand.1"}
                         rounded={"4px"}
                       >
-                        {car?.year}
+                        {car.year}
                       </Tag>
                       <Tag
                         fontSize={"body.2"}
@@ -171,7 +171,7 @@ const PosterContainer = () => {
                         color={"brand.1"}
                         rounded={"4px"}
                       >
-                        {car?.kilometers} KM
+                        {car.kilometers} KM
                       </Tag>
                     </Flex>
                   </Flex>
@@ -248,12 +248,11 @@ const PosterContainer = () => {
           <Box
           paddingTop={"40px"}
           pb={{ base: "45px", md: "73px" }}
-            w={"100%"}
         >
-            <Heading as="h1" size="xl" textAlign="center" color={{ base: "brand.1", md: "brand.1" }}>
+            <Heading as="h1" size="xl" textAlign="center" color="white">
             Anúncio não encontrado
           </Heading>
-          <Box textAlign="center" mt="4" color={{base:"black",md:"black"}}>
+          <Box textAlign="center" mt="4" color="white" textDecoration={"underline"} >
             <Link to="/">Voltar para a página inicial</Link>
           </Box>
         </Box>
