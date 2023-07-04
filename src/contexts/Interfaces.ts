@@ -106,6 +106,7 @@ export interface ICarUser {
     name: string;
     id: string;
     description: string;
+    phone:string
 }
 type OmitComments = "comments"
 
