@@ -16,7 +16,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
 
     const { isOpen: isOpenDeleteModal, onOpen: onOpenDeleteModal, onClose: onCloseDeleteModal} = useDisclosure()
 
-    const { user, editUser, deleteUser } = useContext(UserContext)
+    const { user, editUser, deleteUser, loading } = useContext(UserContext)
 
     const { register, handleSubmit, reset, formState: {errors}}=useForm<IEditUser>({
         mode: "onBlur",
@@ -176,7 +176,7 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
             />
 
             <Flex width="100%" flexDirection={"row-reverse"} justifyContent={"space-evenly"} wrap={{base: "wrap-reverse", sm: "nowrap"}} p={"15px"} gap={"10px"}>
-                <Button type="submit" variant={"brand1"} size={"lg"} width={{base:"80%", sm: "50%"}}>Salvar alterações</Button>
+                <Button type="submit" variant={"brand1"} size={"lg"} isLoading={loading} width={{base:"80%", sm: "50%"}}>Salvar alterações</Button>
                 <Button variant={"alert"} size={"lg"} width={{base: "40%"}} onClick={onOpenDeleteModal}>Excluir perfil</Button>
                 <Button variant={"negative"} size={"lg"} width={{base:"40%"}} onClick={cancelAndClose}>Cancelar</Button>
             </Flex>
@@ -211,8 +211,8 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
                     <Text fontSize={"heading.1"} color={"grey.2"}>Tem certeza que deseja excluir sua conta? </Text>
                 </Flex>
                 
-                <Button variant={"negative"} size={"lg"} onClick={onCloseDeleteModal}>Cancelar</Button>
-                <Button variant={"alert"} size={"lg"} onClick={deleteAndClose}>Sim, excluir minha conta</Button>
+                <Button variant={"negative"} size={"lg"}  onClick={onCloseDeleteModal}>Cancelar</Button>
+                <Button variant={"alert"} size={"lg"} isLoading={loading} onClick={deleteAndClose}>Sim, excluir minha conta</Button>
             </ModalContent>
         </Modal>
         </>
