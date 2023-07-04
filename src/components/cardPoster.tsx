@@ -12,7 +12,7 @@ import {
   Text,
   useDisclosure,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { CarContext } from "../contexts/CarsContext";
 import EditPosterModal from "./posterEditModal";
@@ -33,6 +33,8 @@ const CardPoster = ({ carPost }: ICardPosterProps) => {
   }
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const path = location.pathname;
 
   return (
     <>
@@ -93,7 +95,7 @@ const CardPoster = ({ carPost }: ICardPosterProps) => {
                   $
                 </Flex>
               )}
-
+              {path ==='/profile/seller'?(
               <Flex
                 h={"24px"}
                 w={"51px"}
@@ -110,6 +112,7 @@ const CardPoster = ({ carPost }: ICardPosterProps) => {
                   <Text px="5px">Inativo</Text>
                 )}
               </Flex>
+              ):(<></>)}
           </Flex>
         </CardHeader>
 
