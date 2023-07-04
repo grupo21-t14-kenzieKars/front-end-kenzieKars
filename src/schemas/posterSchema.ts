@@ -32,5 +32,6 @@ export const editPosterSchema = z.object({
     fipe_price: z.string().optional(),
     price: z.string().optional(),
     description: z.string().optional(),
+    is_active: z.boolean().optional(),
     images: imageSchema.optional(),
 }).partial()

@@ -6,5 +6,6 @@ export const carModelSchema = z.object({
     branded: z.string(),
     value: z.string(),
     year: z.string(),
-    fuel: z.number()
+    fuel: z.number(),
+    is_active: z.boolean()
 })
