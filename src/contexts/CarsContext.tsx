@@ -37,8 +37,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem("@kenzie-cars:token")
 
   useEffect(() => {
-    console.log("useEffect getCars");
-
     const getCars = async () => {
       try {
         setLoading(true)
@@ -72,6 +70,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   const createPoster = async (data: INewPoster) => {
     try {
+      setLoading(true)
       const response = await apiG21.post("/car", data, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -100,11 +99,14 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         position: "bottom-right",
         variant: "subtle",
       });
+    } finally {
+      setLoading(false)
     }
   }
 
   const editCarPoster = async (data: IEditPoster) => {
     try {
+      setLoading(true)
       await apiG21.patch(`/car/${carId}`, data, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -133,11 +135,14 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         position: "bottom-right",
         variant: "subtle",
       });
+    } finally {
+      setLoading(false)
     }
   }
 
   const deleteCarPoster = async () => {
     try {
+      setLoading(true)
       await apiG21.delete(`/car/${carId}`, {
         headers: {
           Authorization: `Bearer ${token}`
@@ -165,7 +170,9 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         position: "bottom-right",
         variant: "subtle",
       });
-    } 
+    } finally {
+      setLoading(false)
+    }
   }
 
   //Pega os carros pela marca
@@ -200,6 +207,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() =>{
       try{
+        setLoading(true)
         const getCarById = async () => {
           const { data } = await apiG21.get(`/car/${carId}`)
           setCarData(data)
@@ -207,7 +215,9 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         getCarById()
       }catch(error){
         console.log(error)
-      } 
+      } finally {
+        setLoading(false)
+      }
   }, [carId])
 
   return (

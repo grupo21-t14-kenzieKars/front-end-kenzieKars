@@ -111,7 +111,8 @@ const Home = () => {
                     display={"flex"}
                     flexDirection={"column"}
                     alignItems={"center"}
-                    width={{ base: "100%", md: "auto" }}
+                    justifyContent={"space-between"}
+                    width={{ base: "100%"}}
                   >
                     <CarPostList carsList={filteredCarList} isOwner={false} />
                     <Button
@@ -125,7 +126,6 @@ const Home = () => {
                     <Flex
                       fontSize={"heading.3"}
                       fontFamily={"heading"}
-                      justifyContent={"center"}
                       alignItems={"center"}
                       gap={"10px"}
                       p={{ base: "10px", md: "70px" }}

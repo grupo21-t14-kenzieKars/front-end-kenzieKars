@@ -203,9 +203,8 @@ const CardPoster = ({ carPost }: ICardPosterProps) => {
               Editar
             </Button>
             <Button
-              onClick={(e) => {
-                e.preventDefault();
-              }}
+              as={"a"}
+              href={`/car/${carPost?.id}`}
               variant={"outline1"}
             >
               Ver detalhes

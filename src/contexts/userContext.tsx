@@ -26,8 +26,6 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
 
   useEffect(() => {
-    console.log("useEffect Auth");
-
     const auth = async () => {
 
       const token = localStorage.getItem("@kenzie-cars:token");
