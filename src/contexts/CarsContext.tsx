@@ -64,9 +64,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   const createPoster = async (data: INewPoster) => {
-    console.log(data);
-    console.log(token);
-
     try {
       const response = await apiG21.post("/car", data, {
         headers: {
@@ -161,7 +158,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         position: "bottom-right",
         variant: "subtle",
       });
-    }
+    } 
   }
 
   //Pega os carros pela marca
@@ -203,7 +200,7 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         getCarById()
       }catch(error){
         console.log(error)
-      }
+      } 
   }, [carId])
 
   return (

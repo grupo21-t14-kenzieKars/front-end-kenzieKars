@@ -351,7 +351,7 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
                 <Button onClick={onOpenDeleteModal} variant={"negative"}>
                   Excluir anúncio
                 </Button>
-                <Button type="submit" variant={"brand1"}>
+                <Button type="submit" variant={"brand1"} isLoading>
                   Salvar alterações
                 </Button>
               </Flex>
@@ -386,7 +386,7 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
           </Flex>
           <Flex flexDirection={"row"} justifyContent={"flex-end"} gap={"15px"}>
             <Button variant={"negative"} size={"lg"} onClick={onCloseDeleteModal}>Cancelar</Button>
-            <Button variant={"alert"} size={"lg"} onClick={deleteAndClose}>Sim, excluir anúncio</Button>
+            <Button variant={"alert"} size={"lg"} onClick={deleteAndClose} isLoading>Sim, excluir anúncio</Button>
           </Flex>
 
         </ModalContent>
