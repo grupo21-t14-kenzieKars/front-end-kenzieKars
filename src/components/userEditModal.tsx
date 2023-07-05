@@ -207,9 +207,9 @@ const UserEditModal = ({isOpen, onClose}: IEditUserModalProps) => {
                         Excluir anúncio
                     </Heading>
                     <ModalCloseButton color={"grey.4"} />
-                 </Flex>
-                    <Text fontSize={"heading.1"} color={"grey.2"}>Tem certeza que deseja excluir sua conta? </Text>
                 </Flex>
+                </Flex>
+                <Text fontSize={"heading.1"} color={"grey.2"} p={"10px"}>Tem certeza que deseja excluir sua conta? </Text>
                 
                 <Button variant={"negative"} size={"lg"}  onClick={onCloseDeleteModal}>Cancelar</Button>
                 <Button variant={"alert"} size={"lg"} isLoading={loading} onClick={deleteAndClose}>Sim, excluir minha conta</Button>
