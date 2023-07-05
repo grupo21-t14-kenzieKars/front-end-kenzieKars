@@ -1,17 +1,16 @@
-import { Avatar, Button, Flex, Text, useDisclosure } from "@chakra-ui/react";
+import { Avatar, Button, Flex, Spinner, Text, useDisclosure } from "@chakra-ui/react";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import CarPostList from "./../../components/carPosterListComponet";
 import PosterCreateModal from "../../components/posterCreateModal";
 import { useContext, useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 import { UserContext } from "../../contexts/userContext";
 import { apiG21 } from "../../services/api";
 import { CarContext } from "../../contexts/CarsContext";
 
 const AdvertiserPage = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { user } = useContext(UserContext)
+  const { user, loading } = useContext(UserContext)
   const { editCarPoster } = useContext(CarContext)
 
 const [sellerCars, setSellerCars] = useState()
@@ -29,7 +28,10 @@ const [sellerCars, setSellerCars] = useState()
 
   return (
     <>
-      {!user ? <Navigate to={'/'} /> :
+      {loading ?  
+        <Flex w={"full"} h='100vh' alignItems={"center"} justifyContent={"center"}>
+          <Spinner size={"xl"} color="brand.1" emptyColor='grey.5' thickness='4px' />
+        </Flex> : user && 
         <Flex
           flexDirection={"column"}
           bgGradient={{
