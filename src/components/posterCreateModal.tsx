@@ -292,7 +292,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
               <Button onClick={onClose} variant={"negative"}>
                 Cancelar
               </Button>
-              <Button type="submit" variant={"brand1"}>
+              <Button type="submit" variant={"brand1"} isLoading>
                 Criar anúncio
               </Button>
             </Flex>
