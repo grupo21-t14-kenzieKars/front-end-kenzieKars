@@ -24,8 +24,12 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const toast = useToast();
   const navigate = useNavigate();
 
+
   useEffect(() => {
+    console.log("useEffect Auth");
+
     const auth = async () => {
+
       const token = localStorage.getItem("@kenzie-cars:token");
 
       if (!token) {
@@ -33,6 +37,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
         return;
       }
       try {
+        setLoading(true)
         const { data } = await apiG21.get("/user/profile", {
           headers: {
             authorization: `Bearer ${token}`,
@@ -46,6 +51,8 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
             setUserCars(car.data.cars)
           } catch (error) {
             console.error(error)
+          } finally {
+            setLoading(false)
           }
         }
         getUserCars()

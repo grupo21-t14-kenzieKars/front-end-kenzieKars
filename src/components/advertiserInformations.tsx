@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { ICarUser } from "../contexts/Interfaces";
 
 interface IAdvertiserInformationsProps {
-  user: ICarUser
+  seller: ICarUser
 }
 
-function AdvertiserInformations({ user }: IAdvertiserInformationsProps) {
+function AdvertiserInformations({ seller }: IAdvertiserInformationsProps) {
   const navigate = useNavigate();
 
 
@@ -20,16 +20,16 @@ function AdvertiserInformations({ user }: IAdvertiserInformationsProps) {
       width={"100%"}
       alignItems={"center"}
     >
-      <Avatar name={user?.name} color="white" size="xl" />
+      <Avatar name={seller?.name} color="white" size="xl" />
       <Text color="grey.1" fontWeight={"semibold"} fontSize={"heading.3"}>
-        {user?.name}
+        {seller?.name}
       </Text>
       <Text textAlign={"center"} fontSize={"body.3"} color={"grey.2"}>
-        {user?.description}
+        {seller?.description}
       </Text>
       <Button
         onClick={() => {
-          navigate(`/profile/${user?.id}`);
+          navigate(`/profile/${seller?.id}`);
         }}
         width={"max-content"}
         variant="grey1"

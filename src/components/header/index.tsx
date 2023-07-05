@@ -45,7 +45,7 @@ const Header = () => {
       <Box as={'a'} href="/" padding="20px 60px">
         <img src={logo} alt="Logo" />
       </Box>
-      {loading ? <Spinner /> : <>
+      {loading ? <Spinner color="brand.1" /> : <>
         {isOpen && (
           <Box width={"full"} position={"absolute"} zIndex={1}>
             {user ? (

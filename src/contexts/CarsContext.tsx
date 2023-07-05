@@ -9,7 +9,7 @@ export const CarContext = createContext<ICarProviderData>({} as ICarProviderData
 
 const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
-  const { setUserCars, userCars } = useContext(UserContext)
+  const { setUserCars, userCars, setLoading } = useContext(UserContext)
 
   //Lista de todos os carros da API Kenzie
   const [allCarsList, setAllCarsList] = useState([] as Array<IAllCars>)
@@ -37,14 +37,19 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
   const token = localStorage.getItem("@kenzie-cars:token")
 
   useEffect(() => {
+    console.log("useEffect getCars");
+
     const getCars = async () => {
       try {
+        setLoading(true)
         const { data } = await apiG21.get('/car')
 
         setCarList(data)
         setFilteredCarList(data)
       } catch (error) {
         console.error(error)
+      } finally {
+        setLoading(false)
       }
     }
     getCars()
@@ -52,6 +57,8 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Pega todos os carros da API
   useEffect(() => {
+    console.log("useEffect getCars");
+
     const getCars = async () => {
       try {
         const { data } = await apiKenzieKars.get('/cars')
