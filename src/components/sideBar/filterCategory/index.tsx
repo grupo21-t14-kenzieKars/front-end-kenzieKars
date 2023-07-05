@@ -12,8 +12,9 @@ const FilterCategory = ({ filters, children, category }: filterCategoryProps) =>
 
     const { filteredCarList, setFilteredCarList } = useContext(CarContext)
 
+
     const handleFilter = (filter: any) => {
-        const newList: any = filteredCarList?.cars.filter((el: any) => el[category] == filter)
+        const newList: any = filteredCarList?.filter((el: any) => el[category] == filter)
         setFilteredCarList(newList)
         console.log(newList);
 
@@ -21,10 +22,14 @@ const FilterCategory = ({ filters, children, category }: filterCategoryProps) =>
 
     return (
         <>
-            <Heading color="grey.0" fontSize="heading.5" fontWeight="semibold" marginTop={5}>
+            <Heading color="grey.0" fontSize="heading.5" fontWeight="semibold" marginTop={5} overflowY={'unset'}>
                 {children}
             </Heading>
-            <Box marginTop={5}>
+            <Box marginTop={5} maxHeight='100px' overflowX={"auto"} w={"full"} css={{
+                '&::-webkit-scrollbar': {
+                    display: 'none',
+                }
+            }}>
                 {
                     filters.length > 0 ?
                         (

@@ -351,7 +351,7 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
                 <Button onClick={onOpenDeleteModal} variant={"negative"}>
                   Excluir anúncio
                 </Button>
-                <Button type="submit" variant={"brand1"} isLoading>
+                <Button type="submit" variant={"brand1"} >
                   Salvar alterações
                 </Button>
               </Flex>

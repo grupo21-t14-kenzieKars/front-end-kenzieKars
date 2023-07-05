@@ -45,7 +45,7 @@ const PosterContainer = () => {
   };
   console.log(car?.user)
   const handleButtonClick = () => {
-    const phoneNumber = car?.user.phone 
+    const phoneNumber = car?.user.phone
     window.open(`https://api.whatsapp.com/send?phone=${phoneNumber}`, "_blank");
   };
   useEffect(() => {
@@ -133,7 +133,7 @@ const PosterContainer = () => {
                     align={"right"}
                     gap={{ base: "32px", md: "32px" }}
                   >
-   '                 <VStack align={"right"}>
+                    '                 <VStack align={"right"}>
                       {/*                     {!carPoster?.isPublished && (
                       <Text
                         as={"span"}
@@ -223,7 +223,7 @@ const PosterContainer = () => {
                 gap={"30px"}
               >
                 <PosterImageBox car={car} />
-                <AdvertiserInformations user={car.user} />
+                <AdvertiserInformations seller={car.user} />
               </Flex>
             </Flex>
             <Flex
@@ -248,11 +248,11 @@ const PosterContainer = () => {
           </Flex>
         </Box>
       ) : (
-          <Box
+        <Box
           paddingTop={"40px"}
           pb={{ base: "45px", md: "73px" }}
         >
-            <Heading as="h1" size="xl" textAlign="center" color="white">
+          <Heading as="h1" size="xl" textAlign="center" color="white">
             Anúncio não encontrado
           </Heading>
           <Box textAlign="center" mt="4" color="white" textDecoration={"underline"} >
