@@ -21,6 +21,7 @@ import { useContext, useEffect, useState } from "react";
 import { CarContext } from "../../contexts/CarsContext";
 import { apiG21 } from "../../services/api";
 import { MdNavigateNext, MdNavigateBefore } from 'react-icons/md'
+import { IAllCars } from "../../interfaces/posterInterfaces";
 
 const Home = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,10 +38,12 @@ const Home = () => {
 
   const getCarsByPage = async (page: number) => {
     try{
-      const { data } = await apiG21.get(`/car/paging?page=${page}&perpage=9`)
+      const { data } = await apiG21.get(`/car/paginated?page=${page}&perpage=9`)
 
-      setFilteredCarList(data.cars)
+      const activeCars = data.cars.filter((car: IAllCars) => car.is_active)
+      setFilteredCarList(activeCars)
       setPagination(data)
+      
       const totalPages = Math.ceil(data.count / 9)
       setTotalPages(totalPages)
     }catch(error) {
@@ -98,6 +101,7 @@ const Home = () => {
             display={"flex"}
             flexDirection={"column"}
             alignItems={"center"}
+            justifyContent={"space-between"}
             width={{ base: "100%", md: "auto" }}
           >
             <CarPostList carsList={filteredCarList} isOwner={false}/>
@@ -118,7 +122,7 @@ const Home = () => {
               p={{ base: "10px", md: "70px" }}
             >
               {currentPage > 1 && (
-                <Flex>
+                <>
                   <Button 
                   color={"brand.1"} 
                   fontWeight="light" 
@@ -128,11 +132,11 @@ const Home = () => {
                   onClick={handlePrevPage}>
                     <MdNavigateBefore/> Anterior
                   </Button>
-                </Flex>
+                </>
               )}
                 {currentPage} de {totalPages}
               {currentPage < totalPages && (
-                <Flex color={"brand.1"}>
+                <>
                   <Button 
                   color={"brand.1"} 
                   fontWeight="light" 
@@ -142,7 +146,7 @@ const Home = () => {
                   onClick={handleNextPage}> 
                   Seguinte <MdNavigateNext/> 
                   </Button>
-                </Flex>
+                </>
               )}
             </Flex>
           </Box>
