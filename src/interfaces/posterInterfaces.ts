@@ -55,6 +55,13 @@ export interface IAllCars {
     }>;
   }
 
+  export interface IPaginatedCars {
+    prev: string | null,
+    next: string | null,
+    count: number,
+    cars: IAllCars[]
+  }
+
   export interface IKenzieAPICar {
     id: string;
     brand: string;

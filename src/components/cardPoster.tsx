@@ -190,7 +190,7 @@ const CardPoster = ({ carPost }: ICardPosterProps) => {
             R${carPost.price.toFixed(2)}
           </Text>
         </Flex>
-        {isOwner && (
+        {path==="/profile/seller" && (
           <Flex gap={"15px"}>
             <Button
               onClick={(e) => {
