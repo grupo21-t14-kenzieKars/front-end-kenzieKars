@@ -7,10 +7,14 @@ import ResetPasswordPage from "../pages/resetPasswordPage";
 import AdvertiserPagePublic from "../pages/AdvertiserPagePublic";
 import CarDetailPage from "../pages/CarDetailPage";
 import Home from "../pages/Home";
+import ProtectedRoute from "../ProtectedRoute/index"
 
 const RoutesMain = () => {
   return (
     <Routes>
+      <Route element={<ProtectedRoute />}>
+
+      </Route>
       <Route path="/" element={<Home />} />
       <Route path="/car/:carId" element={<CarDetailPage />} />
       <Route path="/profile/seller" element={<AdvertiserPage />} />

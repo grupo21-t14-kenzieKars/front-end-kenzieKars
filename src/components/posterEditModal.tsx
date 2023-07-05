@@ -19,6 +19,7 @@ import { CarContext } from "../contexts/CarsContext"
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { editPosterSchema } from "../schemas/posterSchema";
+import { UserContext } from "../contexts/userContext";
 
 interface IPosterEditModalProps {
   isOpen: boolean;
@@ -26,6 +27,8 @@ interface IPosterEditModalProps {
 }
 
 const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
+  const { loading } = useContext(UserContext)
+  
   const {
     allCarsList,
     carModels,
@@ -351,7 +354,7 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
                 <Button onClick={onOpenDeleteModal} variant={"negative"}>
                   Excluir anúncio
                 </Button>
-                <Button type="submit" variant={"brand1"} >
+                <Button type="submit" variant={"brand1"} isLoading={loading}>
                   Salvar alterações
                 </Button>
               </Flex>
@@ -386,7 +389,7 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
           </Flex>
           <Flex flexDirection={"row"} justifyContent={"flex-end"} gap={"15px"}>
             <Button variant={"negative"} size={"lg"} onClick={onCloseDeleteModal}>Cancelar</Button>
-            <Button variant={"alert"} size={"lg"} onClick={deleteAndClose} isLoading>Sim, excluir anúncio</Button>
+            <Button variant={"alert"} size={"lg"} onClick={deleteAndClose} isLoading={loading}>Sim, excluir anúncio</Button>
           </Flex>
 
         </ModalContent>
