@@ -47,6 +47,7 @@ export interface IAllCars {
     isPublished: boolean;
     createdAt: string;
     images: IImages;
+    is_active: boolean;
     comments: Array<{
       content: string;
       createdAt: string;

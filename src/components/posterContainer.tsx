@@ -13,7 +13,7 @@ import AdvertiserInformations from "./advertiserInformations";
 import CommentList from "./commentsList";
 import CommentForm, { commentData } from "./commentsForm";
 import { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { ICar, IComment } from "../contexts/Interfaces";
 import { apiG21 } from "../services/api";
 import { UserContext } from "../contexts/userContext";
@@ -39,12 +39,15 @@ const PosterContainer = () => {
       } else {
         setComents([{ user: user, ...data }]);
       }
-
     } catch (error) {
       console.log(error);
     }
   };
-
+  console.log(car?.user)
+  const handleButtonClick = () => {
+    const phoneNumber = car?.user.phone 
+    window.open(`https://api.whatsapp.com/send?phone=${phoneNumber}`, "_blank");
+  };
   useEffect(() => {
     console.log('useEffect getCarById');
 
@@ -52,7 +55,6 @@ const PosterContainer = () => {
 
     const getCarById = async () => {
       try {
-
         const { data } = await apiG21.get(`/car/${carId}`, {
           headers: {
             authorization: `Bearer ${token}`,
@@ -69,8 +71,8 @@ const PosterContainer = () => {
 
 
   return (
-    <>{!car ? <></> :
-      <>
+    <>
+      {car ? (
         <Box
           paddingTop={"40px"}
           pb={{ base: "45px", md: "73px" }}
@@ -110,7 +112,7 @@ const PosterContainer = () => {
                 >
                   <Image
                     h={"355px"}
-                    src={car?.images.one}
+                    src={car.images.one}
                     w={"auto"}
                     role={"button"}
                     maxW={"100%"}
@@ -131,7 +133,7 @@ const PosterContainer = () => {
                     align={"right"}
                     gap={{ base: "32px", md: "32px" }}
                   >
-                    <VStack align={"right"}>
+   '                 <VStack align={"right"}>
                       {/*                     {!carPoster?.isPublished && (
                       <Text
                         as={"span"}
@@ -143,15 +145,15 @@ const PosterContainer = () => {
                       >
                         Anúncio Inativo
                       </Text>
-                    )} */}
+                    )} */}'
                       <Heading
                         as={"h2"}
                         fontSize={"heading.6"}
                         lineHeight={"heading.6"}
                       >
-                        {`${car?.model
+                        {`${car.model
                           .split("")[0]
-                          .toUpperCase()}${car?.model.substring(1)}`}
+                          .toUpperCase()}${car.model.substring(1)}`}
                       </Heading>
                     </VStack>
 
@@ -163,7 +165,7 @@ const PosterContainer = () => {
                         color={"brand.1"}
                         rounded={"4px"}
                       >
-                        {car?.year}
+                        {car.year}
                       </Tag>
                       <Tag
                         fontSize={"body.2"}
@@ -172,7 +174,7 @@ const PosterContainer = () => {
                         color={"brand.1"}
                         rounded={"4px"}
                       >
-                        {car?.kilometers} KM
+                        {car.kilometers} KM
                       </Tag>
                     </Flex>
                   </Flex>
@@ -188,7 +190,7 @@ const PosterContainer = () => {
                     <Button
                       _disabled={{ _hover: { bg: "grey.5" } }}
                       variant={user ? "brand1" : "disable"}
-                    //   onClick={handleBuy}
+                      onClick={handleButtonClick}
                     >
                       Comprar
                     </Button>
@@ -220,8 +222,8 @@ const PosterContainer = () => {
                 w={{ base: "100%", md: "35%" }}
                 gap={"30px"}
               >
-                <PosterImageBox car={car!} />
-                {car && <AdvertiserInformations seller_name={car.user} />}
+                <PosterImageBox car={car} />
+                <AdvertiserInformations user={car.user} />
               </Flex>
             </Flex>
             <Flex
@@ -245,7 +247,20 @@ const PosterContainer = () => {
             </Flex>
           </Flex>
         </Box>
-      </>}</>
+      ) : (
+          <Box
+          paddingTop={"40px"}
+          pb={{ base: "45px", md: "73px" }}
+        >
+            <Heading as="h1" size="xl" textAlign="center" color="white">
+            Anúncio não encontrado
+          </Heading>
+          <Box textAlign="center" mt="4" color="white" textDecoration={"underline"} >
+            <Link to="/">Voltar para a página inicial</Link>
+          </Box>
+        </Box>
+      )}
+    </>
   );
 };
 

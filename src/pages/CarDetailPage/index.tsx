@@ -5,9 +5,9 @@ import Footer from "../../components/footer";
 
 function CarDetailPage() {
   return (
-    <Flex flexDirection={"column"}>
+    <Flex flexDirection={"column"} height="100vh" justifyContent={"space-between"} bg="brand.1">
       <Header />
-      <PosterContainer />
+      <PosterContainer/>
       <Footer />
     </Flex>
   );

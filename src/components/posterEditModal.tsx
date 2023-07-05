@@ -42,7 +42,7 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
 
   const [imagesCount, setImagesCount] = useState(1);
   const [carBrand, setCarBrand] = useState("");
-  const [isActive, setIsActive] = useState(true)
+  const [isActive, setIsActive] = useState(carData.is_active)
 
   const {
     register,
@@ -113,6 +113,9 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
     if (filledData.price) {
       filledData.price = Number(filledData.price)
     }
+
+    filledData.is_active = isActive
+    console.log(filledData)
     editCarPoster(filledData)
     reset();
     onClose()
@@ -285,7 +288,7 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
                     size={"md"}
                     type="button"
                     w="45%"
-                    onClick={() => setIsActive(false)}
+                    onClick={() => setIsActive(true)}
                   >
                     Sim
                   </Button>
@@ -294,7 +297,7 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
                     type="button"
                     variant={"outline2"}
                     w="45%"
-                    onClick={() => setIsActive(true)}
+                    onClick={() => setIsActive(false)}
                   >
                     Não
                   </Button>
@@ -306,7 +309,7 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
                     type="button"
                     w="45%"
                     variant={"outline2"}
-                    onClick={() => setIsActive(false)}
+                    onClick={() => setIsActive(true)}
                   >
                     Sim
                   </Button>
@@ -314,7 +317,7 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
                     size={"md"}
                     type="button"
                     w="45%"
-                    onClick={() => setIsActive(true)}
+                    onClick={() => setIsActive(false)}
                   >
                     Não
                   </Button>

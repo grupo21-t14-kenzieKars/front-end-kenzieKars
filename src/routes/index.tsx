@@ -5,8 +5,8 @@ import Register from "../pages/registerPage";
 import ForgotPasswordPage from "./../pages/ForgotPasswordPage/index";
 import ResetPasswordPage from "../pages/resetPasswordPage";
 import AdvertiserPagePublic from "../pages/AdvertiserPagePublic";
-import CarDetailPage from "../pages/carDetailPage";
-import Home from "../pages/home";
+import CarDetailPage from "../pages/CarDetailPage";
+import Home from "../pages/Home";
 
 const RoutesMain = () => {
   return (

@@ -219,6 +219,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (user) {
       try {
+        setLoading(true)
         const response = await apiG21.patch(`/user/${user.id}`, data, {
           headers: {
             authorization: `Bearer ${token}`
@@ -248,6 +249,8 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
           position: "bottom-right",
           variant: "subtle",
         });
+      } finally{
+        setLoading(false)
       }
     }
   }
@@ -257,6 +260,7 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
     if (user) {
       try {
+        setLoading(true)
         await apiG21.delete(`/user/${user.id}`, {
           headers: {
             authorization: `Bearer ${token}`
@@ -288,10 +292,11 @@ const UserProvider = ({ children }: { children: React.ReactNode }) => {
           position: "bottom-right",
           variant: "subtle",
         });
+      } finally{
+        setLoading(false)
       }
     }
   }
-
 
   return (
     <>
