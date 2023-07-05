@@ -28,7 +28,7 @@ const FilterCategory = ({ filters, children, category }: filterCategoryProps) =>
             </Heading>
             <Box marginTop={5}>
                 {
-                    filters ?
+                    filters.length > 0 ?
                         (
                             filters.map((filter, i) =>
                                 <Heading
@@ -42,7 +42,7 @@ const FilterCategory = ({ filters, children, category }: filterCategoryProps) =>
                                 </Heading>)
                         ) :
                         (<Heading color="grey.3" fontSize="heading.3" fontWeight="semibold">
-                            -
+                            --
                         </Heading>)
                 }
             </Box >
