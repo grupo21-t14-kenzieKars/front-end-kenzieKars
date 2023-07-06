@@ -30,7 +30,7 @@ export interface ICarProviderData {
 }
 export interface ICommentEdit {
     id: string;
-    content:string;
+    content:string | undefined;
 }
 
 export interface IUserProviderData {

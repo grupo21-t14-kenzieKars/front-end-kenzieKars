@@ -286,7 +286,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
           setCarData,
           commentEditPoster,
           deleteCommentPoster
-
         }}
       >
         {children}

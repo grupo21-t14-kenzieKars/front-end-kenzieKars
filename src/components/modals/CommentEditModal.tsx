@@ -6,7 +6,6 @@ import {
   ModalCloseButton,
   Flex,
   Button,
-  Input,
   FormControl,
   Textarea,
 } from "@chakra-ui/react";
@@ -15,6 +14,10 @@ import { ICommentEdit } from "../../contexts/Interfaces";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from 'zod'
+
+const commentSchema = z.object({
+  content: z.string().nonempty("Não é permitido comentário vazio"),
+});
 
 interface IEditModalProps {
   isOpen: boolean;
@@ -25,10 +28,6 @@ interface IEditModalProps {
   buttonText?: string;
   id:string
 }
-
-const commentSchema = z.object({
-  content: z.string().nonempty("Não é permitido comentário vazio"),
-});
 
 const EditModal = ({
   isOpen,
@@ -46,7 +45,6 @@ const EditModal = ({
     handleSubmit,
     register,
     reset,
-    formState: { errors },
   } = useForm<ICommentEdit>({
     resolver: zodResolver(commentSchema),
   });
