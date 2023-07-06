@@ -1,4 +1,5 @@
 import React from "react"
+import { commentData } from "../components/commentsForm"
 import { LoginData } from "../components/forms/loginForm/loginSchema"
 import { RegisterData } from "../components/forms/registerForm/registerSchema"
 import { IForgotPassword, IResetPassword } from "../interfaces/forgotPassword.interfaces"
@@ -6,24 +7,29 @@ import { IAllCars, IEditPoster, IKenzieAPICar, INewPoster } from "../interfaces/
 import { IEditUser } from "../interfaces/userInterfaces"
 
 export interface ICarProviderData {
-    createPoster: (data: INewPoster) => void
-    allCarsList: Array<IAllCars>
-    carList: Array<IAllCars>
-    filteredCarList: Array<IAllCars>
-    setFilteredCarList: React.Dispatch<React.SetStateAction<IAllCars[]>>
-    carsByBrand: Array<object>
-    getCarsByBrand: (brand: string) => void
-    getCarModels: (model: string) => Promise<void>
-    getSelectedCarModel: (name: string, brand: string) => Promise<void>
-    carModels: Array<IAllCars>
-    selectedCarModel: IKenzieAPICar | null;
-    setSelectedCarModel: React.Dispatch<React.SetStateAction<any | null>>
-    editCarPoster: (data: IEditPoster) => void;
-    deleteCarPoster: () => void;
-    setCarId: React.Dispatch<React.SetStateAction<string>>;
-    carId: string;
-    carData: IAllCars;
-    setCarData: React.Dispatch<React.SetStateAction<IAllCars>>;
+  createPoster: (data: INewPoster) => void;
+  allCarsList: Array<IAllCars>;
+  carList: Array<IAllCars>;
+  filteredCarList: Array<IAllCars>;
+  setFilteredCarList: React.Dispatch<React.SetStateAction<IAllCars[]>>;
+  carsByBrand: Array<object>;
+  getCarsByBrand: (brand: string) => void;
+  getCarModels: (model: string) => Promise<void>;
+  getSelectedCarModel: (name: string, brand: string) => Promise<void>;
+  carModels: Array<IAllCars>;
+  selectedCarModel: IKenzieAPICar | null;
+  setSelectedCarModel: React.Dispatch<React.SetStateAction<any | null>>;
+  editCarPoster: (data: IEditPoster) => void;
+  deleteCarPoster: () => void;
+  setCarId: React.Dispatch<React.SetStateAction<string>>;
+  carId: string;
+  carData: IAllCars;
+  setCarData: React.Dispatch<React.SetStateAction<IAllCars>>;
+  commentEditPoster: (id: string, data: string) => Promise<void>;
+  deleteCommentPoster: (id: string)  => void;
+}
+export interface ICommentEdit {
+    content:string
 }
 
 export interface IUserProviderData {

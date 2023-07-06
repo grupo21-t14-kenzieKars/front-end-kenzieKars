@@ -1,42 +1,61 @@
-import { Box, List, ListItem, Text, Flex, Avatar } from "@chakra-ui/react";
+import {
+  Box,
+  List,
+  ListItem,
+  Text,
+  Flex,
+  Avatar,
+  IconButton,
+  useDisclosure,
+} from "@chakra-ui/react";
+import { useContext, useState } from "react";
 import { IComment } from "../contexts/Interfaces";
+import { UserContext } from "../contexts/userContext";
+import { AiFillDelete, AiOutlineEdit } from "react-icons/ai";
+import DeleteModal from "./modals/comentDeleteModal";
+import EditModal from "./modals/commentEditModal";
+import { differenceInMilliseconds, formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import { CarContext } from "./../contexts/CarsContext";
+import { commentData } from "./commentsForm";
 
 interface commentListProps {
   comments: IComment[] | undefined;
 }
 
 function CommentList({ comments }: commentListProps) {
-  function getCommentDate(data: Date) {
-    const date: any = new Date(data);
+  const { user } = useContext(UserContext);
+  const { deleteCommentPoster,commentEditPoster } = useContext(CarContext);
 
-    const today: any = new Date();
+  const {
+    isOpen: isDeleteCommentModalOpen,
+    onOpen: onDeleteCommentModalOpen,
+    onClose: onDeleteCommentModalClose,
+  } = useDisclosure();
+  const {
+    isOpen: isEditCommentModalOpen,
+    onOpen: onEditCommentModalOpen,
+    onClose: onEditCommentModalClose,
+  } = useDisclosure();
 
-    const d = today - date;
+  const [commentToEditDelete, setCommentToEditDelete] =
+    useState<IComment | null>(null);
 
-    const seconds = parseInt("" + d / 1000);
-    const minuts = parseInt("" + d / 1000 / 60);
-    const hours = parseInt("" + d / 1000 / 60 / 60);
-    const days = parseInt("" + d / 1000 / 60 / 60 / 24);
-    const months = parseInt("" + d / 1000 / 60 / 60 / 24 / 30);
-    const years = parseInt("" + d / 1000 / 60 / 60 / 24 / 30 / 12);
+  const handleDeleteComment = async (idComment: string) => {
+    
+     deleteCommentPoster(idComment);
+    onDeleteCommentModalClose()
+  };
 
-    if (seconds < 60) {
-      return `Há ${seconds} segundo${seconds !== 1 ? "s" : ""}`;
-    }
-    if (minuts < 60) {
-      return `Há ${minuts} minuto${minuts !== 1 ? "s" : ""}`;
-    }
-    if (hours < 24) {
-      return `Há ${hours} hora${hours !== 1 ? "s" : ""}`;
-    }
-    if (days < 30) {
-      return `Há ${days} dia${days !== 1 ? "s" : ""}`;
-    }
-    if (months < 12) {
-      return `Há ${months} mês${months !== 1 ? "es" : ""}`;
-    }
+  const handleEditComment =  (idComment:string,data:string) => {
+    commentEditPoster(idComment,data)
+  };
 
-    return `Há ${years} ano${years !== 1 ? "s" : ""}`;
+  function getCommentDate(createdAt: Date): string {
+    const commentDate = new Date(createdAt);
+    const currentDate = new Date();
+
+    return formatDistanceToNow(commentDate, { locale: ptBR, addSuffix: true });
   }
 
   return (
@@ -53,9 +72,9 @@ function CommentList({ comments }: commentListProps) {
         Comentários
       </Text>
       <List display={"flex"} gap={"40px"} flexDirection={"column"}>
-        {comments?.map((elem, i) => {
-          return (
-            <ListItem key={i}>
+        {comments?.map((elem, i) => (
+          <ListItem key={i}>
+            <Flex flexDirection={"column"}>
               <Flex
                 flexDirection={"row"}
                 gap={"10px"}
@@ -80,13 +99,78 @@ function CommentList({ comments }: commentListProps) {
                   {getCommentDate(elem.createdAt)}
                 </Text>
               </Flex>
-              <Text color="grey.2" fontSize={"heading.1"}>
-                {elem.content}
-              </Text>
-            </ListItem>
-          );
-        })}
+              <Flex
+                flexDirection={"row"}
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <Text color="grey.2" fontSize={"heading.1"}>
+                  {elem.content}
+                </Text>
+                {elem.user.id === user?.id && (
+                  <Flex gap={"5px"}>
+                    <IconButton
+                      p={0}
+                      _hover={{ bg: "alert.3" }}
+                      fontSize={"24px"}
+                      color={"red"}
+                      maxW={"100%"}
+                      minW={"0px"}
+                      w={"24px"}
+                      h={"24px"}
+                      bg={"transparent"}
+                      aria-label="excluir"
+                      icon={<AiFillDelete />}
+                      onClick={() => {
+                        onDeleteCommentModalOpen();
+                        setCommentToEditDelete(elem);
+                      }}
+                    />
+                    <IconButton
+                      p={0}
+                      _hover={{ bg: "grey.7" }}
+                      fontSize={"24px"}
+                      color={"brand.1"}
+                      maxW={"100%"}
+                      minW={"0px"}
+                      w={"24px"}
+                      h={"24px"}
+                      bg={"transparent"}
+                      aria-label="editar"
+                      icon={<AiOutlineEdit />}
+                      onClick={() => {
+                        onEditCommentModalOpen();
+                        setCommentToEditDelete(elem);
+                      }}
+                    />
+                  </Flex>
+                )}
+              </Flex>
+            </Flex>
+          </ListItem>
+        ))}
       </List>
+
+      <DeleteModal
+        isOpen={isDeleteCommentModalOpen}
+        onClose={onDeleteCommentModalClose}
+        headingText="Excluir comentário"
+        title="Tem certeza que deseja excluir esse comentário?"
+        description="Essa ação irá remover permanentemente seu comentário desse anúncio"
+        deleteFunction={() =>
+          handleDeleteComment(commentToEditDelete?.id ?? "")
+        }
+      />
+
+      <EditModal
+        isOpen={isEditCommentModalOpen}
+        onClose={onEditCommentModalClose}
+        headingText="Editar comentário"
+        comment={commentToEditDelete?.content ?? ""}
+        editFunction={handleEditComment}
+        id={commentToEditDelete?.id ?? ""}
+
+      />
     </Box>
   );
 }

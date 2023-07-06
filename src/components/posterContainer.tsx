@@ -50,7 +50,7 @@ const PosterContainer = () => {
     const phoneNumber = car?.user.phone
     window.open(`https://api.whatsapp.com/send?phone=${phoneNumber}`, "_blank");
   };
-
+  
   useEffect(() => {
     const token = localStorage.getItem("@kenzie-cars:token");
 
@@ -71,7 +71,7 @@ const PosterContainer = () => {
       }
     };
     getCarById();
-  }, []);
+  }, [carId, comments]);
 
 
   return (

@@ -1,80 +1,83 @@
-import { createContext, useContext, useEffect, useState } from "react"
-import { apiG21, apiKenzieKars } from '../services/api'
-import { ICarProviderData } from "./Interfaces"
-import { IAllCars, IEditPoster, INewPoster } from "../interfaces/posterInterfaces"
-import { useToast } from "@chakra-ui/react"
-import { UserContext } from "./userContext"
+import { createContext, useContext, useEffect, useState } from "react";
+import { apiG21, apiKenzieKars } from "../services/api";
+import { ICarProviderData, IComment, ICommentEdit } from "./Interfaces";
+import {
+  IAllCars,
+  IEditPoster,
+  INewPoster,
+} from "../interfaces/posterInterfaces";
+import { useToast } from "@chakra-ui/react";
+import { UserContext } from "./userContext";
 
-export const CarContext = createContext<ICarProviderData>({} as ICarProviderData)
+export const CarContext = createContext<ICarProviderData>(
+  {} as ICarProviderData
+);
 
 const CarProvider = ({ children }: { children: React.ReactNode }) => {
-
-  const { setUserCars, userCars, setLoading } = useContext(UserContext)
+  const { setUserCars, userCars, setLoading } = useContext(UserContext);
 
   //Lista de todos os carros da API Kenzie
-  const [allCarsList, setAllCarsList] = useState([] as Array<IAllCars>)
+  const [allCarsList, setAllCarsList] = useState([] as Array<IAllCars>);
 
   //listas todos os carros da nossa API
-  const [carList, setCarList] = useState([] as Array<IAllCars>)
+  const [carList, setCarList] = useState([] as Array<IAllCars>);
 
   //Pega o id do carro
-  const [carId, setCarId] = useState("")
+  const [carId, setCarId] = useState("");
 
   //Dados do carro por ID
-  const [carData, setCarData] = useState({} as IAllCars)
+  const [carData, setCarData] = useState({} as IAllCars);
 
   //Lista com as marcas dos carros da API Kenzie
-  const [carsByBrand, setCarsByBrand] = useState([] as Array<object>)
+  const [carsByBrand, setCarsByBrand] = useState([] as Array<object>);
   //Lista de todos os modelos dos carros da API Kenzie
-  const [carModels, setCarModels] = useState([])
+  const [carModels, setCarModels] = useState([]);
   //Modelo do carro selecionado
-  const [selectedCarModel, setSelectedCarModel] = useState(null)
+  const [selectedCarModel, setSelectedCarModel] = useState(null);
 
   //filtra os carros da nossa API
-  const [filteredCarList, setFilteredCarList] = useState<IAllCars[]>([])
+  const [filteredCarList, setFilteredCarList] = useState<IAllCars[]>([]);
 
-  const toast = useToast()
-  const token = localStorage.getItem("@kenzie-cars:token")
+  const toast = useToast();
+  const token = localStorage.getItem("@kenzie-cars:token");
 
   useEffect(() => {
     const getCars = async () => {
       try {
-        setLoading(true)
-        const { data } = await apiG21.get('/car')
+        setLoading(true);
+        const { data } = await apiG21.get("/car");
 
-        setCarList(data)
-        setFilteredCarList(data)
+        setCarList(data);
+        setFilteredCarList(data);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    getCars()
-  }, [])
+    };
+    getCars();
+  }, []);
 
   // Pega todos os carros da API
   useEffect(() => {
-    console.log("useEffect getCars");
-
     const getCars = async () => {
       try {
-        const { data } = await apiKenzieKars.get('/cars')
-        setAllCarsList(data)
+        const { data } = await apiKenzieKars.get("/cars");
+        setAllCarsList(data);
       } catch (error) {
-        console.error(error)
+        console.error(error);
       }
-    }
-    getCars()
-  }, [])
+    };
+    getCars();
+  }, []);
 
   const createPoster = async (data: INewPoster) => {
     try {
       setLoading(true)
       const response = await apiG21.post("/car", data, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       toast({
@@ -87,9 +90,9 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         },
         isClosable: true,
       });
-      setUserCars([...userCars, response.data])
+      setUserCars([...userCars, response.data]);
     } catch (error: any) {
-      console.error(Error)
+      console.error(Error);
       toast({
         status: "error",
         description:
@@ -102,15 +105,15 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setLoading(false)
     }
-  }
+  };
 
   const editCarPoster = async (data: IEditPoster) => {
     try {
       setLoading(true)
       await apiG21.patch(`/car/${carId}`, data, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       toast({
@@ -123,14 +126,11 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         },
         isClosable: true,
       });
-
     } catch (error: any) {
-      console.error(Error)
+      console.error(Error);
       toast({
         status: "error",
-        description:
-          error.response?.data.message ||
-          "Ops... ocorreu um erro!",
+        description: error.response?.data.message || "Ops... ocorreu um erro!",
         duration: 3000,
         position: "bottom-right",
         variant: "subtle",
@@ -138,15 +138,15 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     } finally {
       setLoading(false)
     }
-  }
+  };
 
   const deleteCarPoster = async () => {
     try {
       setLoading(true)
       await apiG21.delete(`/car/${carId}`, {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       toast({
@@ -160,12 +160,10 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
         isClosable: true,
       });
     } catch (error: any) {
-      console.error(Error)
+      console.error(Error);
       toast({
         status: "error",
-        description:
-          error.response?.data.message ||
-          "Ops... ocorreu um erro!",
+        description: error.response?.data.message || "Ops... ocorreu um erro!",
         duration: 3000,
         position: "bottom-right",
         variant: "subtle",
@@ -175,35 +173,34 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }
 
+
   //Pega os carros pela marca
   const getCarsByBrand = async (brand: string) => {
     try {
-      const { data } = await apiKenzieKars.get('/cars', {
+      const { data } = await apiKenzieKars.get("/cars", {
         params: {
-          brand: brand
-        }
-      })
-      setCarsByBrand(data)
+          brand: brand,
+        },
+      });
+      setCarsByBrand(data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   //Pega os carros pelo modelo
   const getCarModels = async (model: string) => {
     const { data } = await apiKenzieKars.get(`/cars?brand=${model}`);
     setCarModels(data);
-  }
+  };
 
   //Pega a marca selecionada
   const getSelectedCarModel = async (name: string, brand: string) => {
     const { data } = await apiKenzieKars.get(`/cars?brand=${brand}`);
     data.map((value: any) => {
       if (value.name === name) {
-        setSelectedCarModel(value)
+        setSelectedCarModel(value);
       }
-    })
-  }
 
   useEffect(() =>{
       try{
@@ -220,32 +217,77 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
       }
   }, [carId])
 
+ const commentEditPoster = async (id: string, data: ICommentEdit) => {
+    try {
+        apiG21.patch(`/comment/${id}`, data);
+    } catch (error: any) {
+      console.error(error);
+      toast({
+        status: "error",
+        description: "Ops... Ocorreu um erro ao editar o comentário.",
+        duration: 3000,
+        position: "top-right",
+        containerStyle: {
+          color: "white",
+        },
+        isClosable: true,
+      });
+    }
+  };
+      
+
+  const deleteCommentPoster = async (id: string) => {
+    try {
+      await apiG21.delete(`/comment/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error: any) {
+      console.error(error);
+      toast({
+        status: "error",
+        description: "Ops... Ocorreu algo de errado! Tente novamente mais tarde",
+        duration: 3000,
+        position: "top-right",
+        containerStyle: {
+          color: "white",
+        },
+        isClosable: true,
+      });
+    }
+  };
   return (
     <>
-      <CarContext.Provider value={{
-        createPoster,
-        allCarsList,
-        carList,
-        filteredCarList,
-        setFilteredCarList,
-        carsByBrand,
-        getCarsByBrand,
-        getCarModels,
-        getSelectedCarModel,
-        carModels,
-        setSelectedCarModel,
-        selectedCarModel,
-        editCarPoster,
-        deleteCarPoster,
-        setCarId,
-        carId,
-        carData,
-        setCarData
-      }}>
+      <CarContext.Provider
+        value={{
+          createPoster,
+          allCarsList,
+          carList,
+          filteredCarList,
+          setFilteredCarList,
+          carsByBrand,
+          getCarsByBrand,
+          getCarModels,
+          getSelectedCarModel,
+          carModels,
+          setSelectedCarModel,
+          selectedCarModel,
+          editCarPoster,
+          deleteCarPoster,
+          setCarId,
+          carId,
+          carData,
+          setCarData,
+          commentEditPoster,
+          deleteCommentPoster
+
+        }}
+      >
         {children}
       </CarContext.Provider>
     </>
   );
-}
+};
 
-export default CarProvider
+export default CarProvider;
