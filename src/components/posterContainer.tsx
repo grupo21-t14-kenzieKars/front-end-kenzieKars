@@ -22,7 +22,6 @@ const PosterContainer = () => {
   const { user } = useContext(UserContext);
   const { carId } = useParams();
   const [car, setCar] = useState<ICar>();
-  console.log(user);
 
   const [comments, setComents] = useState<IComment[] | null>();
 
@@ -43,14 +42,12 @@ const PosterContainer = () => {
       console.log(error);
     }
   };
-  console.log(car?.user)
+
   const handleButtonClick = () => {
     const phoneNumber = car?.user.phone
     window.open(`https://api.whatsapp.com/send?phone=${phoneNumber}`, "_blank");
   };
   useEffect(() => {
-    console.log('useEffect getCarById');
-
     const token = localStorage.getItem("@kenzie-cars:token");
 
     const getCarById = async () => {
@@ -67,7 +64,7 @@ const PosterContainer = () => {
       }
     };
     getCarById();
-  }, []);
+  }, [carId, comments]);
 
 
   return (
