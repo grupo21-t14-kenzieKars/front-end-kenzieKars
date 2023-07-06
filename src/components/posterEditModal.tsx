@@ -290,6 +290,7 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
                   <Button
                     size={"md"}
                     type="button"
+                    variant={"outline2"}
                     w="45%"
                     onClick={() => setIsActive(true)}
                   >
@@ -298,7 +299,6 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
                   <Button
                     size={"md"}
                     type="button"
-                    variant={"outline2"}
                     w="45%"
                     onClick={() => setIsActive(false)}
                   >
@@ -311,7 +311,6 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
                     size={"md"}
                     type="button"
                     w="45%"
-                    variant={"outline2"}
                     onClick={() => setIsActive(true)}
                   >
                     Sim
@@ -319,6 +318,7 @@ const EditPosterModal = ({ isOpen, onClose }: IPosterEditModalProps) => {
                   <Button
                     size={"md"}
                     type="button"
+                    variant={"outline2"}
                     w="45%"
                     onClick={() => setIsActive(false)}
                   >
