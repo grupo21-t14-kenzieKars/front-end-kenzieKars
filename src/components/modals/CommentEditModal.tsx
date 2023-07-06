@@ -10,14 +10,13 @@ import {
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ICommentEdit } from "../../contexts/Interfaces";
-import { commentData } from "../commentsForm";
 
 interface IEditModalProps {
   isOpen: boolean;
   onClose: () => void;
-  editFunction: (id:string,editedComment:string) =>void;
+  editFunction: (id:string,editedComment:ICommentEdit) =>void;
   headingText: string;
-  comment: string;
+  comment: ICommentEdit;
   buttonText?: string;
   id:string
 }
@@ -31,7 +30,7 @@ const EditModal = ({
   buttonText,
   id
 }: IEditModalProps) => {
-  const [editedComment, setEditedComment] = useState<string>(comment);
+  const [editedComment, setEditedComment] = useState<ICommentEdit>(comment);
   const [editLoading, setEditLoading] = useState<boolean>(false);
   const handleEditComment = async () => {
     setEditLoading(true);

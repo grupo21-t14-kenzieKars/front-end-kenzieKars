@@ -29,7 +29,8 @@ export interface ICarProviderData {
   deleteCommentPoster: (id: string)  => void;
 }
 export interface ICommentEdit {
-    content:string
+    id: string;
+    content:string;
 }
 
 export interface IUserProviderData {

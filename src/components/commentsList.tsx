@@ -9,15 +9,14 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { useContext, useState } from "react";
-import { IComment } from "../contexts/Interfaces";
+import { IComment, ICommentEdit } from "../contexts/Interfaces";
 import { UserContext } from "../contexts/userContext";
 import { AiFillDelete, AiOutlineEdit } from "react-icons/ai";
 import DeleteModal from "./modals/comentDeleteModal";
-import EditModal from "./modals/commentEditModal";
-import { differenceInMilliseconds, formatDistanceToNow } from "date-fns";
+import EditModal from "./modals/CommentEditModal";
+import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { CarContext } from "./../contexts/CarsContext";
-import { commentData } from "./commentsForm";
 
 interface commentListProps {
   comments: IComment[] | undefined;
@@ -39,7 +38,7 @@ function CommentList({ comments }: commentListProps) {
   } = useDisclosure();
 
   const [commentToEditDelete, setCommentToEditDelete] =
-    useState<IComment | null>(null);
+    useState<ICommentEdit | null>(null);
 
   const handleDeleteComment = async (idComment: string) => {
     
@@ -47,7 +46,7 @@ function CommentList({ comments }: commentListProps) {
     onDeleteCommentModalClose()
   };
 
-  const handleEditComment =  (idComment:string,data:string) => {
+  const handleEditComment =  (idComment:string,data: ICommentEdit) => {
     commentEditPoster(idComment,data)
   };
 
@@ -166,7 +165,7 @@ function CommentList({ comments }: commentListProps) {
         isOpen={isEditCommentModalOpen}
         onClose={onEditCommentModalClose}
         headingText="Editar comentário"
-        comment={commentToEditDelete?.content ?? ""}
+        comment={commentToEditDelete?.content}
         editFunction={handleEditComment}
         id={commentToEditDelete?.id ?? ""}
 
