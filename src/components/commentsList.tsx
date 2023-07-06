@@ -41,13 +41,12 @@ function CommentList({ comments }: commentListProps) {
     useState<ICommentEdit | null>(null);
 
   const handleDeleteComment = async (idComment: string) => {
-    
-     deleteCommentPoster(idComment);
+    deleteCommentPoster(idComment);
     onDeleteCommentModalClose()
   };
 
-  const handleEditComment =  (idComment:string,data: ICommentEdit) => {
-    commentEditPoster(idComment,data)
+  const handleEditComment = async (idComment:string,data: ICommentEdit) => {
+    await commentEditPoster(idComment,data)
   };
 
   function getCommentDate(createdAt: Date): string {

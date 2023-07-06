@@ -220,7 +220,11 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
  const commentEditPoster = async (id: string, data: ICommentEdit) => {
     try {
-        apiG21.patch(`/comment/${id}`, data);
+        apiG21.patch(`/comment/${id}`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }}
+    );
     } catch (error: any) {
       console.error(error);
       toast({

@@ -71,7 +71,7 @@ const PosterContainer = () => {
       }
     };
     getCarById();
-  }, [carId, comments]);
+  }, []);
 
 
   return (

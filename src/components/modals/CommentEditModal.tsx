@@ -7,19 +7,28 @@ import {
   Flex,
   Button,
   Input,
+  FormControl,
+  Textarea,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ICommentEdit } from "../../contexts/Interfaces";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from 'zod'
 
 interface IEditModalProps {
   isOpen: boolean;
   onClose: () => void;
   editFunction: (id:string,editedComment:ICommentEdit) =>void;
   headingText: string;
-  comment: ICommentEdit;
+  comment: ICommentEdit | string | undefined;
   buttonText?: string;
   id:string
 }
+
+const commentSchema = z.object({
+  content: z.string().nonempty("Não é permitido comentário vazio"),
+});
 
 const EditModal = ({
   isOpen,
@@ -30,15 +39,23 @@ const EditModal = ({
   buttonText,
   id
 }: IEditModalProps) => {
-  const [editedComment, setEditedComment] = useState<ICommentEdit>(comment);
-  const [editLoading, setEditLoading] = useState<boolean>(false);
-  const handleEditComment = async () => {
-    setEditLoading(true);
-    editFunction(id,comment);
-    setEditLoading(false);
-  };
 
-  
+  const [editLoading, setEditLoading] = useState<boolean>(false);
+
+  const {
+    handleSubmit,
+    register,
+    reset,
+    formState: { errors },
+  } = useForm<ICommentEdit>({
+    resolver: zodResolver(commentSchema),
+  });
+
+  const onSubmit = (data: ICommentEdit) => {
+      editFunction(id, data)
+      reset()
+      onClose()
+  }
 
   return (
     <>
@@ -57,14 +74,12 @@ const EditModal = ({
 
           <ModalCloseButton color={"grey.4"} />
 
-          <Flex direction={"column"} align={"flex-start"} gap={"18px"}>
-            <Input
-              value={editedComment}
-              onChange={(e) => setEditedComment(e.target.value)}
-              placeholder="Digite seu comentário..."
-              size="lg"
-            />
 
+          <Flex direction={"column"} align={"flex-start"} gap={"18px"} as="form"
+          onSubmit={handleSubmit(onSubmit)}>
+            <FormControl id="edit_comment">
+              <Textarea {...register("content")} minH={"130px"} placeholder={`${comment}`}/>
+            </FormControl>
             <Flex
               direction={{ base: "column", sm: "row" }}
               w={"100%"}
@@ -81,10 +96,10 @@ const EditModal = ({
                 Cancelar
               </Button>
               <Button
-                onClick={handleEditComment}
                 w={{ base: "100%", sm: "auto" }}
                 size={"lg"}
                 variant={"primary"}
+                type="submit"
                 isLoading={editLoading}
                 loadingText="Salvando"
               >
