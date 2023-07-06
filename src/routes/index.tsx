@@ -7,18 +7,22 @@ import ResetPasswordPage from "../pages/resetPasswordPage";
 import AdvertiserPagePublic from "../pages/AdvertiserPagePublic";
 import CarDetailPage from "../pages/CarDetailPage";
 import Home from "../pages/Home";
+import ProtectedRoute from "../ProtectedRoute";
 
 const RoutesMain = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/car/:carId" element={<CarDetailPage />} />
-      <Route path="/profile/seller" element={<AdvertiserPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/forgotPassword" element={<ForgotPasswordPage />} />
       <Route path="/resetPassword/:token" element={<ResetPasswordPage />} />
       <Route path="/profile/:id" element={<AdvertiserPagePublic />} />
+
+      <Route element={<ProtectedRoute />}>
+        <Route path="/profile/seller" element={<AdvertiserPage />} />
+      </Route>
     </Routes>
   );
 };

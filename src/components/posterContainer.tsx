@@ -7,6 +7,7 @@ import {
   Box,
   Text,
   Image,
+  Spinner,
 } from "@chakra-ui/react";
 import PosterImageBox from "./posterImageBox";
 import AdvertiserInformations from "./advertiserInformations";
@@ -21,6 +22,8 @@ import { UserContext } from "../contexts/userContext";
 const PosterContainer = () => {
   const { user } = useContext(UserContext);
   const { carId } = useParams();
+
+  const [ loading, setLoading ] = useState(true)
   const [car, setCar] = useState<ICar>();
 
   const [comments, setComents] = useState<IComment[] | null>();
@@ -40,13 +43,14 @@ const PosterContainer = () => {
       }
     } catch (error) {
       console.log(error);
-    }
+    } 
   };
 
   const handleButtonClick = () => {
     const phoneNumber = car?.user.phone
     window.open(`https://api.whatsapp.com/send?phone=${phoneNumber}`, "_blank");
   };
+  
   useEffect(() => {
     const token = localStorage.getItem("@kenzie-cars:token");
 
@@ -59,8 +63,11 @@ const PosterContainer = () => {
         });
         setCar(data);
         setComents(data.comments);
+        setLoading(false)
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false)
       }
     };
     getCarById();
@@ -69,6 +76,10 @@ const PosterContainer = () => {
 
   return (
     <>
+    {loading?  
+        <Flex w={"full"} h='100vh' alignItems={"center"} justifyContent={"center"}>
+          <Spinner size={"xl"} color="brand.1" emptyColor='grey.5' thickness='4px' />
+        </Flex> : <>
       {car ? (
         <Box
           paddingTop={"40px"}
@@ -113,7 +124,8 @@ const PosterContainer = () => {
                     w={"auto"}
                     role={"button"}
                     maxW={"100%"}
-                    objectFit={{ base: "contain", md: "fill" }}
+                    objectFit={"contain"}
+                    p={"10px"}
                   />
                 </Flex>
 
@@ -130,19 +142,8 @@ const PosterContainer = () => {
                     align={"right"}
                     gap={{ base: "32px", md: "32px" }}
                   >
-                    '                 <VStack align={"right"}>
-                      {/*                     {!carPoster?.isPublished && (
-                      <Text
-                        as={"span"}
-                        color={"grey.4"}
-                        fontSize={"body.2"}
-                        lineHeight={"heading.6"}
-                        textAlign={"end"}
-                        fontWeight={"semibold"}
-                      >
-                        Anúncio Inativo
-                      </Text>
-                    )} */}'
+
+                    <VStack align={"right"}>
                       <Heading
                         as={"h2"}
                         fontSize={"heading.6"}
@@ -256,7 +257,7 @@ const PosterContainer = () => {
             <Link to="/">Voltar para a página inicial</Link>
           </Box>
         </Box>
-      )}
+      )}</>}
     </>
   );
 };

@@ -20,9 +20,9 @@ const PosterImageModal = ({posterImg, isOpen, onClose}: IPosterImageModalProps) 
                     </Heading>
                     <ModalCloseButton color={"grey.4"}/>
                 </Flex>
-                <Flex w={"100%"} maxW={"465px"} h={"240px"} bgColor={"grey.7"} align={"center"} p={"57px 43px"}>
-                    <Image src={posterImg} w={"100%"} maxH={"100%"} objectFit={"contain"} />
-                </Flex>
+                <Flex w={"100%"} maxW={"465px"} h={"100%"} maxH={"240px"} bgColor={"grey.7"} justify={"center"} align={"center"} p={"57px 43px"}>
+                        <Image src={posterImg} objectFit={"contain"} fallbackSrc='https://via.placeholder.com/350x200'/>
+                  </Flex>
             </ModalContent>
         </Modal>
     )

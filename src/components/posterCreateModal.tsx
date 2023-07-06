@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { useContext, useState } from "react";
 import { createPosterSchema } from "../schemas/posterSchema";
 import { CarContext } from "../contexts/CarsContext";
+import { UserContext } from "../contexts/userContext";
 
 interface IPosterCreateModalProps {
   isOpen: boolean;
@@ -33,6 +34,8 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
       setImagesCount(imagesCount + 1)
     }
   }
+
+  const { loading } = useContext(UserContext)
 
   const {
     createPoster,
@@ -292,7 +295,7 @@ const PosterCreateModal = ({ isOpen, onClose }: IPosterCreateModalProps) => {
               <Button onClick={onClose} variant={"negative"}>
                 Cancelar
               </Button>
-              <Button type="submit" variant={"brand1"}>
+              <Button type="submit" variant={"brand1"} isLoading={loading}>
                 Criar anúncio
               </Button>
             </Flex>
