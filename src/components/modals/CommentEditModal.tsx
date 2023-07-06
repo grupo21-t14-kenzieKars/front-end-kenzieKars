@@ -15,7 +15,7 @@ import { commentData } from "../commentsForm";
 interface IEditModalProps {
   isOpen: boolean;
   onClose: () => void;
-  editFunction: (id:string,editedComment:commentData) =>void;
+  editFunction: (id:string,editedComment:string) =>void;
   headingText: string;
   comment: string;
   buttonText?: string;
@@ -29,12 +29,13 @@ const EditModal = ({
   headingText,
   comment,
   buttonText,
+  id
 }: IEditModalProps) => {
-
+  const [editedComment, setEditedComment] = useState<string>(comment);
   const [editLoading, setEditLoading] = useState<boolean>(false);
   const handleEditComment = async () => {
     setEditLoading(true);
-    editFunction();
+    editFunction(id,comment);
     setEditLoading(false);
   };
 

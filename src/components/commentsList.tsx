@@ -47,7 +47,7 @@ function CommentList({ comments }: commentListProps) {
     onDeleteCommentModalClose()
   };
 
-  const handleEditComment =  (idComment:string,data:commentData) => {
+  const handleEditComment =  (idComment:string,data:string) => {
     commentEditPoster(idComment,data)
   };
 
