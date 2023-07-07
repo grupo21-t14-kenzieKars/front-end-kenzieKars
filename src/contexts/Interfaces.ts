@@ -25,11 +25,12 @@ export interface ICarProviderData {
   carId: string;
   carData: IAllCars;
   setCarData: React.Dispatch<React.SetStateAction<IAllCars>>;
-  commentEditPoster: (id: string, data: string) => Promise<void>;
+  commentEditPoster: (id: string, data: ICommentEdit) => Promise<void>;
   deleteCommentPoster: (id: string)  => void;
 }
 export interface ICommentEdit {
-    content:string
+    id: string;
+    content:string | undefined;
 }
 
 export interface IUserProviderData {

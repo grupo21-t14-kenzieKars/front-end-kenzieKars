@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { apiG21, apiKenzieKars } from "../services/api";
-import { ICarProviderData, IComment, ICommentEdit } from "./Interfaces";
+import { ICarProviderData, ICommentEdit } from "./Interfaces";
 import {
   IAllCars,
   IEditPoster,
@@ -200,7 +200,8 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
     data.map((value: any) => {
       if (value.name === name) {
         setSelectedCarModel(value);
-      }
+      }})
+    }
 
   useEffect(() =>{
       try{
@@ -219,7 +220,11 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
 
  const commentEditPoster = async (id: string, data: ICommentEdit) => {
     try {
-        apiG21.patch(`/comment/${id}`, data);
+        apiG21.patch(`/comment/${id}`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }}
+    );
     } catch (error: any) {
       console.error(error);
       toast({
@@ -281,7 +286,6 @@ const CarProvider = ({ children }: { children: React.ReactNode }) => {
           setCarData,
           commentEditPoster,
           deleteCommentPoster
-
         }}
       >
         {children}
